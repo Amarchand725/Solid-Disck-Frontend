@@ -3,12 +3,12 @@
         <div class="d-flex">
             <ul class="d-flex list-unstyled mb-0">
                 <li class="col">
-                    <router-link class="nav-link text-gray-90" to="/products/compare" data-toggle="tooltip" data-placement="top" title="Compare">
+                    <router-link class="nav-link text-gray-90" to="/products/compare">
                         <i class="font-size-22 ec ec-compare"></i>
                     </router-link>
                 </li>
                 <li class="col">
-                    <router-link class="nav-link text-gray-90" to="/wishlist" data-toggle="tooltip" data-placement="top" title="Favorites">
+                    <router-link class="nav-link text-gray-90" to="/wishlist">
                         <i class="font-size-22 ec ec-favorites"></i>
                     </router-link>
                 </li>

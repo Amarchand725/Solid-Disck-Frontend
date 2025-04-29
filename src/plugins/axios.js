@@ -1,7 +1,16 @@
-import axios from 'axios'
+import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:8000/api', // set your backend API base URL here
-})
+  baseURL: import.meta.env.VITE_API_BASE_URL,
+});
 
-export default instance
+// Attach Bearer token automatically
+instance.interceptors.request.use((config) => {
+  const token = localStorage.getItem('customer_token'); // read token from localStorage
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`; // add Authorization header
+  }
+  return config;
+});
+
+export default instance;

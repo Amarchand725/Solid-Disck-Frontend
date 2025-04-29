@@ -18,7 +18,7 @@
                                 <input type="email" v-model="email" class="form-control border-0 height-40" name="email" id="subscribeSrEmail" placeholder="Email address" aria-label="Email address" aria-describedby="subscribeButton" required
                                 data-msg="Please enter a valid email address.">
                                 <div class="input-group-append">
-                                    <button type="submit" :disabled="loading" class="btn btn-dark btn-sm-wide height-40 py-2" id="subscribeButton">
+                                    <button type="submit" :disabled="loading" class="btn btn-dark btn-sm-wide height-40 py-2">
                                         <span v-if="loading">Loading...</span>
                                         <span v-else>Subscribe</span>
                                     </button>

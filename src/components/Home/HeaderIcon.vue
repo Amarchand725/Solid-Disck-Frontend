@@ -34,12 +34,12 @@
                     </li>
                     <!-- End Search -->
                     <li class="col d-none d-xl-block">
-                        <router-link class="nav-link text-gray-90" to="/products/compare" data-toggle="tooltip" data-placement="top" title="Compare">
+                        <router-link class="nav-link text-gray-90" to="/products/compare">
                             <i class="font-size-22 ec ec-compare"></i>
                         </router-link>
                     </li>
                     <li class="col d-none d-xl-block">
-                        <router-link class="nav-link text-gray-6 font-size-13" to="/wishlist" data-toggle="tooltip" data-placement="top" title="Wishlist">
+                        <router-link class="nav-link text-gray-6 font-size-13" to="/wishlist">
                             <i class="font-size-22 ec ec-favorites"></i>
                         </router-link>
                     </li>
