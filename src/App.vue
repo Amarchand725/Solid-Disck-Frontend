@@ -1,18 +1,11 @@
 <script setup>
-import { useRoute } from 'vue-router'
-import { computed } from 'vue'
-import HomeHeader from '@/components/Home/HomeHeader.vue'
-import DefaultHeader from '@/components/Default/DefaultHeader.vue'
-import Footer from '@/components/General/Footer.vue'
-
-const route = useRoute()
-
-const isHomePage = computed(() => route.path === '/')
+  import Header from '@/components/Header.vue'
+  import Footer from '@/components/Footer.vue'
 </script>
+
 <template>
   <div>
-    <HomeHeader v-if="isHomePage" />
-    <DefaultHeader v-else />
+    <Header />
     <router-view />
     <Footer />
   </div>

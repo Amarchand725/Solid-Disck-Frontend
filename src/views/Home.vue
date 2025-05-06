@@ -1,52 +1,48 @@
 <template>
-   <div>
-      <!-- ========== MAIN CONTENT ========== -->
-      <main id="content" role="main">
-         <!-- Slider Section -->
-         <Slider />
-         <!-- End Slider Section -->
-         <div class="container">
-            <!-- Banner -->
+    <div>
+        <main>
+            <!-- Banner Section -->
             <Banner />
-            <!-- End Banner -->
-            <!-- Deals-and-tabs -->
-            <Deals />
-            <!-- End Deals-and-tabs -->
-         </div>
-         <!-- Products-4-1-4 -->
-         <Products />
-         <!-- End Products-4-1-4 -->
-         <div class="container">
-            <!-- Prodcut-cards-carousel -->
-            <BestSeller />
-            <!-- End Prodcut-cards-carousel -->
-            <!-- Full banner -->
-            <FullBanner />
-            <!-- End Full banner -->
-            <!-- Recently viewed -->
-            <RecentlyViewed />
-            <!-- End Recently viewed -->
-            <!-- Brand Carousel -->
-            <BrandCarousel />
-            <!-- End Brand Carousel -->
-         </div>
-      </main>
-      <!-- ========== END MAIN CONTENT ========== -->
-   </div>
+
+            <!-- Central Content -->
+             <CentralContent />
+
+            <!-- Why work with us section  -->
+            <WhyWorkWithUs />
+
+            <!-- Top Seller Manufacturer -->
+            <TopSellerManufacturer />            
+
+            <!-- Top seller categories -->
+            <TopSellerCategory />
+
+            <!-- Featured Categories -->
+            <FeaturedCategories />
+
+            <!-- Featured Manufacturer -->
+            <FeaturedManufacturer />
+
+            <!-- Best Selling Product -->
+            <BestSellingProduct />
+
+            <!-- Blogs Section -->
+            <Blogs />
+        </main>
+    </div>
 </template>
 
 <script setup>
-   import Slider from '@/components/Slider.vue';
-   import Banner from '@/components/Banner.vue';
-   import Deals from '@/components/Deals.vue';
-   import Products from '@/components/Products.vue';
-   import BestSeller from '@/components/BestSeller.vue';
-   import FullBanner from '@/components/FullBanner.vue';
-   import RecentlyViewed from '@/components/RecentlyViewed.vue';
-   import BrandCarousel from '@/components/BrandCarousel.vue';
+    import WhyWorkWithUs from '@/components/WhyWorkWithUs.vue';
+    import Banner from '@/components/Banner.vue';
+    import CentralContent from '@/components/CentralContent.vue';
+    import TopSellerManufacturer from '@/components/TopSellerManufacturer.vue';
+    import TopSellerCategory from '@/components/TopSellerCategory.vue';
+    import FeaturedCategories from '@/components/FeaturedCategories.vue';
+    import FeaturedManufacturer from '@/components/FeaturedManufacturer.vue';
+    import BestSellingProduct from '@/components/BestSellingProduct.vue';
+    import Blogs from '@/components/Blogs.vue';
 </script>
 
 <style scoped>
 /* Inline or import styles */
 </style>
-  

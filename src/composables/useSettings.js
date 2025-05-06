@@ -16,7 +16,7 @@ const setFavicon = (url) => {
 
 const getSettings = async () => {
   try {
-    const response = await axios.get('/settings');
+    const response = await axios.get('/business-info');
     settings.value = response.data.data;
 
     // ✅ Set favicon if available
