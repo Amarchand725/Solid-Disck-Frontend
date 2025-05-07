@@ -201,10 +201,19 @@
                     </div>
                     <div class="ant-col ant-col-14 contact-now-container css-i6rspj">
                         <div class="track-order-container">
-                            <div class="contact-now-link trackorder_link" role="button" tabindex="0" style="cursor: pointer;"><img src="/assets/image/Track-Order-Icon.webp" alt="Track Order Icon" title="Track Your Order"><span class="contact-now" title="Track Your Order">Track Order</span></div>
+                            <div class="contact-now-link trackorder_link" role="button" tabindex="0" style="cursor: pointer;">
+                                <img src="/assets/image/Track-Order-Icon.webp" alt="Track Order Icon" title="Track Your Order">
+                                <span class="contact-now" title="Track Your Order">Track Order</span>
+                            </div>
                         </div>
-                        <a href="mailto:support@etechbuy.com" class="contact-now-link"><img src="/assets/image/Mail-Icon.webp" alt="Mail Icon" title="Contact our support team"><span class="contact-now" title="Contact our support team">support@etechbuy.com</span></a>
-                        <a href="tel:+18887195848" class="contact-now-link"><img src="/assets/image/Call-Icon.webp" alt="Call Icon" title="Call Etechbuy"><span class="contact-now" title="Call Etechbuy">(888) 719-5848</span></a>
+                        <a href="mailto:{{ settings?.support_email ?? '' }}" class="contact-now-link">
+                            <img src="/assets/image/Mail-Icon.webp" alt="Mail Icon" title="Contact our support team">
+                            <span class="contact-now" title="Contact our support team">{{ settings?.support_email ?? '' }}</span>
+                        </a>
+                        <a href="tel:+{{ settings?.phone ?? '' }}" class="contact-now-link">
+                            <img src="/assets/image/Call-Icon.webp" alt="Call Icon" title="Call {{ settings?.name ?? '' }}">
+                            <span class="contact-now" title="Call {{ settings?.name ?? '' }}">{{ settings?.phone ?? '' }}</span>
+                        </a>
                     </div>
                 </div>
                 <div class="ant-row navbar-header-menu css-i6rspj">
