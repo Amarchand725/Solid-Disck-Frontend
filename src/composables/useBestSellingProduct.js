@@ -1,15 +1,15 @@
 import { ref } from 'vue';
 import axios from '@/plugins/axios';
 
-const brands = ref([]);
+const products = ref([]);
 const loading = ref(false);
 const error = ref(null);
 
-const getBrands = async () => {
+const getProducts = async () => {
   loading.value = true;
   try {
-    const res = await axios.get('/brands');
-    brands.value = res.data.data;
+    const res = await axios.get('/products/best-selling');
+    products.value = res.data.data;
   } catch (err) {
     error.value = err;
   } finally {
@@ -17,21 +17,21 @@ const getBrands = async () => {
   }
 };
 
-const getBrandBySlug = async (slug) => {
+const getProductBySlug = async (slug) => {
   try {
-    const res = await axios.get(`/brands/${slug}`);
+    const res = await axios.get(`/products/${slug}`);
     return res.data.data;
   } catch (err) {
     throw err;
   }
 };
 
-export function useBrands() {
+export function useProducts() {
   return {
-    brands,
+    products,
     loading,
     error,
-    getBrands,
-    getBrandBySlug,
+    getProducts,
+    getProductBySlug,
   };
 }

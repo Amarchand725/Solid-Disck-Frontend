@@ -4,6 +4,8 @@ const instance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
 });
 
+axios.defaults.withCredentials = true
+
 // Attach Bearer token automatically
 instance.interceptors.request.use((config) => {
   const token = localStorage.getItem('customer_token'); // read token from localStorage

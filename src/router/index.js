@@ -54,7 +54,7 @@ const routes = [
   //   meta: { title: 'Shop' }
   // },
   // {
-  //   path: '/shop/single-product/:slug', 
+  //   path: '/single-product/:slug', 
   //   name: 'SingleProduct',
   //   component: SingleProduct,
   //   meta: { title: 'Single Product' }
