@@ -1,6 +1,11 @@
 <script setup>
+  import { useCart } from '@/composables/useCart'
   import Header from '@/components/Header.vue'
   import Footer from '@/components/Footer.vue'
+
+  const { getCart } = useCart()
+
+  getCart() // Load cart data when app starts
 </script>
 
 <template>

@@ -35,11 +35,11 @@
                         <div class="left-icons cart">
                             <router-link class="nav-link" to="/cart">
                                 <img src="/assets/image/Cart-Icon.webp" alt="Cart Icon" title="Cart">
-                                <p>Cart (2)</p>
+                                <p>Cart ({{ cartItemCount }})</p>
                             </router-link>
                             <div class="cart_overview_modal_main">
                                 <div class="cart_overview_modal_header">
-                                    <p>2 Items in Cart</p>
+                                    <p>{{ cartItemCount }} Items in Cart</p>
                                 </div>
                                 <div class="cart_overview_modal_content">
                                     <ul>
@@ -120,49 +120,52 @@
                         <div class="left-icons cart">
                             <router-link class="nav-link" to="/cart">
                                 <img src="/assets/image/Cart-Icon.webp" alt="Cart Icon" title="Cart">
-                                <p>Cart (2)</p>
+                                <p>Cart ({{ cartItemCount }})</p>
                             </router-link>
-                            <div class="cart_overview_modal_main">
+                            <div class="cart_overview_modal_main" v-if(fullCart)>
                                 <div class="cart_overview_modal_header">
-                                    <p>2 Items in Cart</p>
+                                    <p>{{ cartItemCount }} Items in Cart</p>
                                 </div>
                                 <div class="cart_overview_modal_content">
                                     <ul>
-                                        <li class="cart_items">
+                                        <li 
+                                            class="cart_items"
+                                            v-for="item in fullCart.items" 
+                                            :key="item.id"
+                                        >
                                             <div class="image">
-                                                <a href="#"><img alt="product-image" loading="lazy" width="80" height="80" decoding="async" data-nimg="1" srcset="/assets/image/IE-4000-4TC4G-E.avif"
-                                                    src="/assets/image/IE-4000-4TC4G-E.avif" style="color: transparent;"></a>
+                                                <a href="#">
+                                                    <img 
+                                                        :alt="item.product.title" 
+                                                        loading="lazy" width="80" height="80" decoding="async" data-nimg="1" 
+                                                        :srcset="item.product.thumbnail"
+                                                        :src="item.product.thumbnail" 
+                                                        style="color: transparent;"
+                                                    >
+                                                </a>
                                             </div>
                                             <div class="title">
                                                 <a href="#">
-                                                    <p>Industrial Ethernet 4000 Series 4 x RJ-45 GE Combo Uplink Ports 10/100/1000Base-T + 4 x FE Additional Combo Ports Layer 3 Managed Gigabit Ethernet Network Switch</p>
+                                                    <p>{{ item.product.title }}</p>
                                                 </a>
-                                                <div class="price"><span>$ 1473.41<sup>x</sup>1</span>
-                                                    <p>$1473.41</p>
+                                                <div class="price">
+                                                    <span>${{ item.unit_price }} <strong>X</strong> {{ item.quantity }}</span> = 
+                                                    <p>${{ item.sub_total }}</p>
                                                 </div>
                                             </div>
-                                            <div class="cross_icon"><span role="img" aria-label="delete" class="anticon anticon-delete"><svg viewBox="64 64 896 896" focusable="false" data-icon="delete" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"></path></svg></span></div>
-                                        </li>
-                                        <li class="cart_items">
-                                            <div class="image">
-                                                <a href="#"><img alt="product-image" loading="lazy" width="80" height="80" decoding="async" data-nimg="1" srcset="/assets/image/ISR4351-K9.avif"
-                                                    src="/assets/image/ISR4351-K9.avif" style="color: transparent;"></a>
+                                            <div class="cross_icon">
+                                                <span role="img" aria-label="delete" @click="removeCartItem(item.id)" class="anticon anticon-delete">
+                                                    <svg viewBox="64 64 896 896" focusable="false" data-icon="delete" width="1em" height="1em" fill="currentColor" aria-hidden="true">
+                                                        <path d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"></path>
+                                                    </svg>
+                                                </span>
                                             </div>
-                                            <div class="title">
-                                                <a href="#">
-                                                    <p>4000 Series ISR 4351 3 x WAN/LAN Ports 3 x RJ-45 Ports + 3 x SFP Ports Gigabit Ethernet Integrated Service Router</p>
-                                                </a>
-                                                <div class="price"><span>$ 154.00<sup>x</sup>1</span>
-                                                    <p>$154.00</p>
-                                                </div>
-                                            </div>
-                                            <div class="cross_icon"><span role="img" aria-label="delete" class="anticon anticon-delete"><svg viewBox="64 64 896 896" focusable="false" data-icon="delete" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"></path></svg></span></div>
                                         </li>
                                     </ul>
                                 </div>
                                 <div class="cart_overview_modal_footer">
                                     <div class="subtotal"><span>Subtotal:</span>
-                                        <p>$1627.41</p>
+                                        <p>${{ fullCart.total }}</p>
                                     </div>
                                     <div class="footer_btn">
                                         <router-link class="view_cart_btn" to="/cart">View Cart</router-link>
@@ -355,13 +358,17 @@
     </header>
 </template>
 <script setup>
-    import { useSettings } from '@/composables/useSettings.js'
-    const { settings } = useSettings()
+import { useSettings } from '@/composables/useSettings.js'
+import { useCart } from '@/composables/useCart'
+const { removeCartItem } = useCart()
 
-    const onImageError = (event) => {
-        event.target.src = '/images/loader.gif'
-    }
+const { settings } = useSettings()
+const { cartItemCount, fullCart } = useCart()
+const onImageError = (event) => {
+  event.target.src = '/images/loader.gif'
+}
 </script>
+
 
 <style scoped>
 /* Optional scoped styling */

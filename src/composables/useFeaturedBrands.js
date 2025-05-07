@@ -8,7 +8,7 @@ const error = ref(null);
 const getBrands = async () => {
   loading.value = true;
   try {
-    const res = await axios.get('/brands');
+    const res = await axios.get('/brands/featured');
     brands.value = res.data.data;
   } catch (err) {
     error.value = err;
@@ -19,7 +19,7 @@ const getBrands = async () => {
 
 const getBrandBySlug = async (slug) => {
   try {
-    const res = await axios.get(`/brands/${slug}`);
+    const res = await axios.get(`/brands/featured/${slug}`);
     return res.data.data;
   } catch (err) {
     throw err;
