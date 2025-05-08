@@ -56,12 +56,13 @@ export function useCart() {
     }
   }
 
-  const increaseCartItem = async (productSlug) => {
+  const increaseCartItem = async (item_id) => {
     loading.value = true    
     try {
       const response = await axios.put('/cart/increase', {
-        slug: productSlug
+        cart_item_id: item_id
       })
+      setCartData(response.data)
       message.value = response.data.message || 'Quantity increased.'
       toast.success(message.value)
     } catch (error) {
@@ -71,12 +72,13 @@ export function useCart() {
     }
   }
 
-  const decreaseCartItem = async (productSlug) => {
+  const decreaseCartItem = async (item_id) => {
     loading.value = true
     try {
       const response = await axios.put('/cart/decrease', {
-        slug: productSlug
+        cart_item_id: item_id
       })
+      setCartData(response.data)
       message.value = response.data.message || 'Quantity decreased.'
       toast.success(message.value)
     } catch (error) {
@@ -92,6 +94,7 @@ export function useCart() {
       const response = await axios.delete('/cart/remove', {
         data: { cart_item_id: item_id }
       })
+      setCartData(response.data)
       message.value = response.data.message || 'Item removed from cart.'
       toast.success(message.value)
     } catch (error) {

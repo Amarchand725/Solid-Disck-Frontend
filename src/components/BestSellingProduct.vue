@@ -1,5 +1,5 @@
 <template>
-    <section class="best_selling_product_section" v-if(products)>
+    <section class="best_selling_product_section" v-if="products">
         <h2>Best Selling</h2>
         <div class="ant-row css-i6rspj" style="margin-left: -12px; margin-right: -12px; row-gap: 24px;">
             <div class="ant-col processor_left ant-col-xs-24 ant-col-sm-24 ant-col-md-16 ant-col-lg-16 ant-col-xl-16 css-i6rspj" style="padding-left: 12px; padding-right: 12px;"><a href="#"><h3 title="2GS116-500 Seagate IronWolf 12TB 7200RPM SATA 6Gb/s 3.5-inch NAS Hard Drive">2GS116-500 Seagate IronWolf 12TB 7200RPM SATA 6Gb/s 3.5-inch NAS Hard Drive <br><span title="2GS116-500">2GS116-500</span></h3></a>
@@ -9,7 +9,7 @@
                 </router-link>
             </div>
             <div class="ant-col processor_right ant-col-xs-24 ant-col-sm-24 ant-col-md-8 ant-col-lg-8 ant-col-xl-8 css-i6rspj" style="padding-left: 12px; padding-right: 12px;">
-                <router-link href="#">
+                <router-link to="#">
                     <img 
                         :alt="products.title" 
                         :title="products.title" 

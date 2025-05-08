@@ -8,7 +8,7 @@ import Cart from '../views/Cart.vue' // make sure path is correct
 import Checkout from '../views/Checkout.vue' // make sure path is correct
 // import TrackOrder from '../views/TrackOrder.vue' // make sure path is correct
 // import Shop from '../views/Shop.vue' // make sure path is correct
-// import SingleProduct from '../views/SingleProduct.vue' // make sure path is correct
+import SingleProduct from '../views/SingleProduct.vue' // make sure path is correct
 
 const routes = [
   {
@@ -53,12 +53,12 @@ const routes = [
   //   component: Shop,
   //   meta: { title: 'Shop' }
   // },
-  // {
-  //   path: '/single-product/:slug', 
-  //   name: 'SingleProduct',
-  //   component: SingleProduct,
-  //   meta: { title: 'Single Product' }
-  // },
+  {
+    path: '/single-product/:slug',
+    name: 'SingleProduct',
+    component: SingleProduct,
+    meta: { title: 'Single Product' }
+  },
 ]
 
 const router = createRouter({

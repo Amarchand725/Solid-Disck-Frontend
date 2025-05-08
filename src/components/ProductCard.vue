@@ -1,5 +1,8 @@
 <template>
-    <router-link class="TabProductCard_image_main__n81WY" to="#">
+    <router-link
+        :to="`/single-product/${product.slug}`"
+        class="TabProductCard_image_main__n81WY"
+    >
         <img 
             :alt="product.title"
             :title="product.title"
@@ -10,8 +13,8 @@
         />
 
     </router-link>
-    <span class="TabProductCard_category__yj7NY" v-if="product.last_category">
-        {{ product.last_category.name }}
+    <span class="TabProductCard_category__yj7NY" v-if="product.category">
+        {{ product.category.name }}
     </span>
     <router-link class="TabProductCard_title_main__m3y_P" title="{{ product.title }}" to="">
         {{ product.title }}
@@ -20,11 +23,11 @@
         <span class="TabProductCard_price__JKv5c">
             <div>
                 <span style="font-size: 16px; font-weight: 400; text-decoration: line-through; margin-right: 8px; color: rgb(0, 0, 0);">
-                    {{ product.discount_price }}
+                    {{ settings?.currency ?? '' }}{{ product.unit_price }}
                 </span>
             </div>
             <span class="TabProductCard_product_price__miZKi" style="margin-top: 18px;">
-                {{ product.unit_price }}
+                {{ settings?.currency ?? '' }}{{ product.discount_price }}
             </span>
         </span>
         <router-link to="#">
@@ -42,7 +45,10 @@
     </div>
 </template>
 <script setup>
+import { useSettings } from '@/composables/useSettings.js'
 import { useCart } from '@/composables/useCart'
+
+const { settings } = useSettings()
 
 const { addToCart, loading } = useCart()
 

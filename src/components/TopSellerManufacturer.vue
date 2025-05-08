@@ -58,7 +58,7 @@
 </template>
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { useBrands } from '@/composables/useBrands.js'
+import { useBrands } from '@/composables/useTopBrands.js'
 import ProductCard from './ProductCard.vue'
 
 // Step 1: Get brands from composable
