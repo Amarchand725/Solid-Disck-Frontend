@@ -162,9 +162,12 @@
                             </div>
                         </div>
                         <div class="left-icons">
-                            <a href="#"><img src="/assets/image/SignIn-Icon.webp" alt="SignIn Icon" title="Signin">
+                            <router-link 
+                                to="/login"
+                            >
+                                <img src="/assets/image/SignIn-Icon.webp" alt="SignIn Icon" title="Signin">
                                 <p>Sign In</p>
-                            </a>
+                            </router-link>
                         </div>
                     </div>
                 </div>

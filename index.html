@@ -71,6 +71,10 @@
         <link rel="stylesheet" href="/assets/css/a9631ae885e5c18e.css" data-precedence="next">
         <link rel="stylesheet" href="/assets/css/d68ca2ae67dddcca.css" data-precedence="next">
         <link rel="stylesheet" href="/assets/css/84b2aeb934d6f2b9.css" data-precedence="next">
+        <link rel="stylesheet" href="/assets/css/1e57cf3011417b2d.css" data-precedence="next">
+        <link rel="stylesheet" href="/assets/css/59af2d1037c6bfc9.css" data-precedence="next">
+        <link rel="stylesheet" href="/assets/css/93a2ad7a4cd5097a.css" data-precedence="next">
+        <link rel="stylesheet" href="/assets/css/aa38d4199648fc82.css" data-precedence="next">
         
         <!-- <link rel="preload" as="script" fetchpriority="low" href="/_next/static/chunks/webpack-918cc1d6c072150e.js"> -->
         <!-- <script src="https://ct.pinterest.com/static/ct/token_create.js"></script> -->
@@ -333,6 +337,10 @@
   <script type="module" src="/src/main.js"></script>
   
   <script>
+    function toggleSummary() {
+        const body = document.getElementById("summaryBody");
+        body.classList.toggle('ant-collapse-content-hidden');
+    }
     function handleOpen() {
         const dropdown = document.getElementById('header-menu-dropdown'); // Corrected method name
         if (dropdown.style.display === 'none') {
@@ -341,6 +349,17 @@
             dropdown.style.display = 'none';
         }
     }
+    
+    document.addEventListener('DOMContentLoaded', function () {
+        const checkbox = document.getElementById('billToDiffCheckbox');
+        if (checkbox) {
+            checkbox.addEventListener('change', function () {
+                const form = document.getElementById('billingForm');
+                form.style.display = this.checked ? 'block' : 'none';
+            });
+        }
+    });
 </script>
+
 </body>
 </html>

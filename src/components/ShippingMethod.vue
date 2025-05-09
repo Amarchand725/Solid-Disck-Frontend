@@ -23,8 +23,24 @@
                                     </tr>
                                 </thead>
                                 <tbody class="ant-table-tbody">
-                                    <tr class="ant-table-placeholder">
-                                        <td class="ant-table-cell" colspan="3">Add Zip Code for Shipping Details</td>
+                                    <!-- Show rates if available -->
+                                    <tr 
+                                        v-for="rate in rates" 
+                                        :key="rate.service_code"
+                                    >
+                                        <td class="ant-table-cell" colspan="3">
+                                        {{ rate.service_name }} - ${{ rate.amount }}
+                                        </td>
+                                    </tr>
+
+                                    <!-- Show placeholder if no rates -->
+                                    <tr 
+                                        v-if="!rates || rates.length === 0"
+                                        class="ant-table-placeholder"
+                                    >
+                                        <td class="ant-table-cell" colspan="3">
+                                        Add Zip Code for Shipping Details
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -35,3 +51,12 @@
         </div>
     </div>
 </template>
+<script setup>
+import { ref } from 'vue';
+import useFedEx from '@/composables/useFedEx.js';
+
+const country = ref('');
+const zipcode = ref('');
+
+const { rates, loading, error } = useFedEx(country, zipcode);
+</script>

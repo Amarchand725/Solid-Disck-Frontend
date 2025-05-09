@@ -13,8 +13,10 @@
                 v-for="catTrail in categoryTrail"
             >
                 <router-link 
-                    :title="catTrail.name" to="#"
-                >{{ catTrail.name }}
+                    :title="catTrail.name" 
+                    :to="`/categories/show/${catTrail.slug}`"
+                >
+                {{ catTrail.name }}
                 </router-link>
                 <span class="separator">&gt;</span>
             </span>

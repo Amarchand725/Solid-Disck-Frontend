@@ -7,7 +7,9 @@ import Home from '../views/Home.vue' // make sure path is correct
 import Cart from '../views/Cart.vue' // make sure path is correct
 import Checkout from '../views/Checkout.vue' // make sure path is correct
 // import TrackOrder from '../views/TrackOrder.vue' // make sure path is correct
-// import Shop from '../views/Shop.vue' // make sure path is correct
+import Shop from '../views/Shop.vue' // make sure path is correct
+import Login from '../views/Login.vue' // make sure path is correct
+import Register from '../views/Register.vue' // make sure path is correct
 import SingleProduct from '../views/SingleProduct.vue' // make sure path is correct
 
 const routes = [
@@ -47,18 +49,30 @@ const routes = [
   //   component: TrackOrder,
   //   meta: { title: 'Track Your Order' }
   // },
-  // {
-  //   path: '/shop',
-  //   name: 'Shop',
-  //   component: Shop,
-  //   meta: { title: 'Shop' }
-  // },
+  {
+    path: '/categories/show/:slug',
+    name: 'Shop',
+    component: Shop,
+    meta: { title: 'Shop' }
+  },
   {
     path: '/products/:categoryPath(.*)/:slug',
     name: 'SingleProduct',
     component: SingleProduct,
     meta: { title: 'Single Product' }
-  }  
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+    meta: { title: 'Login' }
+  },  
+  {
+    path: '/register',
+    name: 'Register',
+    component: Register,
+    meta: { title: 'Register' }
+  },  
 ]
 
 const router = createRouter({

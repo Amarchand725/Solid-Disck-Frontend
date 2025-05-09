@@ -5,11 +5,15 @@
             <div class="first-container">
                 <div>
                     <router-link class="nav-link" to="/">
-                        <img alt="{{ settings?.name ?? '' }}" title="{{ settings?.name ?? '' }}" loading="lazy" width="220" height="55" decoding="async" data-nimg="1" 
-                        :srcset="settings?.logo || '/images/loader.gif'"
-                        :src="settings?.logo || '/images/loader.gif'" 
-                        @error="onImageError"
-                        style="color: transparent;">
+                        <img 
+                            :alt="settings?.name" 
+                            :title="settings?.name" 
+                            loading="lazy" width="220" height="55" decoding="async" data-nimg="1" 
+                            :srcset="settings?.logo || '/images/loader.gif'"
+                            :src="settings?.logo || '/images/loader.gif'" 
+                            @error="onImageError"
+                            style="color: transparent;"
+                        >
                     </router-link>
                     <div class="logo_bottom_para" style="width: 350px; margin-top: 10px;">
                         <div class="info-detail">
@@ -84,8 +88,8 @@
                 <div>
                     <div style="display: flex; flex-direction: column;">
                         <h4 href="#" class="headlingTag">Customer Account</h4>
-                        <a class="tags" title="Login" href="/login">Login</a>
-                        <a class="tags" title="Register" href="#">Register</a>
+                        <router-link class="tags" title="Login" to="/login">Login</router-link>
+                        <router-link class="tags" title="Register" to="/register">Register</router-link>
                         <a class="tags" title="My Account" href="#">My Account</a>
                         <a class="tags" title="Shopping Cart" href="#">Shopping Cart</a>
                         <a class="tags" title="Order Process" href="#">Order Process</a>

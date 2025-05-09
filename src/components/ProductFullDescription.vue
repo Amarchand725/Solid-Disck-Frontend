@@ -12,7 +12,7 @@
                 </div>
                 <div class="w-full h-[1px] bg-[#E8E8E8] absolute left-0 sm:top-[50px] top-[36px] -z-10"></div>
             </div>
-            <div class="specification_main" v-html="productDetails?.full_description"></div>
+            <div v-html="productDetails?.full_description"></div>
         </div>
     </div>
 </template>

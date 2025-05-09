@@ -223,9 +223,11 @@
                                     <p>{{ settings?.currency ?? '' }}{{ fullCart.total }}</p>
                                 </div>
                                 <p class="tax">Tax and Shipping calculated at checkout.</p>
-                                <a class="checkout-btn" href="#">
-                                    <button type="button" class="ant-btn css-i6rspj ant-btn-primary ant-btn-color-primary ant-btn-variant-solid"><span style="font-size: 14px; font-weight: 600; color: rgb(255, 255, 255);">Proceed to Checkout</span></button>
-                                </a>
+                                <router-link class="checkout-btn" to="/checkout">
+                                    <button type="button" class="ant-btn css-i6rspj ant-btn-primary ant-btn-color-primary ant-btn-variant-solid">
+                                        <span style="font-size: 14px; font-weight: 600; color: rgb(255, 255, 255);">Proceed to Checkout</span>
+                                    </button>
+                                </router-link>
                             </div>
                         </div>
                     </div>

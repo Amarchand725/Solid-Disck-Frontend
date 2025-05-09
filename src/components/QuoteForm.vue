@@ -6,7 +6,7 @@
       </p>
   
       <form @submit.prevent="handleSubmit">
-        <input type="hidden" v-model="mpn" name="mpn" />
+        <input type="hidden" v-model="product_mpn" name="mpn" />
         <div class="ant-row input_row css-i6rspj">
             <div class="ant-col ant-col-xs-12 css-i6rspj">
                 <input v-model="first_name" placeholder="First Name" class="ant-input css-i6rspj ant-input-outlined form_bulk_input_field" type="text" value="" name="first_name">
@@ -54,20 +54,19 @@
   </template>
   
   <script setup>
-  import { ref, computed, watch } from 'vue';  // Import computed from 'vue'
+  import { ref, watch } from 'vue';  // Import computed from 'vue'
   import { useQuoteRequest } from '@/composables/useQuoteForm.js'
   
   const props = defineProps({
     productDetails: Object
   })
 
-  // const product_mpn = ref(props.productDetails?.mpn ?? '');
-  const mpn = ref('');
+  const product_mpn = ref('');
 
   watch(
     () => props.productDetails?.mpn,
     (newMpn) => {
-      mpn.value = newMpn ?? ''; // Set to empty string if mpn is null or undefined
+      product_mpn.value = newMpn ?? ''; // Set to empty string if mpn is null or undefined
     },
     { immediate: true }
   )
@@ -75,19 +74,15 @@
   const { first_name, last_name, email, phone, quantity, how_soon_need, errors, loading, quote_request } = useQuoteRequest()
   
   const handleSubmit = async () => {
-    console.log("Submitting with mpn:", mpn.value); 
-    const formData = {
-      first_name: first_name.value,
-      last_name: last_name.value,
-      email: email.value,
-      phone: phone.value,
-      quantity: quantity.value,
-      how_soon_need: how_soon_need.value,
-      mpn: mpn.value  // Add mpn to the form data
-    };
-
-    // Call the quote_request function with the form data
-    await quote_request(formData);
+    await quote_request({
+      first_name,
+      last_name,
+      email,
+      phone,
+      quantity,
+      how_soon_need,
+      mpn: product_mpn.value
+    });
   };
   </script>
   

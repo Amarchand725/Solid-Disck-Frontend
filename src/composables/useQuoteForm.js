@@ -63,30 +63,31 @@ export function useQuoteRequest() {
     return isValid;
   };
 
-  const quote_request = async () => {
+  const quote_request = async (formData) => {
     if (!validate()) return;
 
     loading.value = true;
     try {
       const response = await axios.post('/quote_requests/store', {
-        mpn: mpn.value,
-        first_name: first_name.value,
-        last_name: last_name.value,
-        email: email.value,
-        phone: phone.value,
-        quantity: quantity.value,
-        how_soon_need: how_soon_need.value,
+        mpn: formData.mpn,
+        first_name: formData.first_name.value,
+        last_name: formData.last_name.value,
+        email: formData.email.value,
+        phone: formData.phone.value,
+        quantity: formData.quantity.value,
+        how_soon_need: formData.how_soon_need.value,
       });
+
       message.value = response.data.message || 'Sent quote request successfully!';
       toast.success(message.value);
 
       // ✅ Reset fields
-      first_name.value = '';
-      last_name.value = '';
-      email.value = '';
-      phone.value = '';
-      quantity.value = '';
-      how_soon_need.value = '';
+      formData.first_name.value = '';
+      formData.last_name.value = '';
+      formData.email.value = '';
+      formData.phone.value = '';
+      formData.quantity.value = '';
+      formData.how_soon_need.value = '';
 
       // ✅ Clear errors after success
       for (const key in errors) {
@@ -101,6 +102,7 @@ export function useQuoteRequest() {
       loading.value = false;
     }
   };
+
 
   return {
     mpn,
