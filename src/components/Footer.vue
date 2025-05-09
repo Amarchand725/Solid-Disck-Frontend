@@ -58,7 +58,7 @@
                         </a>
                     </div>
                 </div>
-                <div style="display: flex; flex-direction: column;" v-if="categories.length">
+                <div style="display: flex; flex-direction: column;" v-if="categories?.length">
                     <h4 href="#" class="headlingTag" title="FEATURED CATEGORIES">FEATURED CATEGORIES</h4>
                     <router-link 
                         v-for="category in categories" 

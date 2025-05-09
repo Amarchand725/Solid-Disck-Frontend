@@ -2,7 +2,7 @@
     <section class="manufacturer_partners_section">
         <h2>Featured Manufacturers</h2>
         <div class="ant-row manufacturer_partners_card_main css-i6rspj" style="margin-left: -10px; margin-right: -10px; row-gap: 20px;"
-            v-if="brands.length"
+            v-if="brands?.length"
         >
             <div 
                 v-for="brand in brands" 

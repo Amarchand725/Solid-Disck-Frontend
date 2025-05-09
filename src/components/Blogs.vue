@@ -134,8 +134,8 @@ onMounted(() => {
     getBlogs()
 })
 
-function shortDescription(html, limit = 100) {
-  const text = html.replace(/<[^>]*>/g, ''); // strip HTML tags
+function shortDescription(html, limit = 150) {
+  const text = (html || '').replace(/<[^>]*>/g, ''); // safely handle undefined
   return text.length > limit ? text.substring(0, limit) + '...' : text;
 }
 </script>

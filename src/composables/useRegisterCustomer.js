@@ -1,5 +1,5 @@
 import { ref } from 'vue';
-import api from '@/api';
+import api from '@/plugins/axios';
 import { useToast } from 'vue-toastification';
 
 export function useRegisterCustomer() {

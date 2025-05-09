@@ -1,5 +1,5 @@
 <template>
-    <section class="top-seller-category-product-section" v-if="categories.length">
+    <section class="top-seller-category-product-section" v-if="categories?.length">
         <div class="ant-tabs ant-tabs-right top-seller-category-product-tab css-i6rspj" style="height: 700px;">
             <div role="tablist" class="ant-tabs-nav">
                 <div class="ant-tabs-nav-wrap">
@@ -89,9 +89,10 @@ const activeCategory = computed(() => {
 // Step 4: When component mounts, fetch and set first active brand
 onMounted(async () => {
   await getCategories()
-  if (categories.value.length) {
-    activeId.value = categories.value[0].id // auto-select first brand
-  }
+    const firstCategory = categories.value?.[0]
+    if (firstCategory) {
+        activeId.value = firstCategory.id
+    }
 })
 
 // Step 5: Change active brand on click

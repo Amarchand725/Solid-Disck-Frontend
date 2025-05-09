@@ -54,11 +54,11 @@ const routes = [
   //   meta: { title: 'Shop' }
   // },
   {
-    path: '/single-product/:slug',
+    path: '/products/:categoryPath(.*)/:slug',
     name: 'SingleProduct',
     component: SingleProduct,
     meta: { title: 'Single Product' }
-  },
+  }  
 ]
 
 const router = createRouter({

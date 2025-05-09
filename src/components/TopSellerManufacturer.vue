@@ -1,5 +1,5 @@
 <template>
-    <section class="top-seller-manufacturer-product-section" v-if="brands.length">
+    <section class="top-seller-manufacturer-product-section" v-if="brands?.length">
         <div class="ant-tabs ant-tabs-left top-seller-manufacturer-product-tab css-i6rspj" style="height: 700px;">
             <div role="tablist" class="ant-tabs-nav">
                 <div class="ant-tabs-nav-wrap">
@@ -33,7 +33,7 @@
                 </div>
             </div>
             <div class="ant-tabs-content-holder">
-                <div class="ant-tabs-content ant-tabs-content-left" v-if="activeBrand && activeBrand.products.length">
+                <div class="ant-tabs-content ant-tabs-content-left" v-if="activeBrand && activeBrand.products?.length">
                     <div
                         role="tabpanel"
                         :id="`rc-tabs-0-panel-${activeBrand.id}`"
@@ -75,9 +75,10 @@ const activeBrand = computed(() => {
 // Step 4: When component mounts, fetch and set first active brand
 onMounted(async () => {
   await getBrands()
-  if (brands.value.length) {
-    activeBrandId.value = brands.value[0].id // auto-select first brand
-  }
+    const firstBrand = brands.value?.[0]
+    if (firstBrand) {
+        activeBrandId.value = firstBrand.id
+    }
 })
 
 // Step 5: Change active brand on click
