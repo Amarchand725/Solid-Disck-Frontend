@@ -6,13 +6,14 @@
       </p>
   
       <form @submit.prevent="handleSubmit">
+        <input type="hidden" v-model="mpn" name="mpn" />
         <div class="ant-row input_row css-i6rspj">
             <div class="ant-col ant-col-xs-12 css-i6rspj">
-                <input v-model="first_name" placeholder="First Name" class="ant-input css-i6rspj ant-input-outlined form_bulk_input_field" type="text" value="" name="name">
+                <input v-model="first_name" placeholder="First Name" class="ant-input css-i6rspj ant-input-outlined form_bulk_input_field" type="text" value="" name="first_name">
                 <p class="error_messages">{{ errors.first_name }}</p>
             </div>
             <div class="ant-col ant-col-xs-12 css-i6rspj">
-                <input v-model="last_name" placeholder="Last Name" class="ant-input css-i6rspj ant-input-outlined form_bulk_input_field" type="text" value="" name="lastName">
+                <input v-model="last_name" placeholder="Last Name" class="ant-input css-i6rspj ant-input-outlined form_bulk_input_field" type="text" value="" name="last_name">
                 <p class="error_messages">{{ errors.last_name }}</p>
             </div>
         </div>
@@ -22,7 +23,7 @@
                 <p class="error_messages">{{ errors.email }}</p>
             </div>
             <div class="ant-col ant-col-xs-12 css-i6rspj">
-                <input v-model="phone" placeholder="Phone Number" class="ant-input css-i6rspj ant-input-outlined form_bulk_input_field" type="tel" value="" name="mobile">
+                <input v-model="phone" placeholder="Phone Number" class="ant-input css-i6rspj ant-input-outlined form_bulk_input_field" type="tel" value="" name="phone">
                 <p class="error_messages">{{ errors.phone }}</p>
             </div>
         </div>
@@ -36,13 +37,13 @@
                 </div>
             </div>
             <div class="ant-col ant-col-xs-12 css-i6rspj">
-                <input v-model="how_soon" placeholder="How Soon Do You need it?" class="ant-input css-i6rspj ant-input-outlined form_bulk_input_field" type="text" value="" name="urgency">
-                <p class="error_messages">{{ errors.how_soon }}</p>
+                <input v-model="how_soon_need" placeholder="How Soon Do You need it?" class="ant-input css-i6rspj ant-input-outlined form_bulk_input_field" type="text" value="" name="how_soon_need">
+                <p class="error_messages">{{ errors.how_soon_need }}</p>
             </div>
         </div>
   
         <!-- Submit Button -->
-        <button type="submit" class="ant-btn" :disabled="loading || !isFormValid">
+        <button type="submit" class="ant-btn">
           <span v-if="!loading">Submit</span>
           <span v-else>Submitting...</span>
         </button>
@@ -53,23 +54,40 @@
   </template>
   
   <script setup>
-  import { ref, computed } from 'vue';  // Import computed from 'vue'
+  import { ref, computed, watch } from 'vue';  // Import computed from 'vue'
   import { useQuoteRequest } from '@/composables/useQuoteForm.js'
   
-  const { first_name, last_name, email, phone, quantity, how_soon, errors, loading, quote_request, validate } = useQuoteRequest()
-  
-  // Validate form and handle submission
-  const isFormValid = computed(() => !Object.values(errors).some(error => error));
+  const props = defineProps({
+    productDetails: Object
+  })
+
+  // const product_mpn = ref(props.productDetails?.mpn ?? '');
+  const mpn = ref('');
+
+  watch(
+    () => props.productDetails?.mpn,
+    (newMpn) => {
+      mpn.value = newMpn ?? ''; // Set to empty string if mpn is null or undefined
+    },
+    { immediate: true }
+  )
+
+  const { first_name, last_name, email, phone, quantity, how_soon_need, errors, loading, quote_request } = useQuoteRequest()
   
   const handleSubmit = async () => {
-    if (!validate()) return;
-  
-    const success = await quote_request();
-    if (success) {
-      toast.success('Quote request submitted successfully!');
-    } else {
-      toast.error('Error submitting quote request.');
-    }
-  }
+    console.log("Submitting with mpn:", mpn.value); 
+    const formData = {
+      first_name: first_name.value,
+      last_name: last_name.value,
+      email: email.value,
+      phone: phone.value,
+      quantity: quantity.value,
+      how_soon_need: how_soon_need.value,
+      mpn: mpn.value  // Add mpn to the form data
+    };
+
+    // Call the quote_request function with the form data
+    await quote_request(formData);
+  };
   </script>
   
