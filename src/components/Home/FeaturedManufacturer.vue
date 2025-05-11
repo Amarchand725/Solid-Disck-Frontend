@@ -21,8 +21,8 @@
                             :title="brand.name"
                             loading="lazy" width="110" height="70" decoding="async" data-nimg="1" 
                             class="manufacturer_image" 
-                            :srcset="brand.logo"
-                            :src="brand.logo"
+                            :src="brand.logo || '/placeholders/110x70.svg'"
+                            @error="onImageError"
                             style="color: transparent;"
                         >
                     </div>
@@ -40,4 +40,8 @@ const { brands, loading, error, getBrands } = useBrands()
 onMounted(() => {
   getBrands()
 })
+
+const onImageError = (event) => {
+    event.target.src = '/placeholders/110x70.svg'
+}
 </script>

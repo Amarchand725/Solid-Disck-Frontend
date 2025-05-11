@@ -28,8 +28,8 @@
                         :alt="products.title" 
                         :title="products.title" 
                         loading="lazy" decoding="async" data-nimg="fill" sizes="100vw" 
-                        :srcset="products.thumbnail"
-                        :src="products.thumbnail" 
+                        :src="products.thumbnail || '/placeholders/270x280.svg'"
+                        @error="onImageError" 
                         style="position: absolute; height: 100%; width: 100%; inset: 0px; object-fit: contain; color: transparent;"
                     >
                 </router-link>
@@ -47,4 +47,8 @@ const { products, loading, error, getProducts } = useProducts()
 onMounted(() => {
   getProducts()
 })
+
+const onImageError = (event) => {
+    event.target.src = '/placeholders/270x280.svg'
+}
 </script>

@@ -27,8 +27,8 @@
                                 :title="productDetails?.title" 
                                 fetchpriority="high" decoding="async" data-nimg="fill" class="prodcut_image"
                                 sizes="(max-width: 1600) 100%, (max-width: 767) 70%" 
-                                :srcset="productDetails?.thumbnail"
-                                :src="productDetails?.thumbnail" 
+                                :src="productDetails?.thumbnail || '/placeholders/270x280.svg'"
+                                @error="onThumbnailError" 
                                 style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;"
                             >
                             <div class="product_magnifier" style="background-position: -78.6458px 42.3438px; 
@@ -51,8 +51,8 @@
                                     :alt="productDetails?.title" 
                                     title="productDetails?.title"
                                     fetchpriority="high" decoding="async" data-nimg="fill" class="" sizes="(max-width: 1600) 100%, (max-width: 767) 70%" 
-                                    :srcset="productImage?.image"
-                                    :src="productImage?.image" 
+                                    :src="productImage?.image || '/placeholders/80x80.svg'"
+                                    @error="onImageError"
                                     style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;"
                                 >
                             </div>
@@ -180,5 +180,12 @@
 
         // Otherwise, return the full text
         return text;
+    }
+
+    const onImageError = (event) => {
+        event.target.src = '/placeholders/80x80.svg'
+    }
+    const onThumbnailError = (event) => {
+        event.target.src = '/placeholders/270x280.svg'
     }
 </script>

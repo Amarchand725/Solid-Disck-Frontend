@@ -10,15 +10,15 @@
                 <router-link 
                     class="popular_cards_main_inner-a" 
                     title="{{ category.name }}" 
-                    to="#"
+                    :to="`/categories/show/${category.slug}`"
                 >
                     <div class="card_content">
                         <img 
                             :alt="category.name"
                             :title="category.name"
                             fetchpriority="high" width="270" height="280" decoding="async" data-nimg="1" 
-                            :srcset="category.banner"
-                            :sr="category.banner"
+                            :src="category.banner || '/placeholders/270x280.svg'"
+                            @error="onImageError"
                             style="color: transparent; max-width: 100%; height: auto;"
                         />
                         <p class="popular_cards_main_inner-p">{{ category.name }}</p>
@@ -37,4 +37,8 @@ const { categories, loading, error, getCategories } = useCategories()
 onMounted(() => {
   getCategories()
 })
+
+const onImageError = (event) => {
+    event.target.src = '/placeholders/270x280.svg'
+}
 </script>

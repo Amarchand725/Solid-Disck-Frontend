@@ -20,8 +20,8 @@
                                             :alt="product?.title" 
                                             :title="product?.title"
                                             fetchpriority="high" width="188" height="188" decoding="async" data-nimg="1" 
-                                            :srcset="product?.thumbnail"
-                                            :src="product?.thumbnail" 
+                                            :src="product?.thumbnail || '/placeholders/270x280.svg'"
+                                            @error="onImageError"
                                             style="color: transparent;"
                                         >
                                     </router-link>
@@ -105,5 +105,9 @@
 
         // Otherwise, return the full text
         return text;
+    }
+
+    const onImageError = (event) => {
+        event.target.src = '/placeholders/270x280.svg'
     }
 </script>

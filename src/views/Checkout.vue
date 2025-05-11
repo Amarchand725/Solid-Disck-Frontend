@@ -20,15 +20,6 @@
                     <div class="head_main two">
                         <h1>Billing Details</h1>
                     </div>
-                    <!-- <div class="bill_to_diff">
-                        <label class="ant-checkbox-wrapper css-i6rspj">
-                            <span class="ant-checkbox ant-wave-target css-i6rspj">
-                                <input class="ant-checkbox-input" type="checkbox">
-                                <span class="ant-checkbox-inner"></span>
-                            </span>
-                        </label>
-                        <p class="bill_to_diff_para">Bill to a different address</p>
-                    </div> -->
                     <BillingDetails />
                     <ShippingMethod />
                 </div>
@@ -38,8 +29,8 @@
     </div>
 </template>
 <script setup>
-    import OrderSummary from '@/components/OrderSummary.vue';
-    import ShippingMethod from '@/components/ShippingMethod.vue';
-    import ShippingDetailForm from '@/components/ShippingDetailForm.vue';    
-    import BillingDetails from '@/components/BillingDetails.vue';    
+    import OrderSummary from '@/components/Checkout/OrderSummary.vue';
+    import ShippingMethod from '@/components/Checkout/ShippingMethod.vue';
+    import ShippingDetailForm from '@/components/Checkout/ShippingDetailForm.vue';    
+    import BillingDetails from '@/components/Checkout/BillingDetailsForm.vue';    
 </script>

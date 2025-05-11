@@ -7,23 +7,12 @@
                 <span class="separator">&gt;</span>
             </span>
             
-            <span 
-                class="path_name" 
-                v-if="categoryTrail?.length"
-                v-for="catTrail in categoryTrail"
-            >
-                <router-link 
-                    :title="catTrail.name" 
-                    :to="`/categories/show/${catTrail.slug}`"
-                >
-                {{ catTrail.name }}
-                </router-link>
-                <span class="separator">&gt;</span>
-            </span>
+            <CategoryBreadcrumb :categoryTrail="categoryTrail" />
+
             <strong title="productDetails.title">{{ productDetails?.slug }}</strong>
         </div>
         <div class="ant-row css-i6rspj">
-            <ProductDetailComponent :productDetails="productDetails" />
+            <Details :productDetails="productDetails" />
             <div class="ant-col ant-col-xs-24 ant-col-sm-24 ant-col-md-24 ant-col-lg-8 ant-col-xl-8 css-i6rspj">
                 <div class="product_detail_right">
                     <QuoteForm :productDetails="productDetails"/>
@@ -45,16 +34,19 @@
   </main>
 </template>
 <script setup>
+    //Sub Components
+    import CategoryBreadcrumb from '@/components/SingleProduct/CategoryBreadcrumb.vue';
+    import Details from '@/components/SingleProduct/Details.vue';
+    import ProductFullDescription from '@/components/SingleProduct/FullDescription.vue'
+    import QuoteForm from '@/components/SingleProduct/QuoteForm.vue';
+    import DeliveryOption from '@/components/SingleProduct/DeliveryOption.vue';
+    import BestFor from '@/components/SingleProduct/BestFor.vue';
+    import SocialShare from '@/components/SingleProduct/SocialShare.vue';
+    import RelatedProductComponent from '@/components/SingleProduct/RelatedProducts.vue';
+    
     import { ref, onMounted, watch } from 'vue';
     import { useRoute } from 'vue-router';
     import { useProducts } from '@/composables/useProducts';
-    import ProductDetailComponent from '@/components/ProductDetails.vue'
-    import ProductFullDescription from '@/components/ProductFullDescription.vue'
-    import QuoteForm from '@/components/QuoteForm.vue';
-    import DeliveryOption from '@/components/DeliveryOption.vue';
-    import BestFor from '@/components/BestFor.vue';
-    import SocialShare from '@/components/SocialShare.vue';
-    import RelatedProductComponent from '@/components/RelatedProducts.vue';
 
     const { getProductBySlug } = useProducts();
 

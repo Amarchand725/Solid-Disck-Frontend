@@ -48,14 +48,14 @@
             <div class="sub_total total"><span>Total:</span>
                 <p>{{ settings?.currency ?? '' }}{{ fullCart.total }}</p>
             </div>
-            <PaymentForm />
+            <PaymentCheckout />
         </div>
     </div>
 </template>
 <script setup>
     import { useSettings } from '@/composables/useSettings.js'
     import { useCart } from '@/composables/useCart'
-    import PaymentForm from './paymentForm.vue'
+    import PaymentCheckout from '@/components/Checkout/PaymentCheckout.vue';
 
     const { settings } = useSettings()
     const { cartItemCount, fullCart } = useCart()

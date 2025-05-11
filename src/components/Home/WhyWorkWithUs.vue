@@ -2,11 +2,16 @@
     <section class="why_work_with_us">
         <div class="left_banner_container">
             <router-link to="/">
-                <img v-if="bannerObj.left" :alt="bannerObj.left.title" :title="bannerObj.left.title" loading="lazy" width="200" height="200" decoding="async" data-nimg="1" 
-                :srcset="bannerObj.left.banner"
-                :src="bannerObj.left.banner" 
-                @error="onImageError"
-                style="color: transparent;">
+                <img 
+                    v-if="bannerObj.left" 
+                    :alt="bannerObj.left.title" 
+                    :title="bannerObj.left.title" 
+                    loading="lazy" width="200" height="200" decoding="async" data-nimg="1" 
+                    :srcset="bannerObj.left.banner"
+                    :src="bannerObj.left.banner || '/placeholders/200x200.svg'" 
+                    @error="onImageError"
+                    style="color: transparent;"
+                >
             </router-link>
         </div>
         <div class="why_work_with_us_content">
@@ -37,11 +42,16 @@
         </div>
         <div class="right_banner_container">
             <router-link to="/">
-                <img v-if="bannerObj.right" :alt="bannerObj.right.title" :title="bannerObj.right.title" loading="lazy" width="200" height="200" decoding="async" data-nimg="1" 
-                :srcset="bannerObj.right.banner"
-                :src="bannerObj.right.banner" 
-                @error="onImageError"
-                style="color: transparent;">
+                <img 
+                    v-if="bannerObj.right" 
+                    :alt="bannerObj.right.title" 
+                    :title="bannerObj.right.title" 
+                    loading="lazy" width="200" height="200" decoding="async" data-nimg="1" 
+                    :srcset="bannerObj.right.banner"
+                    :src="bannerObj.right.banner || '/placeholders/200x200.svg'" 
+                    @error="onImageError"
+                    style="color: transparent;"
+                >
             </router-link>
         </div>
     </section>
@@ -65,7 +75,7 @@ const bannerObj = computed(() => {
 })
 
 const onImageError = (event) => {
-    event.target.src = '/images/loader.gif'
+    event.target.src = '/placeholders/200x200.svg'
 }
 
 </script>

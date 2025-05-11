@@ -7,8 +7,8 @@
             :alt="product.title"
             :title="product.title"
             fetchpriority="high" width="270" height="280" decoding="async" data-nimg="1" 
-            :srcset="product.thumbnail"
-            :sr="product.thumbnail"
+            :src="product.thumbnail || '/placeholders/270x280.svg'"
+            @error="onImageError"
             style="color: transparent; max-width: 100%; height: auto;"
         />
 
@@ -64,5 +64,9 @@ const props = defineProps({
 
 const handleAddToCart = async () => {
   await addToCart(props.product.slug, 1)
+}
+
+const onImageError = (event) => {
+    event.target.src = '/placeholders/270x280.svg'
 }
 </script>
