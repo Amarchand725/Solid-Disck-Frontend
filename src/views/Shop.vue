@@ -85,7 +85,7 @@
                             <div class="sort_bar">
                                 <div class="sort">
                                     <p>SORT:</p>
-                                    <div class="ant-select ant-select-outlined css-i6rspj ant-select-single ant-select-show-arrow" style="width: 145px;">
+                                    <div onclick="openThis()" class="ant-select ant-select-outlined css-i6rspj ant-select-single ant-select-show-arrow" style="width: 145px;">
                                         <div class="ant-select-selector"><span class="ant-select-selection-wrap"><span class="ant-select-selection-search"><input autocomplete="off" class="ant-select-selection-search-input" role="combobox" aria-expanded="false" aria-haspopup="listbox" aria-owns="rc_select_0_list" aria-autocomplete="list" aria-controls="rc_select_0_list" readonly="" unselectable="on" type="search" value="" id="rc_select_0" style="opacity: 0;"></span>
                                             <span
                                             class="ant-select-selection-item" title="Sort by latest">Sort by latest</span>
@@ -712,4 +712,59 @@
             </section>
         </main>
     </div>
+    <div class="ant-select-dropdown ant-select-dropdown-hidden css-i6rspj ant-select-dropdown-placement-topLeft" style="--arrow-x: 72.5px; --arrow-y: 202px; inset: auto auto 81px 452px; box-sizing: border-box; width: 145px;">
+        <div>
+            <div role="listbox" id="rc_select_2_list" style="height: 0px; width: 0px; overflow: hidden;">
+                <div aria-label="Price High - Low" role="option" id="rc_select_2_list_3" aria-selected="false">-sell_price</div>
+                <div aria-label="Name A-Z" role="option" id="rc_select_2_list_4" aria-selected="false">title</div>
+                <div aria-label="Name Z-A" role="option" id="rc_select_2_list_5" aria-selected="false">-title</div>
+            </div>
+           <div class="rc-virtual-list" style="position: relative;">
+                <div class="rc-virtual-list-holder" style="max-height: 256px; overflow-y: hidden; overflow-anchor: none;">
+                    <div>
+                        <div class="rc-virtual-list-holder-inner" style="display: flex; flex-direction: column;">
+                            <div aria-selected="false" class="ant-select-item ant-select-item-option" title="Sort by oldest">
+                                <div class="ant-select-item-option-content">Sort by oldest</div><span class="ant-select-item-option-state" unselectable="on" aria-hidden="true" style="user-select: none;"></span></div>
+                            <div aria-selected="true" class="ant-select-item ant-select-item-option ant-select-item-option-selected"
+                            title="Sort by latest">
+                                <div class="ant-select-item-option-content">Sort by latest</div><span class="ant-select-item-option-state" unselectable="on" aria-hidden="true" style="user-select: none;"></span></div>
+                            <div aria-selected="false" class="ant-select-item ant-select-item-option" title="Price Low - High">
+                                <div class="ant-select-item-option-content">Price Low - High</div><span class="ant-select-item-option-state" unselectable="on" aria-hidden="true" style="user-select: none;"></span></div>
+                            <div aria-selected="false" class="ant-select-item ant-select-item-option ant-select-item-option-active"
+                            title="Price High - Low">
+                                <div class="ant-select-item-option-content">Price High - Low</div><span class="ant-select-item-option-state" unselectable="on" aria-hidden="true" style="user-select: none;"></span></div>
+                            <div aria-selected="false" class="ant-select-item ant-select-item-option" title="Name A-Z">
+                                <div class="ant-select-item-option-content">Name A-Z</div><span class="ant-select-item-option-state" unselectable="on" aria-hidden="true" style="user-select: none;"></span></div>
+                            <div aria-selected="false" class="ant-select-item ant-select-item-option" title="Name Z-A">
+                                <div class="ant-select-item-option-content">Name Z-A</div><span class="ant-select-item-option-state" unselectable="on" aria-hidden="true" style="user-select: none;"></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
+<script>
+    $(document).ready(function () {
+        // 2. Hover effect to highlight item
+        $('.ant-select-item-option').hover(
+            function () {
+                $('.ant-select-item-option').removeClass('ant-select-item-option-active');
+                $(this).addClass('ant-select-item-option-active');
+            },
+            function () {
+                $(this).removeClass('ant-select-item-option-active');
+            }
+        );
+
+        // 3. Click to select option
+        $('.ant-select-item-option').on('click', function () {
+            $('.ant-select-item-option').removeClass('ant-select-item-option-selected').attr('aria-selected', 'false');
+            $(this).addClass('ant-select-item-option-selected').attr('aria-selected', 'true');
+
+            // Optionally hide dropdown after selection
+            $('.ant-select-dropdown').addClass('ant-select-dropdown-hidden');
+            $('.ant-select-dropdown').css('pointer-events', 'none');
+        });
+    });
+</script>
