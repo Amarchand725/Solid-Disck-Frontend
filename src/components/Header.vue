@@ -178,9 +178,10 @@
                         <ul class="ant-menu-overflow ant-menu ant-menu-root ant-menu-horizontal ant-menu-light nav-menu-custom css-i6rspj" role="menu" tabindex="0" data-menu-list="true" style="width: 100%;">
                             <li class="ant-menu-overflow-item ant-menu-submenu ant-menu-submenu-horizontal" role="none" style="opacity: 1; order: 0;">
                                 <div role="menuitem" class="ant-menu-submenu-title" tabindex="-1" aria-expanded="false" aria-haspopup="true" data-menu-id="rc-menu-uuid-26089-1-/categories" aria-controls="rc-menu-uuid-26089-1-/categories-popup">
-                                    <img src="/assets/image/cart-right-icon.webp" alt="Cart Right Icon" class="ant-menu-item-icon" style="width: 10px; rotate: -90deg; filter: brightness(0) invert(1);"><span class="ant-menu-title-content"><span>Shop By Category</span></span>
-                                    <i
-                                    class="ant-menu-submenu-arrow"></i>
+                                    <img src="/assets/image/cart-right-icon.webp" alt="Cart Right Icon" class="ant-menu-item-icon" style="width: 10px; rotate: -90deg; filter: brightness(0) invert(1);">
+                                    <span class="ant-menu-title-content">
+                                        <span>Shop By Category</span></span>
+                                    <i class="ant-menu-submenu-arrow"></i>
                                 </div>
                             </li>
                             <li class="ant-menu-overflow-item ant-menu-overflow-item-rest ant-menu-submenu ant-menu-submenu-horizontal ant-menu-submenu-disabled" aria-hidden="true" role="none" style="opacity: 0; height: 0px; overflow-y: hidden; order: 2147483647; pointer-events: none; position: absolute;">
