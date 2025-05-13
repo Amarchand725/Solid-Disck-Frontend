@@ -76,7 +76,7 @@
                             <div class="sort_bar">
                                 <div class="sort">
                                     <p>SORT:</p>
-                                    <div class="ant-select ant-select-outlined css-i6rspj ant-select-single ant-select-show-arrow" style="width: 145px;">
+                                    <div onclick="openThis()" class="ant-select ant-select-outlined css-i6rspj ant-select-single ant-select-show-arrow" style="width: 145px;">
                                         <div class="ant-select-selector"><span class="ant-select-selection-wrap"><span class="ant-select-selection-search"><input autocomplete="off" class="ant-select-selection-search-input" role="combobox" aria-expanded="false" aria-haspopup="listbox" aria-owns="rc_select_0_list" aria-autocomplete="list" aria-controls="rc_select_0_list" readonly="" unselectable="on" type="search" value="" id="rc_select_0" style="opacity: 0;"></span>
                                             <span
                                             class="ant-select-selection-item" title="Sort by latest">Sort by latest</span>
