@@ -17,9 +17,9 @@ const getPolicies = async () => {
   }
 };
 
-const getPolicyByTitle = async (title) => {
+const getPolicyBySlug = async (slug) => {
   try {
-    const res = await axios.get(`/policies/${title}`);
+    const res = await axios.get(`/policies/${slug}`);
     return res.data.data;
   } catch (err) {
     throw err;
@@ -33,6 +33,6 @@ export function usePolicies() {
     loading,
     error,
     getPolicies,
-    getPolicyByTitle,
+    getPolicyBySlug,
   };
 }

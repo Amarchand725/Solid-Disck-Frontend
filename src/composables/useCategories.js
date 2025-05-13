@@ -19,7 +19,7 @@ const getCategories = async () => {
 
 const getCategoryBySlug = async (slug) => {
   try {
-    const res = await axios.get(`/categories/${slug}`);
+    const res = await axios.get(`/categories/show/${slug}`);
     return res.data.data;
   } catch (err) {
     throw err;

@@ -32,15 +32,15 @@
 </template>
 
 <script setup>
-    import WhyWorkWithUs from '@/components/WhyWorkWithUs.vue';
-    import Banner from '@/components/Banner.vue';
-    import CentralContent from '@/components/CentralContent.vue';
-    import TopSellerManufacturer from '@/components/TopSellerManufacturer.vue';
-    import TopSellerCategory from '@/components/TopSellerCategory.vue';
-    import FeaturedCategories from '@/components/FeaturedCategories.vue';
-    import FeaturedManufacturer from '@/components/FeaturedManufacturer.vue';
-    import BestSellingProduct from '@/components/BestSellingProduct.vue';
-    import Blogs from '@/components/Blogs.vue';
+    import WhyWorkWithUs from '@/components/Home/WhyWorkWithUs.vue';
+    import Banner from '@/components/Home/Banner.vue';
+    import CentralContent from '@/components/Home/CentralContent.vue';
+    import TopSellerManufacturer from '@/components/Home/TopSellerManufacturer.vue';
+    import TopSellerCategory from '@/components/Home/TopSellerCategory.vue';
+    import FeaturedCategories from '@/components/Home/FeaturedCategories.vue';
+    import FeaturedManufacturer from '@/components/Home/FeaturedManufacturer.vue';
+    import BestSellingProduct from '@/components/Home/BestSellingProduct.vue';
+    import Blogs from '@/components/Home/Blogs.vue';
 </script>
 
 <style scoped>

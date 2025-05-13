@@ -11,6 +11,11 @@ import Shop from '../views/Shop.vue' // make sure path is correct
 import Login from '../views/Login.vue' // make sure path is correct
 import Register from '../views/Register.vue' // make sure path is correct
 import SingleProduct from '../views/SingleProduct.vue' // make sure path is correct
+import PolicyPage from '../views/PolicyPage.vue' // make sure path is correct
+import RequestQuote from '../views/RequestQuote.vue' // make sure path is correct
+import faq from '../views/faq.vue' // make sure path is correct
+import Blogs from '../views/Blogs.vue' // make sure path is correct
+import BlogDetails from '../views/BlogDetails.vue' // make sure path is correct
 
 const routes = [
   {
@@ -50,7 +55,7 @@ const routes = [
   //   meta: { title: 'Track Your Order' }
   // },
   {
-    path: '/categories/show/:slug',
+    path: '/categories/:slug',
     name: 'Shop',
     component: Shop,
     meta: { title: 'Shop' }
@@ -73,6 +78,36 @@ const routes = [
     component: Register,
     meta: { title: 'Register' }
   },  
+  {
+    path: '/policies/:page',
+    name: 'PolicyPage',
+    component: PolicyPage,
+    meta: { title: 'Policy Content' }
+  },
+  {
+    path: '/quote-request',
+    name: 'RequestQuote',
+    component: RequestQuote,
+    meta: { title: 'Request Quote Form' }
+  },
+  {
+    path: '/faq',
+    name: 'faq',
+    component: faq,
+    meta: { title: 'FAQ' }
+  },
+  {
+    path: '/blogs',
+    name: 'Blogs',
+    component: Blogs,
+    meta: { title: 'Blogs' }
+  },
+  {
+    path: '/blogs/:slug',
+    name: 'BlogDetails',
+    component: BlogDetails,
+    meta: { title: 'Blog Details' }
+  },
 ]
 
 const router = createRouter({
