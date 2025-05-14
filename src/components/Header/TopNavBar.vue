@@ -6,25 +6,18 @@
                     <div class="dropdown-container">
                             <button class="dropdown-btn">Shop By Category</button>
                             <ul class="dropdown-menu">
-                              <li class="dropdown-item">
-                                Storage Devices
-                                <ul class="submenu">
-                                  <li class="dropdown-item">
-                                    Hard Drives
-                                    <ul class="submenu">
-                                      <li class="dropdown-item">Server Hard Drives</li>
-                                      <li class="dropdown-item">Desktop Hard Drives</li>
-                                      <li class="dropdown-item">Laptop Hard Drives</li>
-                                    </ul>
-                                  </li>
-                                  <li class="dropdown-item">Solid State Drives</li>
-                                  <li class="dropdown-item">USB Flash Drives</li>
-                                </ul>
-                              </li>
-                              <li class="dropdown-item">Memory</li>
-                              <li class="dropdown-item">Network & Accessories</li>
-                              <li class="dropdown-item">PC & Servers</li>
-                              <li class="dropdown-item">Softwares</li>
+                              <CategoryMenu
+                                v-for="(item, index) in visibleCategories"
+                                :key="index"
+                                :item="item"
+                              />
+                             <li
+                              v-if="hasOverflow"
+                              class="dropdown-item view-more"
+                              @click.stop.prevent="toggleView"
+                            >
+                              {{ showAll ? 'View Less' : 'View More' }}
+                            </li>
                             </ul>
                     </div>
                 </li>
@@ -36,7 +29,7 @@
                             </svg>
                         </span>
                         <i class="ant-menu-submenu-arrow"></i>
-                    </div>
+                    </div>  
                 </li>
             </ul>
             <div aria-hidden="true" style="display: none;"></div>
@@ -60,77 +53,152 @@
     </div>
 </template>
 <script setup>
+  import { onMounted , onUnmounted  } from 'vue'
+  import { useCategories } from '@/composables/useCategories.js'
+  import CategoryMenu from '@/components/Header/CategoryMenu.vue'
+  import { ref, computed } from 'vue'
+  const { categories2, loading, error, getCategories2 } = useCategories()
+  onMounted(() => {
+  getCategories2()
+  console.log('Categories:', categories2.value) // this should show your full nested category structure
+})
+
+const dropdownElement = ref(null);
+const isDropdownOpen = ref(false);
+
+const toggleDropdown = () => {
+  isDropdownOpen.value = !isDropdownOpen.value;
+};
+
+// Outside click logic
+const handleClickOutside = (e) => {
+  if (dropdownElement.value && !dropdownElement.value.contains(e.target)) {
+    isDropdownOpen.value = false;
+  }
+};
+
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside);
+});
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside);
+});
+
+  const showAll = ref(false)
+  const maxVisible = 6 // how many items to show initially
+
+  const visibleCategories = computed(() =>
+    showAll.value ? categories2.value : categories2.value.slice(0, maxVisible)
+  )
+
+  const hasOverflow = computed(() => categories2.value.length > maxVisible)
+  const toggleView = () => (showAll.value = !showAll.value)
+
     const props = defineProps({
         settings: Object
     })
 </script>
 <style>
-      .dropdown-container {
-      position: relative;
-      display: inline-block;
-    }
+.dropdown-container {
+  position: relative;
+  display: inline-block;
+}
 
-    .dropdown-btn {
-      /* background-color: #003366; */
-      color: #fff;
-      padding: 12px 18px;
-      font-size: 16px;
-      font-weight: bold;
-      border: none;
-      cursor: pointer;
-    }
+.dropdown-btn {
+  background-color: #003366;
+  color: #fff;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
 
-    .dropdown-menu,
-    .submenu {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      position: absolute;
-      display: none;
-      background-color: #ffffff;
-      min-width: 220px;
-      border: 1px solid #ccc;
-      z-index: 999;
-      /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
-    }
+.dropdown-menu,
+.submenu {
+  list-style: none;
+  margin: 0;
+  padding: 6px 0;
+  position: absolute;
+  display: none;
+  background-color: #fff;
+  min-width: 220px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+  z-index: 999;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  line-height: 1.4;
+}
 
-    .dropdown-menu {
-      top: 100%;
-      left: 0;
-    }
+.dropdown-menu {
+  top: 100%;
+  left: 0;
+}
 
-    .submenu {
-      top: 0;
-      left: 100%;
-    }
+.submenu {
+  top: 0;
+  left: 100%;
+  margin-left: 4px;
+}
 
-    .dropdown-item {
-      padding: 5px 5px;
-      cursor: pointer;
-      white-space: nowrap;
-      position: relative;
-      background-color: #ffffff;
-      color: #333;
-      transition: background-color 0.3s ease;
-    }
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 14px;
+  color: #111827;
+  cursor: pointer;
+  white-space: nowrap;
+  position: relative;
+  transition: background-color 0.2s ease;
+  border-radius: 6px;
+}
 
-    .dropdown-item:hover {
-      background-color: #f5f5f5;
-    }
+.dropdown-item:hover {
+  background-color: #f3f4f6;
+}
 
-    .dropdown-item:hover > .submenu {
-      display: block;
-    }
+/* Show menus on hover */
+.dropdown-container:hover > .dropdown-menu,
+.dropdown-item:hover > .submenu {
+  display: block;
+}
 
-    .dropdown-container:hover .dropdown-menu {
-      display: block;
-    }
+/* Submenu arrow */
+.dropdown-item:has(.submenu)::after {
+  content: '›';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: #6b7280;
+}
 
-    .dropdown-item:has(.submenu)::after {
-      content: '>';
-      position: absolute;
-      right: 12px;
-      color: #000000;
-      font-size: 12px;
-    }
+ul.dropdown-menu,
+ul.submenu {
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  line-height: 1.4;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+}
+
+.view-more {
+  font-weight: 600;
+  color: #1d4ed8;
+  text-align: center;
+  border-top: 1px solid #e5e7eb;
+}
+.view-more:hover {
+  background-color: #f1f5f9;
+}
+
+
     </style>
