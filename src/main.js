@@ -8,6 +8,7 @@ import 'vue-toastification/dist/index.css'
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
 
+
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title || '';
   next();
