@@ -1,23 +1,49 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { nextTick } from 'vue';
+import { useStore } from 'vuex';  // Use Vuex to access the global state
 import { initAllPlugins } from '@/initPlugins';
-import Home from '../views/Home.vue' // make sure path is correct
-// import Wishlist from '../views/Wishlist.vue' // make sure path is correct
-// import CompareProduct from '../views/CompareProduct.vue' // make sure path is correct
-import Cart from '../views/Cart.vue' // make sure path is correct
-import Checkout from '../views/Checkout.vue' // make sure path is correct
-// import TrackOrder from '../views/TrackOrder.vue' // make sure path is correct
-import Shop from '../views/Shop.vue' // make sure path is correct
-import Login from '../views/Login.vue' // make sure path is correct
-import Register from '../views/Register.vue' // make sure path is correct
-import SingleProduct from '../views/SingleProduct.vue' // make sure path is correct
-import PolicyPage from '../views/PolicyPage.vue' // make sure path is correct
-import RequestQuote from '../views/RequestQuote.vue' // make sure path is correct
-import faq from '../views/faq.vue' // make sure path is correct
-import Blogs from '../views/Blogs.vue' // make sure path is correct
-import BlogDetails from '../views/BlogDetails.vue' // make sure path is correct
+import Home from '../views/Home.vue'
+// import Wishlist from '../views/Wishlist.vue'
+// import CompareProduct from '../views/CompareProduct.vue'
+import Cart from '../views/Cart.vue'
+import Checkout from '../views/Checkout.vue'
+// import TrackOrder from '../views/TrackOrder.vue'
+import Shop from '../views/Shop.vue'
+import Login from '../views/Login.vue'
+import Register from '../views/Register.vue'
+import SingleProduct from '../views/SingleProduct.vue'
+import PolicyPage from '../views/PolicyPage.vue'
+import RequestQuote from '../views/RequestQuote.vue'
+import faq from '../views/faq.vue'
+import Blogs from '../views/Blogs.vue'
+import BlogDetails from '../views/BlogDetails.vue'
+import ContactUs from '../views/ContactUs.vue'
+import MyAccount from '../views/MyAccount.vue'
 
 const routes = [
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+    beforeEnter: (to, from, next) => {
+      const store = useStore();
+      const isAuthenticated = localStorage.getItem('auth_token') || store.state.auth.token;
+
+      if (isAuthenticated) {
+        // If the user is logged in, redirect them to the account page
+        next({ name: 'MyAccount' });  // Redirect to the account page (or any other route)
+      } else {
+        // Otherwise, continue to the login page
+        next();
+      }
+    }
+  },
+  {
+    path: '/my-account',
+    name: 'MyAccount',
+    component: MyAccount,
+    meta: { title: 'MyAccount' }
+  },
   {
     path: '/',
     name: 'Home',
@@ -108,6 +134,12 @@ const routes = [
     component: BlogDetails,
     meta: { title: 'Blog Details' }
   },
+  {
+    path: '/contact-us',
+    name: 'ContactUs',
+    component: ContactUs,
+    meta: { title: 'ContactUs' }
+  },
 ]
 
 const router = createRouter({
@@ -115,10 +147,25 @@ const router = createRouter({
   routes,
 })
 
-// router.afterEach((to, from) => {
-//   nextTick(() => {
-//     initAllPlugins();
-//   });
-// });
+// Add a navigation guard to protect certain routes
+router.beforeEach((to, from, next) => {
+  const store = useStore();  // Get access to the Vuex store
+  const isLoggedIn = store.getters.isLoggedIn;  // Check if the user is logged in
+
+  // If the route requires login but the user is not logged in
+  if (to.meta.requiresAuth && !isLoggedIn) {
+    // Redirect the user to the login page
+    next({ name: 'login' });  // Assuming you have a route named 'login'
+  } else {
+    // Otherwise, allow access to the route
+    next();
+  }
+});
+
+router.afterEach((to, from) => {
+  nextTick(() => {
+    initAllPlugins();
+  });
+});
 
 export default router

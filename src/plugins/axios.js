@@ -8,7 +8,7 @@ axios.defaults.withCredentials = true
 
 // Attach Bearer token automatically
 instance.interceptors.request.use((config) => {
-  const token = localStorage.getItem('customer_token'); // read token from localStorage
+  const token = localStorage.getItem('auth_token'); // read token from localStorage
   if (token) {
     config.headers.Authorization = `Bearer ${token}`; // add Authorization header
   }

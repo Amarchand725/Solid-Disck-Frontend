@@ -3,27 +3,26 @@ import axios from '@/plugins/axios';
 import { useToast } from 'vue-toastification';
 
 export function useQuoteRequest() {
-  const form_name = ref('quick_form');
+  const form_name = ref('full_form');
+  const full_name = ref('');
+  const company = ref('');
   const mpn = ref('');
-  const first_name = ref('');
-  const last_name = ref('');
   const email = ref('');
   const phone = ref('');
-  const quantity = ref('');
   const how_soon_need = ref('');
-  const loading = ref(false);
   const message = ref('');
+  const loading = ref(false);
   const toast = useToast();
 
   // ✅ Use reactive instead of ref
   const errors = reactive({
+    full_name: '',
+    company: '',
     mpn: '',
-    first_name: '',
-    last_name: '',
     email: '',
     phone: '',
-    quantity: '',
     how_soon_need: '',
+    message: '',
   });
 
   const validate = () => {
@@ -34,8 +33,8 @@ export function useQuoteRequest() {
       errors[key] = '';
     }
 
-    if (!first_name.value.trim()) {
-      errors.first_name = 'First name is required.';
+    if (!full_name.value.trim()) {
+      errors.full_name = 'Name is required.';
       isValid = false;
     }
 
@@ -56,8 +55,8 @@ export function useQuoteRequest() {
     //   isValid = false;
     // }
 
-    if (!quantity.value || parseInt(quantity.value) <= 0) {
-      errors.quantity = 'Quantity must be a positive number.';
+    if (!mpn.value || parseInt(mpn.value) <= 0) {
+      errors.mpn = 'MPN is required.';
       isValid = false;
     }
 
@@ -71,25 +70,26 @@ export function useQuoteRequest() {
     try {
       const response = await axios.post('/quote_requests/store', {
         form: form_name.value,
-        mpn: formData.mpn,
-        first_name: formData.first_name.value,
-        last_name: formData.last_name.value,
+        full_name: formData.full_name.value,
+        company: formData.company.value,
+        mpn: formData.mpn.value,
         email: formData.email.value,
         phone: formData.phone.value,
-        quantity: formData.quantity.value,
         how_soon_need: formData.how_soon_need.value,
+        message: formData.message.value,
       });
 
       message.value = response.data.message || 'Sent quote request successfully!';
       toast.success(message.value);
 
       // ✅ Reset fields
-      formData.first_name.value = '';
-      formData.last_name.value = '';
+      formData.full_name.value = '';
+      formData.company.value = '';
+      formData.mpn.value = '';
       formData.email.value = '';
       formData.phone.value = '';
-      formData.quantity.value = '';
       formData.how_soon_need.value = '';
+      formData.message.value = '';
 
       // ✅ Clear errors after success
       for (const key in errors) {
@@ -108,15 +108,14 @@ export function useQuoteRequest() {
 
   return {
     form_name,
+    full_name,
+    company,
     mpn,
-    first_name,
-    last_name,
     email,
     phone,
-    quantity,
     how_soon_need,
-    loading,
     message,
+    loading,
     errors,
     quote_request,
     validate,

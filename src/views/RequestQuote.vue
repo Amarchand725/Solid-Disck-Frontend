@@ -24,6 +24,7 @@
                                         <div class="ant-form-item-control-input">
                                             <div class="ant-form-item-control-input-content">
                                                 <input v-model="full_name" placeholder="Full Name"  id="control-hooks_fullName" aria-required="true" class="ant-input css-i6rspj ant-input-outlined" type="text" value="">
+                                                <p class="error_messages">{{ errors.full_name}}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -38,6 +39,7 @@
                                         <div class="ant-form-item-control-input">
                                             <div class="ant-form-item-control-input-content">
                                                 <input v-model="company" placeholder="Company Name" id="control-hooks_company" class="ant-input css-i6rspj ant-input-outlined" type="text" value="">
+                                                <p class="error_messages">{{ errors.company }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -52,6 +54,7 @@
                                         <div class="ant-form-item-control-input">
                                             <div class="ant-form-item-control-input-content">
                                                 <input v-model="mpn" placeholder="MPN"  id="control-hooks_mpn" aria-required="true" class="ant-input css-i6rspj ant-input-outlined" type="text" value="">
+                                                <p class="error_messages">{{ errors.mpn }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -66,6 +69,7 @@
                                         <div class="ant-form-item-control-input">
                                             <div class="ant-form-item-control-input-content">
                                                 <input v-model="email" placeholder="Email" id="control-hooks_email" aria-required="true" class="ant-input css-i6rspj ant-input-outlined" type="text" value="">
+                                                <p class="error_messages">{{ errors.email }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -80,6 +84,7 @@
                                         <div class="ant-form-item-control-input">
                                             <div class="ant-form-item-control-input-content">
                                                 <input v-model="phone" placeholder="Phone" id="control-hooks_phone" aria-required="true" class="ant-input css-i6rspj ant-input-outlined" type="text" value="">
+                                                <p class="error_messages">{{ errors.phone }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -94,6 +99,7 @@
                                         <div class="ant-form-item-control-input">
                                             <div class="ant-form-item-control-input-content">
                                                 <input v-model="how_soon_need" placeholder="How Soon Do You Need It?" id="how_soon_need" aria-required="true" class="ant-input css-i6rspj ant-input-outlined" type="text" value="">
+                                                <p class="error_messages">{{ errors.how_soon_need }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -108,6 +114,7 @@
                                         <div class="ant-form-item-control-input">
                                             <div class="ant-form-item-control-input-content">
                                                 <textarea v-model="message" placeholder="Write message" id="control-hooks_message" maxlength="100" class="ant-input css-i6rspj ant-input-outlined"></textarea>
+                                                <p class="error_messages">{{ errors.message }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -135,22 +142,14 @@
     </div>
 </template>
 <script setup>
-    import { useQuoteRequest } from '@/composables/useQuoteForm.js'
+    import { useQuoteRequest } from '@/composables/useQuoteFullForm.js'
 
     const {
-        mpn, full_name, company, email, phone, how_soon_need,
-        loading, message, errors, quote_request
-    } = useQuoteRequest({ useFullName: true, includeCompany: true, includeQuantity: false });
+        full_name, company, mpn, email, phone, how_soon_need, message,
+        loading, errors, quote_request
+    } = useQuoteRequest();
   
     const handleSubmit = async () => {
-        await quote_request({
-            mpn,
-            full_name,
-            company,
-            email,
-            phone,
-            how_soon_need,
-            message
-        });
+        await quote_request({ full_name, company, mpn, email, phone, how_soon_need, message });
     };
 </script>

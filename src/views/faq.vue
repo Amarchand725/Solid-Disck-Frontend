@@ -71,6 +71,25 @@
         </main>
     </div>
 </template>
+<script>
+     $(document).ready(function () {
+      $('.faq-item').click(function () {
+        // Close all answers
+        $('.faq-answer').slideUp();
+        $('.faq-icon').text('+');
+
+        // If the clicked one is already open, close it
+        if ($(this).next('.faq-answer').is(':visible')) {
+          $(this).next('.faq-answer').slideUp();
+          $(this).find('.faq-icon').text('+');
+        } else {
+          // Open the selected answer
+          $(this).next('.faq-answer').slideDown();
+          $(this).find('.faq-icon').text('–');
+        }
+      });
+    });
+</script>
 <style>
     .faq-section {
       max-width: 900px;

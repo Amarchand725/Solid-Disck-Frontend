@@ -1,5 +1,5 @@
 <template>
-    <div class="shipping_main" v-html="policyDetails?.content"></div>
+  <div class="shipping_main" v-html="policyDetails?.content"></div>
 </template>
 <script setup>
 import { ref, onMounted } from 'vue'
