@@ -38,12 +38,12 @@ export function initAllPlugins() {
   };
 
   // handleOpen function
-  window.handleOpen = function () {
-    const dropdown = document.getElementById('header-menu-dropdown');
-    if (dropdown) {
-      dropdown.style.display = dropdown.style.display === 'none' ? 'flex' : 'none';
-    }
-  };
+  // window.handleOpen = function () {
+  //   const dropdown = document.getElementById('header-menu-dropdown');
+  //   if (dropdown) {
+  //     dropdown.style.display = dropdown.style.display === 'none' ? 'flex' : 'none';
+  //   }
+  // };
 
   // Checkbox toggle for billing form
   const checkbox = document.getElementById('billToDiffCheckbox');
