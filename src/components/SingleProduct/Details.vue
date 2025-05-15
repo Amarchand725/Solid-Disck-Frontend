@@ -164,7 +164,6 @@
 
     const quantity = ref(1);
 
-    // const { addToCart, loading } = useCart()
     const { addToCart, loading, decreaseCartItem } = useCart()
     const handleAddToCart = async () => {
         await addToCart(props.productDetails.slug, quantity.value)

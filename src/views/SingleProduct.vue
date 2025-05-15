@@ -54,7 +54,7 @@
 
     const productDetails = ref(null);
     const relatedProducts = ref([]);
-    const categoryTrail = ref(null);
+    const categoryTrail = ref([]);
 
     const loadProduct = async () => {
         const slug = route.params.slug;

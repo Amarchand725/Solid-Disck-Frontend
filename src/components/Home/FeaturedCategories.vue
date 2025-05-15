@@ -10,7 +10,7 @@
                 <router-link 
                     class="popular_cards_main_inner-a" 
                     title="{{ category.name }}" 
-                    :to="`/categories/show/${category.slug}`"
+                :to="`/categories/${category.slug}`"
                 >
                     <div class="card_content">
                         <img 

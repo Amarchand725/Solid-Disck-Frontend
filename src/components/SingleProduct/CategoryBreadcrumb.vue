@@ -6,7 +6,7 @@
     >
         <router-link 
             :title="catTrail.name" 
-            :to="`/categories/show/${catTrail.slug}`"
+            :to="`/categories/${catTrail.slug}`"
         >
         {{ catTrail.name }}
         </router-link>

@@ -38,7 +38,7 @@
                             src="/assets/image/group-product-icon.webp" style="color: transparent; filter: brightness(0) invert(1);"></div><span>Group Products</span></a>
                 </div>
             </div>
-            <a class="create_an_account" title="Create An Account" href="/login">Create An Account</a>
+            <router-link class="create_an_account" title="Create An Account" to="/register">Create An Account</router-link>
         </div>
         <div class="right_banner_container">
             <router-link to="/">
@@ -59,6 +59,7 @@
 <script setup>
 import { onMounted, computed } from 'vue'
 import { useBanners } from '@/composables/useBanners.js'
+import router from '@/router'
 
 const { banners, getBanners } = useBanners()
 

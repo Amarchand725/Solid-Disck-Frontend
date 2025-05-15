@@ -1,12 +1,12 @@
 <template>
     <div class="bill_to_diff">
-        <label class="ant-checkbox-wrapper css-i6rspj">
+        <label for="billToDiffCheckbox" class="ant-checkbox-wrapper css-i6rspj">
             <span class="ant-checkbox ant-wave-target css-i6rspj">
                 <input class="ant-checkbox-input" type="checkbox" id="billToDiffCheckbox">
                 <span class="ant-checkbox-inner"></span>
             </span>
+            <span class="bill_to_diff_para">Bill to a different address</span>
         </label>
-        <p class="bill_to_diff_para">Bill to a different address</p>
     </div>
     <div id="billingForm" class="shipping_details_form" style="display: none; margin-top: 20px;">
         <form id="checkoutForm" class="ant-form ant-form-vertical css-i6rspj">

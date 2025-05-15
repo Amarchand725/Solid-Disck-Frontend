@@ -3,6 +3,7 @@ import axios from '@/plugins/axios';
 import { useToast } from 'vue-toastification';
 
 export function useQuoteRequest() {
+  const form_name = ref('quick_form');
   const mpn = ref('');
   const first_name = ref('');
   const last_name = ref('');
@@ -69,6 +70,7 @@ export function useQuoteRequest() {
     loading.value = true;
     try {
       const response = await axios.post('/quote_requests/store', {
+        form: form_name.value,
         mpn: formData.mpn,
         first_name: formData.first_name.value,
         last_name: formData.last_name.value,
@@ -105,6 +107,7 @@ export function useQuoteRequest() {
 
 
   return {
+    form_name,
     mpn,
     first_name,
     last_name,

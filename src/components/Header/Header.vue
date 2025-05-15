@@ -31,10 +31,22 @@
                             :removeCartItem="removeCartItem"
                         />
                        
-                        <div class="left-icons">
+                        <!-- <div class="left-icons">
                             <router-link to="login">
                                 <img src="/assets/image/SignIn-Icon.webp" alt="SignIn Icon" title="Signin">
                                 <p>Sign In</p>
+                            </router-link>
+                        </div> -->
+                        <div class="left-icons" v-if="!isLoggedIn">
+                            <router-link to="/login">
+                            <img src="/assets/image/SignIn-Icon.webp" alt="SignIn Icon" />
+                            <p>Sign In</p>
+                            </router-link>
+                        </div>
+                        <div class="left-icons" v-else>
+                            <router-link to="/my-account">
+                            <img src="/assets/image/SignIn-Icon.webp" alt="Account Icon" />
+                            <p>Account</p>
                             </router-link>
                         </div>
                     </div>
@@ -53,12 +65,24 @@
                             :settings="settings"
                             :removeCartItem="removeCartItem"
                         />
-                        <div class="left-icons">
+                        <!-- <div class="left-icons">
                             <router-link 
                                 to="/login"
                             >
                                 <img src="/assets/image/SignIn-Icon.webp" alt="SignIn Icon" title="Signin">
                                 <p>Sign In</p>
+                            </router-link>
+                        </div> -->
+                        <div class="left-icons" v-if="!isLoggedIn">
+                            <router-link to="/login">
+                            <img src="/assets/image/SignIn-Icon.webp" alt="SignIn Icon" />
+                            <p>Sign In</p>
+                            </router-link>
+                        </div>
+                        <div class="left-icons" v-else>
+                            <router-link to="/my-account">
+                            <img src="/assets/image/SignIn-Icon.webp" alt="Account Icon" />
+                            <p>Account</p>
                             </router-link>
                         </div>
                     </div>
@@ -79,6 +103,8 @@ import CartOverView from '@/components/Header/CartOverView.vue'
 import Search from '@/components/Header/Search.vue'
 
 //
+import { useStore } from 'vuex';
+import { computed } from 'vue';
 import { useSettings } from '@/composables/useSettings.js'
 import { useCart } from '@/composables/useCart'
 
@@ -88,4 +114,7 @@ const { cartItemCount, fullCart, removeCartItem } = useCart()
 const onLogoError = (event) => {
   event.target.src = '/placeholders/220x50.svg'
 }
+
+const store = useStore();
+const isLoggedIn = computed(() => store.getters.isLoggedIn);
 </script>

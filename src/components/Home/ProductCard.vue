@@ -1,7 +1,7 @@
 <template>
     <router-link
-        :to="`/products/${product.category_url}/${product.slug}`"
         class="TabProductCard_image_main__n81WY"
+        :to="`/products/${product.category_url}/${product.slug}`"
     >
         <img 
             :alt="product.title"
@@ -17,7 +17,7 @@
         {{ product.category.name }}
     </span>
     <router-link 
-        class="TabProductCard_title_main__m3y_P" 
+        class="TabProductCard_title_main__m3y_P"    
         title="{{ product.title }}" 
         :to="`/products/${product.category_url}/${product.slug}`"
         >

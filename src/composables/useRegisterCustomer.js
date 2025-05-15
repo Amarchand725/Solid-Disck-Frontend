@@ -1,5 +1,5 @@
 import { ref } from 'vue';
-import api from '@/plugins/axios';
+import axios from '@/plugins/axios';
 import { useToast } from 'vue-toastification';
 
 export function useRegisterCustomer() {
@@ -14,7 +14,7 @@ export function useRegisterCustomer() {
   const register = async () => {
     loading.value = true;
     try {
-      const response = await api.post('/customer/register', {
+      const response = await axios.post('/customer/register', {
         name: name.value,
         email: email.value,
         password: password.value,

@@ -1,16 +1,16 @@
 <template>
     <div>
         <div style="display: flex; flex-direction: column;">
-            <h4 href="#" class="headlingTag">Customer Account</h4>
+            <h4 class="headlingTag">Customer Account</h4>
             <router-link class="tags" title="Login" to="/login">Login</router-link>
             <router-link class="tags" title="Register" to="/register">Register</router-link>
-            <a class="tags" title="My Account" href="#">My Account</a>
-            <a class="tags" title="Shopping Cart" href="#">Shopping Cart</a>
-            <a class="tags" title="Order Process" href="#">Order Process</a>
-            <a class="tags" title="Our Services" href="#">Our Services</a>
-            <a class="tags" title="About Us" href="#">About Us</a>
-            <a class="tags" title="Contact Us" href="#">Contact Us</a>
-            <router-link class="tags" title="Blogs" to="#">Blogs</router-link>
+            <router-link class="tags" title="My Account" to="/my-account">My Account</router-link>
+            <router-link class="tags" title="Shopping Cart" to="/cart">Shopping Cart</router-link>
+            <router-link class="tags" title="Order Process" to="/policies/order-process">Order Process</router-link>
+            <router-link class="tags" title="Our Services" to="/policies/services">Our Services</router-link>
+            <router-link class="tags" title="About Us" to="/policies/about-us">About Us</router-link>
+            <router-link class="tags" title="Contact Us" to="/contact-us">Contact Us</router-link>
+            <router-link class="tags" title="Blogs" to="/blogs">Blogs</router-link>
             <a class="tags" title="Sitemap" href="#">Sitemap</a>
         </div>
         <div class="seals">

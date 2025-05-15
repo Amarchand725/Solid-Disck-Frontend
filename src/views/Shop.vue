@@ -10,24 +10,14 @@
                                 <span class="separator">&gt;</span>
                             </span>
 
-                            <span class="path_name">
-                                <a title="storage devices" href="#">storage devices</a>
-                                <span class="separator">&gt;</span>
-                            </span>
-                            <span class="path_name">
-                                <a title="solid state drives" href="#">solid state drives</a>
-                                <span class="separator">&gt;</span>
-                            </span>
+                            <CategoryBreadcrumb :categoryTrail="categoryTrail" />
                             
                             <span class="path_name">
-                                <strong title="samsung">samsung</strong>
+                                <strong :title="category?.name">{{ category?.name }}</strong>
                             </span>
                         </div>
-                        <h1 title="Samsung">Samsung</h1>
-                        <div class="header_description">
-                            Experience cutting-edge performance with Samsung Solid State Drives. Designed for both personal and professional use, these SSDs provide ultra-fast data transfer speeds and high endurance. Perfect for gaming, creative tasks, and business applications,
-                            Samsung’s SSDs offer exceptional reliability, energy efficiency, and durability.
-                        </div>
+                        <h1 :title="category?.name">{{ category?.name }}</h1>
+                        <div class="header_description" v-html="category?.description"></div>
                     </div>
                 </div>
                 <div class="ant-row second_row css-i6rspj">
@@ -80,6 +70,7 @@
                             </div>
                         </div>
                     </div>
+                    
                     <div class="ant-col ant-col-xs-19 css-i6rspj">
                         <div class="col_right">
                             <div class="sort_bar">
@@ -94,604 +85,32 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="product_view_comp_main">
-                                <div class="ant-row css-i6rspj">
-                                    <div class="ant-col ant-col-xs-4 css-i6rspj">
-                                        <div class="product_view_left">
-                                            <a href="#">
-                                                <img alt="Product Image" title="MZXLR15THALA-000H3 Samsung PM1733 15.36TB Triple-Level Cell PCI Express NVMe 4.0 x4 U.2 2.5-Inch Solid State Drive" loading="lazy" width="220" height="220" decoding="async" data-nimg="1"
-                                                srcset="/assets/image/MZXLR15THALA-000H3-thumbnail.avif"
-                                                src="/assets/image/MZXLR15THALA-000H3-thumbnail.avif" style="color: transparent;"></a>
-                                        </div>
-                                    </div>
-                                    <div class="ant-col ant-col-xs-12 css-i6rspj">
-                                        <div class="product_view_mid"><a href="#"><h3 title="MZXLR15THALA-000H3 Samsung PM1733 15.36TB Triple-Level Cell PCI Express NVMe 4.0 x4 U.2 2.5-Inch Solid State Drive">MZXLR15THALA-000H3 Samsung PM1733 15.36TB Triple-Level Cell PCI Express NVMe 4.0 x4 U.2 2.5-Inch Sol...</h3></a>
-                                            <div class="mnp">
-                                                <p><b>MPN:</b> <a title="MZXLR15THALA-000H3" href="#">MZXLR15THALA-000H3</a></p><span>|</span>
-                                                <p><b>Brand:</b> <a title="Samsung" href="#">Samsung</a></p>
-                                            </div>
-                                            <div class="specs"></div>
-                                        </div>
-                                    </div>
-                                    <div class="ant-col ant-col-xs-8 css-i6rspj">
-                                        <div class="product_view_right">
-                                            <p class="in_stock" title="In Stock"><b>●</b> In Stock</p>
-                                            <div class="shipping"><b>Product Condition: </b>
-                                                <p title="Refurbished">Refurbished</p>
-                                            </div>
-                                            <div class="__className_139476 cut_price">$2977.56</div>
-                                            <div class="__className_139476 main_price">$2382.05</div>
-                                            <div class="quantity_main">
-                                                <div class="qty_wrapper"><span>Qty:</span>
-                                                    <input min="1" max="1000" placeholder="0" class="ant-input css-i6rspj ant-input-outlined" type="number" value="1">
-                                                </div>
-                                                <div class="cart_icons"><span role="img" aria-label="caret-up" tabindex="-1" class="anticon anticon-caret-up"><svg viewBox="0 0 1024 1024" focusable="false" data-icon="caret-up" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z"></path></svg></span>
-                                                    <span
-                                                    role="img" aria-label="caret-down" tabindex="-1" class="anticon anticon-caret-down">
-                                                        <svg viewBox="0 0 1024 1024" focusable="false" data-icon="caret-down" width="1em" height="1em" fill="currentColor" aria-hidden="true">
-                                                            <path d="M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z"></path>
-                                                        </svg>
-                                                        </span>
-                                                </div>
-                                            </div>
-                                            <button title="Add To Cart" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined"><span>Add To Cart</span></button>
-                                        </div>
+
+                            <div class="product_list_wrapper">
+                                <div 
+                                    v-if="loading" 
+                                    class="product_view_comp_main"
+                                >
+                                    <div class="ant-row css-i6rspj">
+                                        Loading...
                                     </div>
                                 </div>
-                            </div>
-                            <div class="product_view_comp_main">
-                                <div class="ant-row css-i6rspj">
-                                    <div class="ant-col ant-col-xs-4 css-i6rspj">
-                                        <div class="product_view_left">
-                                            <a href="#"><img alt="Product Image" title="MZXLR15THALA-00AH3 Samsung PM1733 15.36TB Triple-Level Cell PCI Express NVMe 4.0 x4 U.2 2.5-Inch Solid State Drive" loading="lazy" width="220" height="220" decoding="async" data-nimg="1" srcset="/assets/image/MZXLR15THALA-000H3-thumbnail.avif"
-                                                src="/assets/image/MZXLR15THALA-000H3-thumbnail.avif" style="color: transparent;"></a>
-                                        </div>
-                                    </div>
-                                    <div class="ant-col ant-col-xs-12 css-i6rspj">
-                                        <div class="product_view_mid"><a href="#"><h3 title="MZXLR15THALA-00AH3 Samsung PM1733 15.36TB Triple-Level Cell PCI Express NVMe 4.0 x4 U.2 2.5-Inch Solid State Drive">MZXLR15THALA-00AH3 Samsung PM1733 15.36TB Triple-Level Cell PCI Express NVMe 4.0 x4 U.2 2.5-Inch Sol...</h3></a>
-                                            <div class="mnp">
-                                                <p><b>MPN:</b> <a title="MZXLR15THALA-00AH3" href="#">MZXLR15THALA-00AH3</a></p><span>|</span>
-                                                <p><b>Brand:</b> <a title="Samsung" href="#">Samsung</a></p>
-                                            </div>
-                                            <div class="specs"></div>
-                                        </div>
-                                    </div>
-                                    <div class="ant-col ant-col-xs-8 css-i6rspj">
-                                        <div class="product_view_right">
-                                            <p class="in_stock" title="In Stock"><b>●</b> In Stock</p>
-                                            <div class="shipping"><b>Product Condition: </b>
-                                                <p title="Refurbished">Refurbished</p>
-                                            </div>
-                                            <div class="__className_139476 cut_price">$2977.56</div>
-                                            <div class="__className_139476 main_price">$2382.05</div>
-                                            <div class="quantity_main">
-                                                <div class="qty_wrapper"><span>Qty:</span>
-                                                    <input min="1" max="1000" placeholder="0" class="ant-input css-i6rspj ant-input-outlined" type="number" value="1">
-                                                </div>
-                                                <div class="cart_icons"><span role="img" aria-label="caret-up" tabindex="-1" class="anticon anticon-caret-up"><svg viewBox="0 0 1024 1024" focusable="false" data-icon="caret-up" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z"></path></svg></span>
-                                                    <span
-                                                    role="img" aria-label="caret-down" tabindex="-1" class="anticon anticon-caret-down">
-                                                        <svg viewBox="0 0 1024 1024" focusable="false" data-icon="caret-down" width="1em" height="1em" fill="currentColor" aria-hidden="true">
-                                                            <path d="M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z"></path>
-                                                        </svg>
-                                                        </span>
-                                                </div>
-                                            </div>
-                                            <button title="Add To Cart" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined"><span>Add To Cart</span></button>
-                                        </div>
+
+                                <div v-else>
+                                    <div 
+                                        class="product_view_comp_main"
+                                        v-for="product in products" :key="product.id"
+                                    >
+                                        <ProductList
+                                            :product="product"
+                                            :settings="settings"
+                                            :quantities="quantities"
+                                            @increase="increaseQuantity"
+                                            @decrease="decreaseQuantity"
+                                            @add-to-cart="handleAddToCart"
+                                        />
                                     </div>
                                 </div>
-                            </div>
-                            <div class="product_view_comp_main">
-                                <div class="ant-row css-i6rspj">
-                                    <div class="ant-col ant-col-xs-4 css-i6rspj">
-                                        <div class="product_view_left">
-                                            <a href="#"><img alt="Product Image" title="MZ-76E4T0B/KR Samsung 860 EVO Series 4TB 2.5&quot; 6GB/s SATA 4GB Cache V-NAND 3bit MLC Solid State Drive" loading="lazy" width="220" height="220" decoding="async" data-nimg="1" srcset="/assets/image/MZXLR15THALA-000H3-thumbnail.avif"
-                                                src="/assets/image/MZXLR15THALA-000H3-thumbnail.avif" style="color: transparent;"></a>
-                                        </div>
-                                    </div>
-                                    <div class="ant-col ant-col-xs-12 css-i6rspj">
-                                        <div class="product_view_mid"><a href="#"><h3 title="MZ-76E4T0B/KR Samsung 860 EVO Series 4TB 2.5&quot; 6GB/s SATA 4GB Cache V-NAND 3bit MLC Solid State Drive">MZ-76E4T0B/KR Samsung 860 EVO Series 4TB 2.5" 6GB/s SATA 4GB Cache V-NAND 3bit MLC Solid State Drive</h3></a>
-                                            <div class="mnp">
-                                                <p><b>MPN:</b> <a title="MZ-76E4T0B/KR" href="#">MZ-76E4T0B/KR</a></p><span>|</span>
-                                                <p><b>Brand:</b> <a title="Samsung" href="#">Samsung</a></p>
-                                            </div>
-                                        <div class="specs">
-                                            <div class="left"><b>Model:</b>
-                                                <p>MZ-76E4T0</p>
-                                            </div>
-                                            <div class="left"><b>Product Line:</b>
-                                                <p>860 EVO</p>
-                                            </div>
-                                            <div class="left"><b>Product Type:</b>
-                                                <p>Solid State Drive</p>
-                                            </div>
-                                            <div class="left"><b>Package Quantity:</b>
-                                                <p>1</p>
-                                            </div>
-                                            <div class="left"><b>Package Type:</b>
-                                                <p>Retail</p>
-                                            </div>
-                                            <div class="left"><b>Storage Capacity:</b>
-                                                <p>4 TB</p>
-                                            </div>
-                                        </div>
-                                        <button title="Expand" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined expand_specs_button"><span>[+] Expand Specs</span></button>
-                                    </div>
-                                </div>
-                                <div class="ant-col ant-col-xs-8 css-i6rspj">
-                                    <div class="product_view_right">
-                                        <p class="in_stock" title="In Stock"><b>●</b> In Stock</p>
-                                        <div class="shipping"><b>Product Condition: </b>
-                                            <p title="Refurbished">Refurbished</p>
-                                        </div>
-                                        <div class="__className_139476 cut_price">$585.14</div>
-                                        <div class="__className_139476 main_price">$468.11</div>
-                                        <div class="quantity_main">
-                                            <div class="qty_wrapper"><span>Qty:</span>
-                                                <input min="1" max="1000" placeholder="0" class="ant-input css-i6rspj ant-input-outlined" type="number" value="1">
-                                            </div>
-                                            <div class="cart_icons"><span role="img" aria-label="caret-up" tabindex="-1" class="anticon anticon-caret-up"><svg viewBox="0 0 1024 1024" focusable="false" data-icon="caret-up" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z"></path></svg></span>
-                                                <span
-                                                role="img" aria-label="caret-down" tabindex="-1" class="anticon anticon-caret-down">
-                                                    <svg viewBox="0 0 1024 1024" focusable="false" data-icon="caret-down" width="1em" height="1em" fill="currentColor" aria-hidden="true">
-                                                        <path d="M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z"></path>
-                                                    </svg>
-                                                    </span>
-                                            </div>
-                                        </div>
-                                        <button title="Add To Cart" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined"><span>Add To Cart</span></button>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                            <div class="product_view_comp_main">
-                                <div class="ant-row css-i6rspj">
-                                    <div class="ant-col ant-col-xs-4 css-i6rspj">
-                                        <div class="product_view_left">
-                                            <a href="#"><img alt="Product Image" title="MZ-76E2T0B/KR Samsung 860 EVO Series 2TB 2.5&quot; 6GB/s SATA 2GB Cache V-NAND 3bit MLC Solid State Drive" loading="lazy" width="220" height="220" decoding="async" data-nimg="1" srcset="/assets/image/MZXLR15THALA-000H3-thumbnail.avif"
-                                                src="/assets/image/MZXLR15THALA-000H3-thumbnail.avif" style="color: transparent;"></a>
-                                        </div>
-                                    </div>
-                                    <div class="ant-col ant-col-xs-12 css-i6rspj">
-                                        <div class="product_view_mid"><a href="#"><h3 title="MZ-76E2T0B/KR Samsung 860 EVO Series 2TB 2.5&quot; 6GB/s SATA 2GB Cache V-NAND 3bit MLC Solid State Drive">MZ-76E2T0B/KR Samsung 860 EVO Series 2TB 2.5" 6GB/s SATA 2GB Cache V-NAND 3bit MLC Solid State Drive</h3></a>
-                                            <div
-                                            class="mnp">
-                                                <p><b>MPN:</b> <a title="MZ-76E2T0B/KR" href="#">MZ-76E2T0B/KR</a></p><span>|</span>
-                                                <p><b>Brand:</b> <a title="Samsung" href="#">Samsung</a></p>
-                                        </div>
-                                        <div class="specs">
-                                            <div class="left"><b>Model:</b>
-                                                <p>MZ-76E2T0</p>
-                                            </div>
-                                            <div class="left"><b>Product Line:</b>
-                                                <p>860 EVO</p>
-                                            </div>
-                                            <div class="left"><b>Product Type:</b>
-                                                <p>Solid State Drive</p>
-                                            </div>
-                                            <div class="left"><b>Package Quantity:</b>
-                                                <p>1</p>
-                                            </div>
-                                            <div class="left"><b>Package Type:</b>
-                                                <p>Retail</p>
-                                            </div>
-                                            <div class="left"><b>Storage Capacity:</b>
-                                                <p>2 TB</p>
-                                            </div>
-                                        </div>
-                                        <button title="Expand" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined expand_specs_button"><span>[+] Expand Specs</span></button>
-                                    </div>
-                                </div>
-                                <div class="ant-col ant-col-xs-8 css-i6rspj">
-                                    <div class="product_view_right">
-                                        <p class="in_stock" title="In Stock"><b>●</b> In Stock</p>
-                                        <div class="shipping"><b>Product Condition: </b>
-                                            <p title="Refurbished">Refurbished</p>
-                                        </div>
-                                        <div class="__className_139476 cut_price">$531.60</div>
-                                        <div class="__className_139476 main_price">$425.28</div>
-                                        <div class="quantity_main">
-                                            <div class="qty_wrapper"><span>Qty:</span>
-                                                <input min="1" max="1000" placeholder="0" class="ant-input css-i6rspj ant-input-outlined" type="number" value="1">
-                                            </div>
-                                            <div class="cart_icons"><span role="img" aria-label="caret-up" tabindex="-1" class="anticon anticon-caret-up"><svg viewBox="0 0 1024 1024" focusable="false" data-icon="caret-up" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z"></path></svg></span>
-                                                <span
-                                                role="img" aria-label="caret-down" tabindex="-1" class="anticon anticon-caret-down">
-                                                    <svg viewBox="0 0 1024 1024" focusable="false" data-icon="caret-down" width="1em" height="1em" fill="currentColor" aria-hidden="true">
-                                                        <path d="M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z"></path>
-                                                    </svg>
-                                                    </span>
-                                            </div>
-                                        </div>
-                                        <button title="Add To Cart" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined"><span>Add To Cart</span></button>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                            <div class="product_view_comp_main">
-                                <div class="ant-row css-i6rspj">
-                                    <div class="ant-col ant-col-xs-4 css-i6rspj">
-                                        <div class="product_view_left">
-                                            <a href="#"><img alt="Product Image" title="MZ-76E1T0B/KR Samsung 860 EVO Series 1TB 2.5&quot; 6GB/s SATA 1GB Cache V-NAND 3bit MLC Solid State Drive" loading="lazy" width="220" height="220" decoding="async" data-nimg="1" srcset="/assets/image/MZXLR15THALA-000H3-thumbnail.avif"
-                                                src="/assets/image/MZXLR15THALA-000H3-thumbnail.avif" style="color: transparent;"></a>
-                                        </div>
-                                    </div>
-                                    <div class="ant-col ant-col-xs-12 css-i6rspj">
-                                        <div class="product_view_mid"><a href="#"><h3 title="MZ-76E1T0B/KR Samsung 860 EVO Series 1TB 2.5&quot; 6GB/s SATA 1GB Cache V-NAND 3bit MLC Solid State Drive">MZ-76E1T0B/KR Samsung 860 EVO Series 1TB 2.5" 6GB/s SATA 1GB Cache V-NAND 3bit MLC Solid State Drive</h3></a>
-                                            <div
-                                            class="mnp">
-                                                <p><b>MPN:</b> <a title="MZ-76E1T0B/KR" href="#">MZ-76E1T0B/KR</a></p><span>|</span>
-                                                <p><b>Brand:</b> <a title="Samsung" href="#">Samsung</a></p>
-                                        </div>
-                                        <div class="specs">
-                                            <div class="left"><b>Model:</b>
-                                                <p>MZ-76E1T0</p>
-                                            </div>
-                                            <div class="left"><b>Product Line:</b>
-                                                <p>860 EVO</p>
-                                            </div>
-                                            <div class="left"><b>Product Type:</b>
-                                                <p>Solid State Drive</p>
-                                            </div>
-                                            <div class="left"><b>Package Quantity:</b>
-                                                <p>1</p>
-                                            </div>
-                                            <div class="left"><b>Package Type:</b>
-                                                <p>Retail</p>
-                                            </div>
-                                            <div class="left"><b>Storage Capacity:</b>
-                                                <p>1 TB</p>
-                                            </div>
-                                        </div>
-                                        <button title="Expand" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined expand_specs_button"><span>[+] Expand Specs</span></button>
-                                    </div>
-                                </div>
-                                <div class="ant-col ant-col-xs-8 css-i6rspj">
-                                    <div class="product_view_right">
-                                        <p class="in_stock" title="In Stock"><b>●</b> In Stock</p>
-                                        <div class="shipping"><b>Product Condition: </b>
-                                            <p title="Refurbished">Refurbished</p>
-                                        </div>
-                                        <div class="__className_139476 cut_price">$266.41</div>
-                                        <div class="__className_139476 main_price">$213.13</div>
-                                        <div class="quantity_main">
-                                            <div class="qty_wrapper"><span>Qty:</span>
-                                                <input min="1" max="1000" placeholder="0" class="ant-input css-i6rspj ant-input-outlined" type="number" value="1">
-                                            </div>
-                                            <div class="cart_icons"><span role="img" aria-label="caret-up" tabindex="-1" class="anticon anticon-caret-up"><svg viewBox="0 0 1024 1024" focusable="false" data-icon="caret-up" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z"></path></svg></span>
-                                                <span
-                                                role="img" aria-label="caret-down" tabindex="-1" class="anticon anticon-caret-down">
-                                                    <svg viewBox="0 0 1024 1024" focusable="false" data-icon="caret-down" width="1em" height="1em" fill="currentColor" aria-hidden="true">
-                                                        <path d="M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z"></path>
-                                                    </svg>
-                                                    </span>
-                                            </div>
-                                        </div>
-                                        <button title="Add To Cart" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined"><span>Add To Cart</span></button>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                            <div class="product_view_comp_main">
-                                <div class="ant-row css-i6rspj">
-                                    <div class="ant-col ant-col-xs-4 css-i6rspj">
-                                        <div class="product_view_left">
-                                            <a href="#"><img alt="Product Image" title="MZ-76E500B/KR Samsung 860 EVO Series 500GB 2.5&quot; 6GB/s SATA 512MB Cache V-NAND 3bit MLC Solid State Drive" loading="lazy" width="220" height="220" decoding="async" data-nimg="1" srcset="/assets/image/MZXLR15THALA-000H3-thumbnail.avif"
-                                                src="/assets/image/MZXLR15THALA-000H3-thumbnail.avif" style="color: transparent;"></a>
-                                        </div>
-                                    </div>
-                                    <div class="ant-col ant-col-xs-12 css-i6rspj">
-                                        <div class="product_view_mid"><a href="#"><h3 title="MZ-76E500B/KR Samsung 860 EVO Series 500GB 2.5&quot; 6GB/s SATA 512MB Cache V-NAND 3bit MLC Solid State Drive">MZ-76E500B/KR Samsung 860 EVO Series 500GB 2.5" 6GB/s SATA 512MB Cache V-NAND 3bit MLC Solid State D...</h3></a>
-                                            <div
-                                            class="mnp">
-                                                <p><b>MPN:</b> <a title="MZ-76E500B/KR" href="#">MZ-76E500B/KR</a></p><span>|</span>
-                                                <p><b>Brand:</b> <a title="Samsung" href="#">Samsung</a></p>
-                                        </div>
-                                        <div class="specs">
-                                            <div class="left"><b>Model:</b>
-                                                <p>MZ-76E500</p>
-                                            </div>
-                                            <div class="left"><b>Product Line:</b>
-                                                <p>860 EVO</p>
-                                            </div>
-                                            <div class="left"><b>Product Type:</b>
-                                                <p>Solid State Drive</p>
-                                            </div>
-                                            <div class="left"><b>Package Quantity:</b>
-                                                <p>1</p>
-                                            </div>
-                                            <div class="left"><b>Package Type:</b>
-                                                <p>Retail</p>
-                                            </div>
-                                            <div class="left"><b>Storage Capacity:</b>
-                                                <p>500 GB</p>
-                                            </div>
-                                        </div>
-                                        <button title="Expand" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined expand_specs_button"><span>[+] Expand Specs</span></button>
-                                    </div>
-                                </div>
-                                <div class="ant-col ant-col-xs-8 css-i6rspj">
-                                    <div class="product_view_right">
-                                        <p class="in_stock" title="In Stock"><b>●</b> In Stock</p>
-                                        <div class="shipping"><b>Product Condition: </b>
-                                            <p title="Refurbished">Refurbished</p>
-                                        </div>
-                                        <div class="__className_139476 cut_price">$182.95</div>
-                                        <div class="__className_139476 main_price">$146.36</div>
-                                        <div class="quantity_main">
-                                            <div class="qty_wrapper"><span>Qty:</span>
-                                                <input min="1" max="1000" placeholder="0" class="ant-input css-i6rspj ant-input-outlined" type="number" value="1">
-                                            </div>
-                                            <div class="cart_icons"><span role="img" aria-label="caret-up" tabindex="-1" class="anticon anticon-caret-up"><svg viewBox="0 0 1024 1024" focusable="false" data-icon="caret-up" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z"></path></svg></span>
-                                                <span
-                                                role="img" aria-label="caret-down" tabindex="-1" class="anticon anticon-caret-down">
-                                                    <svg viewBox="0 0 1024 1024" focusable="false" data-icon="caret-down" width="1em" height="1em" fill="currentColor" aria-hidden="true">
-                                                        <path d="M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z"></path>
-                                                    </svg>
-                                                    </span>
-                                            </div>
-                                        </div>
-                                        <button title="Add To Cart" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined"><span>Add To Cart</span></button>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                            <div class="product_view_comp_main">
-                                <div class="ant-row css-i6rspj">
-                                    <div class="ant-col ant-col-xs-4 css-i6rspj">
-                                        <div class="product_view_left">
-                                            <a href="#"><img alt="Product Image" title="MZ-76E250B/KR Samsung 860 EVO Series 250GB 2.5&quot; 6GB/s SATA  512MB Cache V-NAND 3bit MLC Solid State Drive" loading="lazy" width="220" height="220" decoding="async" data-nimg="1" srcset="/assets/image/MZXLR15THALA-000H3-thumbnail.avif"
-                                                src="/assets/image/MZXLR15THALA-000H3-thumbnail.avif" style="color: transparent;"></a>
-                                        </div>
-                                    </div>
-                                    <div class="ant-col ant-col-xs-12 css-i6rspj">
-                                        <div class="product_view_mid"><a href="#"><h3 title="MZ-76E250B/KR Samsung 860 EVO Series 250GB 2.5&quot; 6GB/s SATA  512MB Cache V-NAND 3bit MLC Solid State Drive">MZ-76E250B/KR Samsung 860 EVO Series 250GB 2.5" 6GB/s SATA  512MB Cache V-NAND 3bit MLC Solid State ...</h3></a>
-                                            <div
-                                            class="mnp">
-                                                <p><b>MPN:</b> <a title="MZ-76E250B/KR" href="#">MZ-76E250B/KR</a></p><span>|</span>
-                                                <p><b>Brand:</b> <a title="Samsung" href="#">Samsung</a></p>
-                                        </div>
-                                        <div class="specs">
-                                            <div class="left"><b>Model:</b>
-                                                <p>MZ-76E250</p>
-                                            </div>
-                                            <div class="left"><b>Product Line:</b>
-                                                <p>860 EVO</p>
-                                            </div>
-                                            <div class="left"><b>Product Type:</b>
-                                                <p>Solid State Drive</p>
-                                            </div>
-                                            <div class="left"><b>Package Quantity:</b>
-                                                <p>1</p>
-                                            </div>
-                                            <div class="left"><b>Package Type:</b>
-                                                <p>Retail</p>
-                                            </div>
-                                            <div class="left"><b>Storage Capacity:</b>
-                                                <p>250 GB</p>
-                                            </div>
-                                        </div>
-                                        <button title="Expand" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined expand_specs_button"><span>[+] Expand Specs</span></button>
-                                    </div>
-                                </div>
-                                <div class="ant-col ant-col-xs-8 css-i6rspj">
-                                    <div class="product_view_right">
-                                        <p class="in_stock" title="In Stock"><b>●</b> In Stock</p>
-                                        <div class="shipping"><b>Product Condition: </b>
-                                            <p title="Refurbished">Refurbished</p>
-                                        </div>
-                                        <div class="__className_139476 cut_price">$182.95</div>
-                                        <div class="__className_139476 main_price">$146.36</div>
-                                        <div class="quantity_main">
-                                            <div class="qty_wrapper"><span>Qty:</span>
-                                                <input min="1" max="1000" placeholder="0" class="ant-input css-i6rspj ant-input-outlined" type="number" value="1">
-                                            </div>
-                                            <div class="cart_icons"><span role="img" aria-label="caret-up" tabindex="-1" class="anticon anticon-caret-up"><svg viewBox="0 0 1024 1024" focusable="false" data-icon="caret-up" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z"></path></svg></span>
-                                                <span
-                                                role="img" aria-label="caret-down" tabindex="-1" class="anticon anticon-caret-down">
-                                                    <svg viewBox="0 0 1024 1024" focusable="false" data-icon="caret-down" width="1em" height="1em" fill="currentColor" aria-hidden="true">
-                                                        <path d="M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z"></path>
-                                                    </svg>
-                                                    </span>
-                                            </div>
-                                        </div>
-                                        <button title="Add To Cart" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined"><span>Add To Cart</span></button>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                            <div class="product_view_comp_main">
-                                <div class="ant-row css-i6rspj">
-                                    <div class="ant-col ant-col-xs-4 css-i6rspj">
-                                        <div class="product_view_left">
-                                            <a href="#"><img alt="Product Image" title="MU-PC500K Samsung T7 Touch Series 500GB 10Gbps USB 3.2 Gen 2 (Type C) Black Portable Solid State Drive" loading="lazy" width="220" height="220" decoding="async" data-nimg="1" srcset="/assets/image/MZXLR15THALA-000H3-thumbnail.avif"
-                                                src="/assets/image/MZXLR15THALA-000H3-thumbnail.avif" style="color: transparent;"></a>
-                                        </div>
-                                    </div>
-                                    <div class="ant-col ant-col-xs-12 css-i6rspj">
-                                        <div class="product_view_mid"><a href="#"><h3 title="MU-PC500K Samsung T7 Touch Series 500GB 10Gbps USB 3.2 Gen 2 (Type C) Black Portable Solid State Drive">MU-PC500K Samsung T7 Touch Series 500GB 10Gbps USB 3.2 Gen 2 (Type C) Black Portable Solid State Dri...</h3></a>
-                                            <div
-                                            class="mnp">
-                                                <p><b>MPN:</b> <a title="MU-PC500K" href="#">MU-PC500K</a></p><span>|</span>
-                                                <p><b>Brand:</b> <a title="Samsung" href="#">Samsung</a></p>
-                                        </div>
-                                        <div class="specs">
-                                            <div class="left"><b>Model:</b>
-                                                <p>MU-PC500</p>
-                                            </div>
-                                            <div class="left"><b>Product Line:</b>
-                                                <p>T7 Touch</p>
-                                            </div>
-                                            <div class="left"><b>Product Type:</b>
-                                                <p>Solid State Drive</p>
-                                            </div>
-                                            <div class="left"><b>Package Quantity:</b>
-                                                <p>1</p>
-                                            </div>
-                                            <div class="left"><b>Package Type:</b>
-                                                <p>Retail</p>
-                                            </div>
-                                            <div class="left"><b>Storage Capacity:</b>
-                                                <p>500 GB</p>
-                                            </div>
-                                        </div>
-                                        <button title="Expand" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined expand_specs_button"><span>[+] Expand Specs</span></button>
-                                    </div>
-                                </div>
-                                <div class="ant-col ant-col-xs-8 css-i6rspj">
-                                    <div class="product_view_right">
-                                        <p class="in_stock" title="In Stock"><b>●</b> In Stock</p>
-                                        <div class="shipping"><b>Product Condition: </b>
-                                            <p title="Refurbished">Refurbished</p>
-                                        </div>
-                                        <div class="__className_139476 cut_price">$334.47</div>
-                                        <div class="__className_139476 main_price">$267.58</div>
-                                        <div class="quantity_main">
-                                            <div class="qty_wrapper"><span>Qty:</span>
-                                                <input min="1" max="1000" placeholder="0" class="ant-input css-i6rspj ant-input-outlined" type="number" value="1">
-                                            </div>
-                                            <div class="cart_icons"><span role="img" aria-label="caret-up" tabindex="-1" class="anticon anticon-caret-up"><svg viewBox="0 0 1024 1024" focusable="false" data-icon="caret-up" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z"></path></svg></span>
-                                                <span
-                                                role="img" aria-label="caret-down" tabindex="-1" class="anticon anticon-caret-down">
-                                                    <svg viewBox="0 0 1024 1024" focusable="false" data-icon="caret-down" width="1em" height="1em" fill="currentColor" aria-hidden="true">
-                                                        <path d="M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z"></path>
-                                                    </svg>
-                                                    </span>
-                                            </div>
-                                        </div>
-                                        <button title="Add To Cart" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined"><span>Add To Cart</span></button>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                            <div class="product_view_comp_main">
-                                <div class="ant-row css-i6rspj">
-                                    <div class="ant-col ant-col-xs-4 css-i6rspj">
-                                        <div class="product_view_left">
-                                            <a href="#"><img alt="Product Image" title="MU-PC500S/WW Samsung T7 Touch Series 500GB 10Gbps USB 3.2 Gen 2 (Type C) Silver Portable Solid State Drive" loading="lazy" width="220" height="220" decoding="async" data-nimg="1" srcset="/assets/image/MZXLR15THALA-000H3-thumbnail.avif"
-                                                src="/assets/image/MZXLR15THALA-000H3-thumbnail.avif" style="color: transparent;"></a>
-                                        </div>
-                                    </div>
-                                    <div class="ant-col ant-col-xs-12 css-i6rspj">
-                                        <div class="product_view_mid"><a href="#"><h3 title="MU-PC500S/WW Samsung T7 Touch Series 500GB 10Gbps USB 3.2 Gen 2 (Type C) Silver Portable Solid State Drive">MU-PC500S/WW Samsung T7 Touch Series 500GB 10Gbps USB 3.2 Gen 2 (Type C) Silver Portable Solid State...</h3></a>
-                                            <div
-                                            class="mnp">
-                                                <p><b>MPN:</b> <a title="MU-PC500S/WW" href="#">MU-PC500S/WW</a></p><span>|</span>
-                                                <p><b>Brand:</b> <a title="Samsung" href="#">Samsung</a></p>
-                                        </div>
-                                        <div class="specs">
-                                            <div class="left"><b>Model:</b>
-                                                <p>MU-PC500</p>
-                                            </div>
-                                            <div class="left"><b>Product Line:</b>
-                                                <p>T7 Touch</p>
-                                            </div>
-                                            <div class="left"><b>Product Type:</b>
-                                                <p>Solid State Drive</p>
-                                            </div>
-                                            <div class="left"><b>Package Quantity:</b>
-                                                <p>1</p>
-                                            </div>
-                                            <div class="left"><b>Package Type:</b>
-                                                <p>Retail</p>
-                                            </div>
-                                            <div class="left"><b>Storage Capacity:</b>
-                                                <p>500 GB</p>
-                                            </div>
-                                        </div>
-                                        <button title="Expand" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined expand_specs_button"><span>[+] Expand Specs</span></button>
-                                    </div>
-                                </div>
-                                <div class="ant-col ant-col-xs-8 css-i6rspj">
-                                    <div class="product_view_right">
-                                        <p class="in_stock" title="In Stock"><b>●</b> In Stock</p>
-                                        <div class="shipping"><b>Product Condition: </b>
-                                            <p title="Refurbished">Refurbished</p>
-                                        </div>
-                                        <div class="__className_139476 cut_price">$258.40</div>
-                                        <div class="__className_139476 main_price">$206.72</div>
-                                        <div class="quantity_main">
-                                            <div class="qty_wrapper"><span>Qty:</span>
-                                                <input min="1" max="1000" placeholder="0" class="ant-input css-i6rspj ant-input-outlined" type="number" value="1">
-                                            </div>
-                                            <div class="cart_icons"><span role="img" aria-label="caret-up" tabindex="-1" class="anticon anticon-caret-up"><svg viewBox="0 0 1024 1024" focusable="false" data-icon="caret-up" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z"></path></svg></span>
-                                                <span
-                                                role="img" aria-label="caret-down" tabindex="-1" class="anticon anticon-caret-down">
-                                                    <svg viewBox="0 0 1024 1024" focusable="false" data-icon="caret-down" width="1em" height="1em" fill="currentColor" aria-hidden="true">
-                                                        <path d="M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z"></path>
-                                                    </svg>
-                                                    </span>
-                                            </div>
-                                        </div>
-                                        <button title="Add To Cart" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined"><span>Add To Cart</span></button>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                            <div class="product_view_comp_main">
-                                <div class="ant-row css-i6rspj">
-                                    <div class="ant-col ant-col-xs-4 css-i6rspj">
-                                        <div class="product_view_left">
-                                            <a href="#"><img alt="Product Image" title="MU-PC500S Samsung T7 Touch Series 500GB 10Gbps USB 3.2 Gen 2 (Type C) Silver Portable Solid State Drive" loading="lazy" width="220" height="220" decoding="async" data-nimg="1" srcset="/assets/image/MZXLR15THALA-000H3-thumbnail.avif"
-                                                src="/assets/image/MZXLR15THALA-000H3-thumbnail.avif" style="color: transparent;"></a>
-                                        </div>
-                                    </div>
-                                    <div class="ant-col ant-col-xs-12 css-i6rspj">
-                                        <div class="product_view_mid"><a href="#"><h3 title="MU-PC500S Samsung T7 Touch Series 500GB 10Gbps USB 3.2 Gen 2 (Type C) Silver Portable Solid State Drive">MU-PC500S Samsung T7 Touch Series 500GB 10Gbps USB 3.2 Gen 2 (Type C) Silver Portable Solid State Dr...</h3></a>
-                                            <div
-                                            class="mnp">
-                                                <p><b>MPN:</b> <a title="MU-PC500S" href="#">MU-PC500S</a></p><span>|</span>
-                                                <p><b>Brand:</b> <a title="Samsung" href="#">Samsung</a></p>
-                                        </div>
-                                        <div class="specs">
-                                            <div class="left"><b>Model:</b>
-                                                <p>MU-PC500</p>
-                                            </div>
-                                            <div class="left"><b>Product Line:</b>
-                                                <p>T7 Touch</p>
-                                            </div>
-                                            <div class="left"><b>Product Type:</b>
-                                                <p>Solid State Drive</p>
-                                            </div>
-                                            <div class="left"><b>Package Quantity:</b>
-                                                <p>1</p>
-                                            </div>
-                                            <div class="left"><b>Package Type:</b>
-                                                <p>Retail</p>
-                                            </div>
-                                            <div class="left"><b>Storage Capacity:</b>
-                                                <p>500 GB</p>
-                                            </div>
-                                        </div>
-                                        <button title="Expand" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined expand_specs_button"><span>[+] Expand Specs</span></button>
-                                    </div>
-                                </div>
-                                <div class="ant-col ant-col-xs-8 css-i6rspj">
-                                    <div class="product_view_right">
-                                        <p class="in_stock" title="In Stock"><b>●</b> In Stock</p>
-                                        <div class="shipping"><b>Product Condition: </b>
-                                            <p title="Refurbished">Refurbished</p>
-                                        </div>
-                                        <div class="__className_139476 cut_price">$258.40</div>
-                                        <div class="__className_139476 main_price">$206.72</div>
-                                        <div class="quantity_main">
-                                            <div class="qty_wrapper"><span>Qty:</span>
-                                                <input min="1" max="1000" placeholder="0" class="ant-input css-i6rspj ant-input-outlined" type="number" value="1">
-                                            </div>
-                                            <div class="cart_icons"><span role="img" aria-label="caret-up" tabindex="-1" class="anticon anticon-caret-up"><svg viewBox="0 0 1024 1024" focusable="false" data-icon="caret-up" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M858.9 689L530.5 308.2c-9.4-10.9-27.5-10.9-37 0L165.1 689c-12.2 14.2-1.2 35 18.5 35h656.8c19.7 0 30.7-20.8 18.5-35z"></path></svg></span>
-                                                <span
-                                                role="img" aria-label="caret-down" tabindex="-1" class="anticon anticon-caret-down">
-                                                    <svg viewBox="0 0 1024 1024" focusable="false" data-icon="caret-down" width="1em" height="1em" fill="currentColor" aria-hidden="true">
-                                                        <path d="M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z"></path>
-                                                    </svg>
-                                                    </span>
-                                            </div>
-                                        </div>
-                                        <button title="Add To Cart" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined"><span>Add To Cart</span></button>
-                                    </div>
-                                </div>
-                            </div>
                             </div>
                             <div class="bottom_navigation">
                                 <p>Showing <b>1 - 10</b> Results</p>
@@ -712,59 +131,83 @@
             </section>
         </main>
     </div>
-    <div class="ant-select-dropdown ant-select-dropdown-hidden css-i6rspj ant-select-dropdown-placement-topLeft" style="--arrow-x: 72.5px; --arrow-y: 202px; inset: auto auto 81px 452px; box-sizing: border-box; width: 145px;">
-        <div>
-            <div role="listbox" id="rc_select_2_list" style="height: 0px; width: 0px; overflow: hidden;">
-                <div aria-label="Price High - Low" role="option" id="rc_select_2_list_3" aria-selected="false">-sell_price</div>
-                <div aria-label="Name A-Z" role="option" id="rc_select_2_list_4" aria-selected="false">title</div>
-                <div aria-label="Name Z-A" role="option" id="rc_select_2_list_5" aria-selected="false">-title</div>
-            </div>
-           <div class="rc-virtual-list" style="position: relative;">
-                <div class="rc-virtual-list-holder" style="max-height: 256px; overflow-y: hidden; overflow-anchor: none;">
-                    <div>
-                        <div class="rc-virtual-list-holder-inner" style="display: flex; flex-direction: column;">
-                            <div aria-selected="false" class="ant-select-item ant-select-item-option" title="Sort by oldest">
-                                <div class="ant-select-item-option-content">Sort by oldest</div><span class="ant-select-item-option-state" unselectable="on" aria-hidden="true" style="user-select: none;"></span></div>
-                            <div aria-selected="true" class="ant-select-item ant-select-item-option ant-select-item-option-selected"
-                            title="Sort by latest">
-                                <div class="ant-select-item-option-content">Sort by latest</div><span class="ant-select-item-option-state" unselectable="on" aria-hidden="true" style="user-select: none;"></span></div>
-                            <div aria-selected="false" class="ant-select-item ant-select-item-option" title="Price Low - High">
-                                <div class="ant-select-item-option-content">Price Low - High</div><span class="ant-select-item-option-state" unselectable="on" aria-hidden="true" style="user-select: none;"></span></div>
-                            <div aria-selected="false" class="ant-select-item ant-select-item-option ant-select-item-option-active"
-                            title="Price High - Low">
-                                <div class="ant-select-item-option-content">Price High - Low</div><span class="ant-select-item-option-state" unselectable="on" aria-hidden="true" style="user-select: none;"></span></div>
-                            <div aria-selected="false" class="ant-select-item ant-select-item-option" title="Name A-Z">
-                                <div class="ant-select-item-option-content">Name A-Z</div><span class="ant-select-item-option-state" unselectable="on" aria-hidden="true" style="user-select: none;"></span></div>
-                            <div aria-selected="false" class="ant-select-item ant-select-item-option" title="Name Z-A">
-                                <div class="ant-select-item-option-content">Name Z-A</div><span class="ant-select-item-option-state" unselectable="on" aria-hidden="true" style="user-select: none;"></span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </template>
-<script>
-    $(document).ready(function () {
-        // 2. Hover effect to highlight item
-        $('.ant-select-item-option').hover(
-            function () {
-                $('.ant-select-item-option').removeClass('ant-select-item-option-active');
-                $(this).addClass('ant-select-item-option-active');
-            },
-            function () {
-                $(this).removeClass('ant-select-item-option-active');
-            }
-        );
+<script setup>
+    //Sub Component
+    import CategoryBreadcrumb from '@/components/SingleProduct/CategoryBreadcrumb.vue';
+    import ProductList from '@/components/Shop/ProductList.vue';
+    
+    import { ref, onMounted, watch } from 'vue';
+    import { useRoute } from 'vue-router';
+    import { useCategories } from '@/composables/useCategories';
+    import { useProducts } from '@/composables/useProducts';
+    import { useSettings } from '@/composables/useSettings.js'
+    import { useCart } from '@/composables/useCart'
 
-        // 3. Click to select option
-        $('.ant-select-item-option').on('click', function () {
-            $('.ant-select-item-option').removeClass('ant-select-item-option-selected').attr('aria-selected', 'false');
-            $(this).addClass('ant-select-item-option-selected').attr('aria-selected', 'true');
+    // Composables
+    const { settings } = useSettings();
+    const { getCategoryBySlug } = useCategories();
+    const { products, pagination, loading, getProductsByCategory } = useProducts();
+    const { addToCart } = useCart();
 
-            // Optionally hide dropdown after selection
-            $('.ant-select-dropdown').addClass('ant-select-dropdown-hidden');
-            $('.ant-select-dropdown').css('pointer-events', 'none');
-        });
-    });
+    // Route & reactive state
+    const route = useRoute();
+    const category = ref(null);
+    const categoryTrail = ref([]);
+
+    // Store quantities per product
+    const quantities = ref({});
+
+    // Quantity handlers
+    const increaseQuantity = (product) => {
+        const key = product.slug;
+        quantities.value[key] = (quantities.value[key] || 1) + 1;
+    };
+
+    const decreaseQuantity = (product) => {
+        const key = product.slug;
+        if ((quantities.value[key] || 1) > 1) {
+            quantities.value[key]--;
+        }
+    };
+
+    // Add to cart using selected quantity
+    const handleAddToCart = async (product) => {
+        const quantity = quantities.value[product.slug] || 1;
+        await addToCart(product.slug, quantity);
+    };
+
+    // Load category and its products
+    const loadCategory = async () => {
+        const slug = route.params.slug;
+
+        if (!slug) {
+            console.warn('Missing slug:', { slug });
+            return;
+        }
+
+        try {
+            const result = await getCategoryBySlug(slug);
+            category.value = result;
+            categoryTrail.value = result?.category_trail || [];
+
+            await getProductsByCategory({
+                categorySlug: slug,
+                perPage: 12,
+                page: 1,
+                sortField: 'created_at',
+                sortDirection: 'desc',
+                search: '',
+            });
+        } catch (err) {
+            console.error('Failed to load category or products:', err);
+        }
+    };
+
+    // Lifecycle
+    onMounted(loadCategory);
+
+    // Watch for route slug changes
+    watch(() => [route.params.slug], loadCategory);
+
 </script>

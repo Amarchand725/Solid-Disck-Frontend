@@ -1,92 +1,56 @@
-// src/initPlugins.js
-
 export function initAllPlugins() {
-    // HSMegaMenu
-    $('.js-mega-menu').HSMegaMenu({
-      event: 'hover',
-      direction: 'horizontal',
-      pageContainer: $('.container'),
-      breakpoint: 767.98,
-      hideTimeOut: 0
-    });
-  
-    // SVG Injector
-    $.HSCore.components.HSSVGIngector.init('.js-svg-injector');
-  
-    // Header
-    $.HSCore.components.HSHeader.init($('#header'));
-  
-    // Scroll Animations
-    $.HSCore.components.HSOnScrollAnimation.init('[data-animation]');
-  
-    // Unfold
-    $.HSCore.components.HSUnfold.init($('[data-unfold-target]'), {
-      afterOpen: function () {
-        $(this).find('input[type="search"]').focus();
+  // Tabs logic
+  const tabs = document.querySelectorAll(".ant-tabs-tab");
+  const tabBtns = document.querySelectorAll(".ant-tabs-tab-btn");
+  const panels = document.querySelectorAll("[id^='rc-tabs-2-panel']");
+
+  tabs.forEach((tab, index) => {
+    tab.addEventListener("click", () => {
+      tabs.forEach(t => t.classList.remove("ant-tabs-tab-active"));
+      tabBtns.forEach(btn => btn.setAttribute("aria-selected", "false"));
+      panels.forEach(panel => panel.style.display = "none");
+
+      tab.classList.add("ant-tabs-tab-active");
+      tabBtns[index].setAttribute("aria-selected", "true");
+
+      const panelId = tabBtns[index].getAttribute("aria-controls");
+      const panelToShow = document.getElementById(panelId);
+      if (panelToShow) {
+        panelToShow.style.display = "block";
       }
     });
-  
-    // FancyBox
-    $.HSCore.components.HSFancyBox.init('.js-fancybox');
-  
-    // Countdown
-    $.HSCore.components.HSCountdown.init('.js-countdown', {
-      yearsElSelector: '.js-cd-years',
-      monthsElSelector: '.js-cd-months',
-      daysElSelector: '.js-cd-days',
-      hoursElSelector: '.js-cd-hours',
-      minutesElSelector: '.js-cd-minutes',
-      secondsElSelector: '.js-cd-seconds'
+  });
+
+  panels.forEach((panel, idx) => {
+    panel.style.display = idx === 0 ? "block" : "none";
+  });
+
+  // openThis function
+  window.openThis = function () {
+    document.querySelectorAll('.ant-select-dropdown')
+      .forEach(el => el.classList.toggle('ant-select-dropdown-hidden'));
+  };
+
+  // toggleSummary function
+  window.toggleSummary = function () {
+    const body = document.getElementById("summaryBody");
+    if (body) body.classList.toggle('ant-collapse-content-hidden');
+  };
+
+  // handleOpen function
+  window.handleOpen = function () {
+    const dropdown = document.getElementById('header-menu-dropdown');
+    if (dropdown) {
+      dropdown.style.display = dropdown.style.display === 'none' ? 'flex' : 'none';
+    }
+  };
+
+  // Checkbox toggle for billing form
+  const checkbox = document.getElementById('billToDiffCheckbox');
+  if (checkbox) {
+    checkbox.addEventListener('change', function () {
+      const form = document.getElementById('billingForm');
+      if (form) form.style.display = this.checked ? 'block' : 'none';
     });
-  
-    // Malihu Scrollbar
-    $.HSCore.components.HSMalihuScrollBar.init($('.js-scrollbar'));
-  
-    // Form Focus
-    $.HSCore.components.HSFocusState.init();
-  
-    // Validation
-    $.HSCore.components.HSValidation.init('.js-validate', {
-      rules: {
-        confirmPassword: {
-          equalTo: '#signupPassword'
-        }
-      }
-    });
-  
-    // Show Animations
-    $.HSCore.components.HSShowAnimation.init('.js-animation-link');
-  
-    // Slick Carousel
-    $.HSCore.components.HSSlickCarousel.init('.js-slick-carousel');
-  
-    // GoTo Button
-    $.HSCore.components.HSGoTo.init('.js-go-to');
-  
-    // Hamburger
-    $.HSCore.components.HSHamburgers.init('#hamburgerTrigger');
-  
-    // Sidebar Unfold
-    $.HSCore.components.HSUnfold.init($('[data-unfold-target]'), {
-      beforeClose: function () {
-        $('#hamburgerTrigger').removeClass('is-active');
-      },
-      afterClose: function () {
-        $('#headerSidebarList .collapse.show').collapse('hide');
-      }
-    });
-  
-    // Sidebar Collapse
-    $('#headerSidebarList [data-toggle="collapse"]').off('click').on('click', function (e) {
-      e.preventDefault();
-      var target = $(this).data('target');
-      if ($(this).attr('aria-expanded') === "true") {
-        $(target).collapse('hide');
-      } else {
-        $(target).collapse('show');
-      }
-    });
-  
-    // Select Picker
-    $.HSCore.components.HSSelectPicker.init('.js-select');
-  }  
+  }
+}
