@@ -56,6 +56,22 @@ export function useCart() {
     }
   }
 
+  const updateShipping = async (rate) => {
+    loading.value = true
+    try {
+      const response = await axios.put('/cart/update-shipping', {
+        rate
+      })
+      setCartData(response.data)
+      message.value = response.data.message || 'Shipping updated.'
+      // toast.success(message.value)
+    } catch (error) {
+      handleError(error, 'Failed to update shipping.')
+    } finally {
+      loading.value = false
+    }
+  }
+
   const increaseCartItem = async (item_id) => {
     loading.value = true    
     try {
@@ -122,6 +138,7 @@ export function useCart() {
     message,
     addToCart,
     updateCartItem,
+    updateShipping,
     increaseCartItem,
     decreaseCartItem,
     removeCartItem,

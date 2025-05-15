@@ -6,12 +6,12 @@ const instance = axios.create({
 
 axios.defaults.withCredentials = true
 
-// Attach Bearer token automatically
 instance.interceptors.request.use((config) => {
-  const token = localStorage.getItem('auth_token'); // read token from localStorage
+  const token = localStorage.getItem('auth_token');
   if (token) {
-    config.headers.Authorization = `Bearer ${token}`; // add Authorization header
+    config.headers.Authorization = `Bearer ${token}`;
   }
+  
   return config;
 });
 

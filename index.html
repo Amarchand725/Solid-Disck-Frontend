@@ -295,32 +295,5 @@
     <!-- main js -->
     <script type="module" src="/src/main.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
-    <script>
-        function openThis() {
-            $('.ant-select-dropdown').toggleClass('ant-select-dropdown-hidden');
-        }
-        function toggleSummary() {
-            const body = document.getElementById("summaryBody");
-            body.classList.toggle('ant-collapse-content-hidden');
-        }
-        function handleOpen() {
-            const dropdown = document.getElementById('header-menu-dropdown'); // Corrected method name
-            if (dropdown.style.display === 'none') {
-                dropdown.style.display = 'flex';
-            } else {
-                dropdown.style.display = 'none';
-            }
-        }
-        
-        document.addEventListener('DOMContentLoaded', function () {
-            const checkbox = document.getElementById('billToDiffCheckbox');
-            if (checkbox) {
-                checkbox.addEventListener('change', function () {
-                    const form = document.getElementById('billingForm');
-                    form.style.display = this.checked ? 'block' : 'none';
-                });
-            }
-        });
-    </script>
 </body>
 </html>

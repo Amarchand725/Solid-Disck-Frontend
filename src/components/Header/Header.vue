@@ -117,5 +117,4 @@ const onLogoError = (event) => {
 
 const store = useStore();
 const isLoggedIn = computed(() => store.getters.isLoggedIn);
-
 </script>

@@ -36,14 +36,6 @@ export function useCustomer() {
     login_password: ''
   });
 
-  const customer = reactive({
-    first_name: '',
-    last_name: '',
-    email: '',
-    phone: '',
-    country: ''
-  });
-
   const clearErrors = () => {
     for (const key in errors) {
       errors[key] = '';
@@ -123,24 +115,12 @@ export function useCustomer() {
    // Fetch user data after login
   const fetchUserData = async () => {
     const token = localStorage.getItem('auth_token');
-    if (token) {
+    if (token != undefined) {
       try {
-        // const response = await axios.get('/customer/profile', {
-        //   headers: { Authorization: `Bearer ${token}` }
-        // });
         const response = await axios.get('/customer/profile');
-
-        console.log(response);
         
-        if (response.data && response.data.data) {
-          customer.first_name = response.data.data.first_name;
-          customer.last_name = response.data.data.last_name;
-          customer.email = response.data.data.email;
-          customer.phone = response.data.data.phone;
-          customer.country = response.data.data.country;
-          
-          // Optionally, store this user data in Vuex store as well
-          store.commit('setCustomerData', customer);
+        if (response.data && response.data) {
+          store.commit('setCustomerData', response.data.data);
 
         } else {
           toast.error('Failed to fetch user data!');
@@ -168,24 +148,10 @@ export function useCustomer() {
         i_have_read: formData.i_have_read.value,
       });
 
-      // console.log(response); // Log the response to debug
-
-      // Check for token and structure
-      // if (response.data && response.data.data && response.data.data.token) {
-      //   localStorage.setItem('auth_token', response.data.data.token);
-      //   store.dispatch('login'); // 🔥 Mark logged in globally
-      //   router.push('/my-account');
-      // } else {
-      //   toast.error('No token received!');
-      // }
-
-      if (response.data && response.data.data && response.data.data.token) {
-        localStorage.setItem('auth_token', response.data.data.token);
-        store.dispatch('login');
-        await fetchUserData();  // Fetch user data after successful login
+      if (response.data.data.token) {
+        await store.dispatch('login', response.data.data.token); // pass token to store
+        await fetchUserData();
         router.push('/my-account');
-      } else {
-        toast.error('No token received!');
       }
 
       toast.success(response.data.message || 'Registered successfully!');
@@ -222,17 +188,10 @@ export function useCustomer() {
       });
 
       toast.success(response.data.message || 'Login successful!');
-      // console.log(response.data.token)
-      // if (response.data.token) {
-      //   localStorage.setItem('auth_token', response.data.token);
-      //   store.dispatch('login'); // 🔥 Update Vuex state
-      //   router.push('/my-account');
-      // }
 
       if (response.data.token) {
-        localStorage.setItem('auth_token', response.data.token);
-        store.dispatch('login');
-        await fetchUserData();  // Fetch user data after successful login
+        await store.dispatch('login', response.data.token); // pass token to store
+        await fetchUserData();
         router.push('/my-account');
       }
 
@@ -269,7 +228,6 @@ export function useCustomer() {
     // Shared
     loading,
     errors,
-    customer,
 
     // Functions
     customer_register,

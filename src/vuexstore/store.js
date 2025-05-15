@@ -2,20 +2,30 @@ import { createStore } from 'vuex';
 
 export default createStore({
   state: {
-    isLoggedIn: !!localStorage.getItem('auth_token'),  // Check if there's an auth token stored in localStorage
+    isLoggedIn: !!localStorage.getItem('auth_token'),
+    token: localStorage.getItem('auth_token') || null,
+    customer: JSON.parse(localStorage.getItem('customer_data')) || null,
   },
   mutations: {
     setLogin(state, token) {
       state.isLoggedIn = true;
-      localStorage.setItem('auth_token', token);  // Save the token to localStorage
+      state.token = token;
+      localStorage.setItem('auth_token', token);
     },
     setLogout(state) {
       state.isLoggedIn = false;
-      localStorage.removeItem('auth_token');  // Remove the token from localStorage
+      state.token = null;
+      localStorage.removeItem('auth_token');
+    },
+    setCustomerData(state, customer) {
+      state.customer = customer;
+      localStorage.setItem('customer_data', JSON.stringify(customer));
     },
   },
   getters: {
-    isLoggedIn: (state) => state.isLoggedIn,  // Get the login status
+    token: (state) => state.token,
+    isLoggedIn: (state) => state.isLoggedIn,
+    customer: (state) => state.customer,
   },
   actions: {
     login({ commit }, token) {

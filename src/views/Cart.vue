@@ -40,8 +40,6 @@ import { useCart } from '@/composables/useCart'
 
 const { settings } = useSettings()
 const { fullCart, removeCartItem, clearCart, increaseCartItem, decreaseCartItem } = useCart()
-
-
 </script>
 
 <style scope>
