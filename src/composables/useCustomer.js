@@ -279,17 +279,15 @@ export function useCustomer() {
       if (response.data.token) {
         await store.dispatch('login', response.data.token); // pass token to store
         await fetchUserData();
-        // await fetchOrders();
-        // router.push('/my-account');
         const redirectToCheckout = localStorage.getItem('redirect_to_checkout');
 
         if (redirectToCheckout === 'true') {
           localStorage.removeItem('redirect_to_checkout');
           router.push({ name: 'Checkout' }); // redirect to checkout page
         } else {
-          localStorage.removeItem('redirect_to_checkout');
-          localStorage.removeItem('shipping');
-          localStorage.removeItem('billing');
+          // localStorage.removeItem('redirect_to_checkout');
+          // localStorage.removeItem('shipping');
+          // localStorage.removeItem('billing');
           router.push('/my-account'); // default after-login page
         }
       }

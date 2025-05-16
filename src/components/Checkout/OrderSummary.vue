@@ -41,9 +41,9 @@
                 <div class="sub_total"><span>Shipping:</span>
                     <p>{{ settings?.currency ?? '' }}{{ fullCart.shipping_cost }}</p>
                 </div>
-                <div class="sub_total"><span>Tax:</span>
+                <!-- <div class="sub_total"><span>Tax:</span>
                     <p> (0%) $0.00</p>
-                </div>
+                </div> -->
             </div>
             <div class="sub_total total"><span>Total:</span>
                 <p>{{ settings?.currency ?? '' }}{{ fullCart.total }}</p>
@@ -61,12 +61,9 @@
 
     const props = defineProps({
         shippingRef: Object,
-        // billingRef: Object,
-        // paymentRef: Object,
         shippingDetails: Object,
         billingDetails: Object,
     })
-
 
     const { settings } = useSettings()
     const { cartItemCount, fullCart } = useCart()
@@ -80,9 +77,9 @@
             const shippingForm = props.shippingDetails ?? {}
             const billingFormData = props.billingDetails ?? {}
 
-            const billingForm = billingFormData.sameAsShipping
-                ? shippingForm
-                : props.billingFormData ?? {}
+            const billingForm = billingFormData?.sameAsShipping
+            ? { ...shippingForm, same_as_shipping: true }
+            : { ...(billingFormData || {}), same_as_shipping: false }
 
             const stripePaymentMethodId = await paymentRef.value.getPaymentMethodId()
 
@@ -90,13 +87,10 @@
                 shipping: shippingForm,
                 billing: billingForm,
                 cart: fullCart.value,
-                payment: {
-                    stripePaymentMethodId,
-                },
+                paymentMethodId: stripePaymentMethodId,
             }
-            console.log(payload)
-            const result = await placeOrder(payload)
-            console.log('Order placed!', result)
+            await placeOrder(payload)
+            console.log('Order placed!')
         } catch (err) {
             console.error('Checkout failed:', err.message || err)
         }
