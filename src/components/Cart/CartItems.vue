@@ -16,7 +16,9 @@
                 :key="item.id"
             >
                 <div class="items">
-                    <router-link to="#">
+                    <router-link
+                        :to="`/products/${item.product.category_url}/${item.product.slug}`"
+                    >
                         <img 
                             :alt="item.product.title" 
                             loading="lazy" width="70" height="70" decoding="async" data-nimg="1" 
@@ -26,9 +28,11 @@
                         >
                     </router-link>
                     <div class="items_inner">
-                        <a href="#">
-                            {{ item.product.title }}
-                        </a>
+                        <router-link 
+                            :to="`/products/${item.product.category_url}/${item.product.slug}`"
+                        >
+                            {{ shortDescription(item?.product?.short_description, 150) }}
+                        </router-link>
                     </div>
                 </div>
                 <div class="price">
@@ -79,7 +83,9 @@
                 :key="item.id"
             >
                 <div class="items">
-                    <router-link to="#">
+                    <router-link 
+                        :to="`/products/${item.product.category_url}/${item.product.slug}`"
+                    >
                         <img 
                             :alt="item.product.title" 
                             loading="lazy" width="70" height="70" decoding="async" data-nimg="1" 
@@ -89,9 +95,11 @@
                         >
                     </router-link>
                     <div class="items_inner">
-                        <a href="#">
-                            {{ item.product.title }}
-                        </a>
+                        <router-link 
+                            :to="`/products/${item.product.category_url}/${item.product.slug}`"
+                        >
+                            {{ shortDescription(item?.product?.short_description, 150) }}
+                        </router-link>
                         <div class="bottom_prices_and_quantity">
                             <div class="price">
                                 <p>Price</p><span class="original_price">{{ settings?.currency ?? '' }}{{ item.unit_price }}</span>
@@ -168,5 +176,17 @@
 <script setup>
     const onImageError = (event) => {
         event.target.src = '/placeholders/70x70.svg'
+    }
+
+    function shortDescription(html, limit = '') {
+        const text = (html || '').replace(/<[^>]*>/g, ''); // strip HTML tags safely
+
+        // If limit is a number and greater than 0, apply truncation
+        if (Number(limit) > 0) {
+            return text.length > limit ? text.substring(0, limit) + '...' : text;
+        }
+
+        // Otherwise, return the full text
+        return text;
     }
 </script>

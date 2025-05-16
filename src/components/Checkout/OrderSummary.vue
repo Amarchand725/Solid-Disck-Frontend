@@ -20,7 +20,7 @@
                                 :key="item.id"
                             >
                                 <div class="left">
-                                    <span>{{ item.product.title }}<sup>x{{ item.quantity }}</sup></span>
+                                    <span>{{ shortDescription(item?.product?.short_description, 50) }}<sup>x{{ item.quantity }}</sup></span>
                                 </div>
                                 <div class="right">
                                     <p>{{ settings?.currency ?? '' }}{{ item.sub_total }}</p>
@@ -48,15 +48,69 @@
             <div class="sub_total total"><span>Total:</span>
                 <p>{{ settings?.currency ?? '' }}{{ fullCart.total }}</p>
             </div>
-            <PaymentCheckout />
+            <PaymentCheckout :error="error" :loading="loading" @placeOrder="handlePlaceOrder" ref="paymentRef" />
         </div>
     </div>
 </template>
 <script setup>
+    import { ref } from 'vue'
     import { useSettings } from '@/composables/useSettings.js'
     import { useCart } from '@/composables/useCart'
     import PaymentCheckout from '@/components/Checkout/PaymentCheckout.vue';
+    import { usePlaceOrder } from '@/composables/usePlaceOrder'
+
+    const props = defineProps({
+        shippingRef: Object,
+        // billingRef: Object,
+        // paymentRef: Object,
+        shippingDetails: Object,
+        billingDetails: Object,
+    })
+
 
     const { settings } = useSettings()
     const { cartItemCount, fullCart } = useCart()
+
+    const paymentRef = ref()
+
+    const { placeOrder, loading, error, success } = usePlaceOrder()
+
+    const handlePlaceOrder = async () => {
+        try {
+            const shippingForm = props.shippingDetails ?? {}
+            const billingFormData = props.billingDetails ?? {}
+
+            const billingForm = billingFormData.sameAsShipping
+                ? shippingForm
+                : props.billingFormData ?? {}
+
+            const stripePaymentMethodId = await paymentRef.value.getPaymentMethodId()
+
+            const payload = {
+                shipping: shippingForm,
+                billing: billingForm,
+                cart: fullCart.value,
+                payment: {
+                    stripePaymentMethodId,
+                },
+            }
+            console.log(payload)
+            const result = await placeOrder(payload)
+            console.log('Order placed!', result)
+        } catch (err) {
+            console.error('Checkout failed:', err.message || err)
+        }
+    }
+
+    function shortDescription(html, limit = '') {
+        const text = (html || '').replace(/<[^>]*>/g, ''); // strip HTML tags safely
+
+        // If limit is a number and greater than 0, apply truncation
+        if (Number(limit) > 0) {
+            return text.length > limit ? text.substring(0, limit) + '...' : text;
+        }
+
+        // Otherwise, return the full text
+        return text;
+    }
 </script>
