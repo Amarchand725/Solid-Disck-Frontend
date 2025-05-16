@@ -19,6 +19,7 @@ import Blogs from '../views/Blogs.vue'
 import BlogDetails from '../views/BlogDetails.vue'
 import ContactUs from '../views/ContactUs.vue'
 import MyAccount from '../views/MyAccount.vue'
+import OrderSuccess from '../views/OrderSuccess.vue'
 
 const routes = [
   {
@@ -30,11 +31,9 @@ const routes = [
       const isAuthenticated = localStorage.getItem('auth_token') || store.state.auth.token;
 
       if (isAuthenticated) {
-        // If the user is logged in, redirect them to the account page
-        next({ name: 'MyAccount' });  // Redirect to the account page (or any other route)
+        next({ name: 'MyAccount' });
       } else {
-        // Otherwise, continue to the login page
-        next();
+        next(); // allow to continue to login
       }
     }
   },
@@ -72,8 +71,26 @@ const routes = [
     path: '/checkout',
     name: 'Checkout',
     component: Checkout,
-    meta: { title: 'Checkout' }
+    meta: { title: 'Checkout' },
+    beforeEnter: (to, from, next) => {
+      const store = useStore();
+      const isAuthenticated = store.getters.isLoggedIn || localStorage.getItem('auth_token');
+
+      if (!isAuthenticated) {
+        localStorage.setItem('redirect_to_checkout', 'true');
+        next({ name: 'Login', query: { message: 'Please login or register to continue to checkout.' } });
+      } else {
+        next();
+      }
+    }
   },
+  {
+    path: '/order-success/:orderNumber',
+    name: 'OrderSuccess',
+    component: OrderSuccess,
+    props: true,  // important to enable passing params as props
+  },
+
   // {
   //   path: '/track-order',
   //   name: 'TrackOrder',

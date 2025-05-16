@@ -26,7 +26,7 @@
                     <div id="errors-output" role="alert" style="color: red;"></div>
                     <div class="form-group card_number_main">
                         <div id="card-element" class="border p-2 rounded"></div>
-                        <p v-if="cardError" class="text-red-500">{{ cardError }}</p>
+                        <!-- <p v-if="cardError" class="text-red-500">{{ cardError }}</p> -->
                     </div>
                     <!-- <div class="form-group card_number_main">
                         <label id="cardNumber-label" class="font-semibold">Card Number</label>
@@ -86,6 +86,8 @@ const { mountStripe, getPaymentMethodId } = useStripe()
 onMounted(() => {
   mountStripe('card-element').catch(err => {
     cardError.value = err.message
+
+    console.log(cardError);
   })
 })
 

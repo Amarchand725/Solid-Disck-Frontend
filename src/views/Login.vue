@@ -70,17 +70,21 @@
     </div>
 </template>
 <script setup>
-    import { ref } from 'vue';
-    import { reactive } from 'vue'
+    import { useRoute } from 'vue-router';
+    import { ref, reactive } from 'vue';
     import { useCustomer } from '@/composables/useCustomer'
     import { useSettings } from '@/composables/useSettings.js'
+    import { useToast } from 'vue-toastification'
+
+    const route = useRoute();
+    const toast = useToast();
     const { settings } = useSettings()
     const passwordVisible = ref(false);
 
     const form = reactive({
-    login_email: '',
-    login_password: '',
-    remember_me: ''
+        login_email: '',
+        login_password: '',
+        remember_me: ''
     })
 
     const {
@@ -97,5 +101,13 @@
     }
     function togglePassword() {
         passwordVisible.value = !passwordVisible.value;
+    }
+
+    if (route.query.message) {
+        toast.warning(route.query.message, {
+            timeout: 5000,
+            closeOnClick: true,
+            pauseOnHover: true,
+        });
     }
 </script>
