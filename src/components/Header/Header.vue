@@ -30,13 +30,6 @@
                             :settings="settings"
                             :removeCartItem="removeCartItem"
                         />
-                       
-                        <!-- <div class="left-icons">
-                            <router-link to="login">
-                                <img src="/assets/image/SignIn-Icon.webp" alt="SignIn Icon" title="Signin">
-                                <p>Sign In</p>
-                            </router-link>
-                        </div> -->
                         <div class="left-icons" v-if="!isLoggedIn">
                             <router-link to="/login">
                             <img src="/assets/image/SignIn-Icon.webp" alt="SignIn Icon" />
@@ -65,14 +58,6 @@
                             :settings="settings"
                             :removeCartItem="removeCartItem"
                         />
-                        <!-- <div class="left-icons">
-                            <router-link 
-                                to="/login"
-                            >
-                                <img src="/assets/image/SignIn-Icon.webp" alt="SignIn Icon" title="Signin">
-                                <p>Sign In</p>
-                            </router-link>
-                        </div> -->
                         <div class="left-icons" v-if="!isLoggedIn">
                             <router-link to="/login">
                             <img src="/assets/image/SignIn-Icon.webp" alt="SignIn Icon" />

@@ -16,23 +16,28 @@
                     <div class="head_main">
                         <h1>Shipping Details</h1>
                     </div>
-                    <!-- <ShippingDetailForm /> -->
                     <ShippingDetailForm
                         :country="shippingCountry"
                         :zip="shippingZip"
                         @update:country="shippingCountry = $event"
                         @update:zip="shippingZip = $event"
+                        v-model:formData="shippingDetails"
                     />
                     <div class="head_main two">
                         <h1>Billing Details</h1>
                     </div>
-                    <BillingDetails />
+                    <BillingDetailsForm 
+                        v-model:formData="billingDetails" 
+                    />
                     <ShippingMethod
                         :country="shippingCountry"
                         :zip="shippingZip"
                     />
                 </div>
-                <OrderSummary />
+                <OrderSummary 
+                    :shippingDetails="shippingDetails"
+                    :billingDetails="billingDetails"
+                />
             </div>
         </section>
     </div>
@@ -42,15 +47,17 @@
     import OrderSummary from '@/components/Checkout/OrderSummary.vue';
     import ShippingMethod from '@/components/Checkout/ShippingMethod.vue';
     import ShippingDetailForm from '@/components/Checkout/ShippingDetailForm.vue';    
-    import BillingDetails from '@/components/Checkout/BillingDetailsForm.vue';    
+    import BillingDetailsForm from '@/components/Checkout/BillingDetailsForm.vue';
 
-    import { ref, watch } from 'vue'
+    import { ref, watch, onMounted } from 'vue'
     import { useShippingRates } from '@/composables/useShippingRates.js'
 
-    const shippingCountry = ref('')
+    const shippingCountry = ref(null)
     const shippingZip = ref('')
 
-    // const { fetchRates } = useShippingRates()
+    const shippingDetails = ref({})
+    const billingDetails = ref({})
+
     // ✅ Pass refs to the composable
     const {
         shippingRates,

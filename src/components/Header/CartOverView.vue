@@ -29,7 +29,7 @@
               <router-link 
                 :to="`/products/${item.product.category_url}/${item.product.slug}`"
               >
-                <p>{{ item.product.title }}</p>
+                <p>{{ shortDescription(item?.product?.short_description, 150) }}</p>
               </router-link>
               <div class="price">
                 <span>
@@ -87,5 +87,17 @@
 <script setup>
   const onImageError = (event) => {
     event.target.src = '/placeholders/80x80.svg'
+  }
+
+  function shortDescription(html, limit = '') {
+    const text = (html || '').replace(/<[^>]*>/g, ''); // strip HTML tags safely
+
+    // If limit is a number and greater than 0, apply truncation
+    if (Number(limit) > 0) {
+        return text.length > limit ? text.substring(0, limit) + '...' : text;
+    }
+
+    // Otherwise, return the full text
+    return text;
   }
 </script>
