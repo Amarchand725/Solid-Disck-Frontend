@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from '@/plugins/axios';
+import { setCartData } from './cartState'
 import { useToast } from 'vue-toastification'
 
 export function usePlaceOrder() {
@@ -13,7 +14,7 @@ export function usePlaceOrder() {
     try {
       isPlacing.value = true
       error.value = ''
-
+      
       const token = localStorage.getItem('auth_token')
       // if (!token) {
       //   localStorage.setItem('shipping', JSON.stringify(shipping))
@@ -39,6 +40,7 @@ export function usePlaceOrder() {
         // localStorage.removeItem('shipping')
         // localStorage.removeItem('billing')
         // localStorage.removeItem('redirect_to_checkout')
+        setCartData(response.data) 
         toast.success(response.data.message || 'You have placed your order successfully!')
         router.push({ name: 'OrderSuccess', params: { orderNumber: response.data.order_number } });
       } else {
@@ -59,47 +61,3 @@ export function usePlaceOrder() {
     error
   }
 }
-
-
-// import { ref } from 'vue'
-// import axios from '@/plugins/axios';
-// import { useToast } from 'vue-toastification';
-
-// export function usePlaceOrder() {
-//     const loading = ref(false);
-//     const message = ref('');
-//     const toast = useToast();
-//     const error = ref(null)
-//     const success = ref(false)
-
-//     const placeOrder = async (payload) => {
-//         loading.value = true
-//         error.value = null
-//         success.value = false
-
-//         try {
-//             const response = await axios.post('/orders/place-order', payload)
-
-//             success.value = true
-//             // return response.data // optional: order ID or message
-//             message.value = response.data.message || 'You have placed order successfully!';
-//             toast.success(message.value);
-//         } catch (err) {
-//         if (err.response?.data) {
-//             error.value = err.response.data
-//         } else {
-//             error.value = { message: err.message }
-//         }
-//         throw error.value
-//         } finally {
-//         loading.value = false
-//         }
-//     }
-
-//     return {
-//         placeOrder,
-//         loading,
-//         error,
-//         success
-//     }
-// }

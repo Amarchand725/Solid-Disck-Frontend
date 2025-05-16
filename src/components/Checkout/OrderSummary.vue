@@ -41,9 +41,9 @@
                 <div class="sub_total"><span>Shipping:</span>
                     <p>{{ settings?.currency ?? '' }}{{ fullCart.shipping_cost }}</p>
                 </div>
-                <div class="sub_total"><span>Tax:</span>
+                <!-- <div class="sub_total"><span>Tax:</span>
                     <p> (0%) $0.00</p>
-                </div>
+                </div> -->
             </div>
             <div class="sub_total total"><span>Total:</span>
                 <p>{{ settings?.currency ?? '' }}{{ fullCart.total }}</p>
@@ -61,12 +61,9 @@
 
     const props = defineProps({
         shippingRef: Object,
-        // billingRef: Object,
-        // paymentRef: Object,
         shippingDetails: Object,
         billingDetails: Object,
     })
-
 
     const { settings } = useSettings()
     const { cartItemCount, fullCart } = useCart()
@@ -74,55 +71,6 @@
     const paymentRef = ref()
 
     const { placeOrder, loading, error, success } = usePlaceOrder()
-
-    // const handlePlaceOrder = async () => {
-    //     try {
-    //         const shippingForm = props.shippingDetails ?? {}
-    //         const billingFormData = props.billingDetails ?? {}
-
-    //         const billingForm = billingFormData?.sameAsShipping
-    //             ? { ...shippingForm, same_as_shipping: true }
-    //             : { ...(billingFormData || {}), same_as_shipping: false }
-
-    //         // Step 1: Create payment method
-    //         const stripePaymentMethodId = await paymentRef.value.getPaymentMethodId()
-
-    //         const payload = {
-    //             shipping: shippingForm,
-    //             billing: billingForm,
-    //             cart: fullCart.value,
-    //             paymentMethodId: stripePaymentMethodId,
-    //         }
-
-    //         // Step 2: Send to backend (creates PaymentIntent)
-    //         const result = await placeOrder(payload)
-
-    //         // Step 3: If authentication is needed
-    //         if (result?.requires_action) {
-    //             const { error, paymentIntent } = await paymentRef.value.confirmPayment(result.payment_intent_client_secret)
-
-    //             if (error) {
-    //                 console.error('Authentication failed:', error.message)
-    //                 return
-    //             }
-
-    //             if (paymentIntent.status === 'succeeded') {
-    //                 console.log('✅ Payment succeeded after authentication', paymentIntent)
-    //                 // Optionally notify backend or redirect
-    //             } else {
-    //                 console.warn('⚠️ Payment did not succeed after authentication:', paymentIntent.status)
-    //             }
-    //         } else if (result?.success) {
-    //             console.log('✅ Payment succeeded without extra action', result)
-    //         } else {
-    //             console.error('❌ Unexpected response from backend:', result)
-    //         }
-
-    //     } catch (err) {
-    //         console.error('Checkout failed:', err.message || err)
-    //     }
-    // }
-
 
     const handlePlaceOrder = async () => {
         try {
@@ -141,9 +89,8 @@
                 cart: fullCart.value,
                 paymentMethodId: stripePaymentMethodId,
             }
-            // console.log(payload)
-            const result = await placeOrder(payload)
-            console.log('Order placed!', result)
+            await placeOrder(payload)
+            console.log('Order placed!')
         } catch (err) {
             console.error('Checkout failed:', err.message || err)
         }
