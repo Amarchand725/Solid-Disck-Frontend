@@ -16,6 +16,11 @@ export function useCustomer() {
   const loading = ref(false);
   const toast = useToast();
 
+  const orders = ref([]);
+  const cancel_orders = ref([]);
+  const return_orders = ref([]);
+  const pending_orders = ref([]);
+
   const router = useRouter();
   const store = useStore();
 
@@ -132,6 +137,87 @@ export function useCustomer() {
     }
   };
 
+
+  const fetchOrders = async () => {
+    const token = localStorage.getItem('auth_token');
+    if (token != undefined) {
+      try {
+        const response = await axios.get('/customer/orders');
+        
+        if (response.data && response.data) {
+            console.log('✔ Orders fetched from API:', response.data.data);
+            orders.value = response.data.data;
+            // store.commit('setCustomerOrders', response.data.data);
+
+        } else {
+          toast.error('Failed to fetch user orders!');
+        }
+      } catch (error) {
+        toast.error('Failed to fetch user orders!');
+      }
+    }
+  };
+
+  const fetchCancelOrders = async () => {
+    const token = localStorage.getItem('auth_token');
+    if (token != undefined) {
+      try {
+        const response = await axios.get('/customer/cancel-orders');
+        
+        if (response.data && response.data) {
+            console.log('✔ Orders fetched from API:', response.data.data);
+            cancel_orders.value = response.data.data;
+            // store.commit('setCustomerOrders', response.data.data);
+
+        } else {
+          toast.error('Failed to fetch user orders!');
+        }
+      } catch (error) {
+        toast.error('Failed to fetch user orders!');
+      }
+    }
+  };
+
+  const fetchPendingOrders = async () => {
+    const token = localStorage.getItem('auth_token');
+    if (token != undefined) {
+      try {
+        const response = await axios.get('/customer/pending-orders');
+        
+        if (response.data && response.data) {
+            console.log('✔ Orders fetched from API:', response.data.data);
+            pending_orders.value = response.data.data;
+            // store.commit('setCustomerOrders', response.data.data);
+
+        } else {
+          toast.error('Failed to fetch user orders!');
+        }
+      } catch (error) {
+        toast.error('Failed to fetch user orders!');
+      }
+    }
+  };
+
+  const fetchReturnOrders = async () => {
+    const token = localStorage.getItem('auth_token');
+    if (token != undefined) {
+      try {
+        const response = await axios.get('/customer/return-orders');
+        
+        if (response.data && response.data) {
+            console.log('✔ Orders fetched from API:', response.data.data);
+            return_orders.value = response.data.data;
+            // store.commit('setCustomerOrders', response.data.data);
+
+        } else {
+          toast.error('Failed to fetch user orders!');
+        }
+      } catch (error) {
+        toast.error('Failed to fetch user orders!');
+      }
+    }
+  };
+
   const customer_register = async (formData) => {
     if (!validateRegister()) return;
       const message = ref('');
@@ -151,6 +237,7 @@ export function useCustomer() {
       if (response.data.data.token) {
         await store.dispatch('login', response.data.data.token); // pass token to store
         await fetchUserData();
+        // await fetchOrders();
         router.push('/my-account');
       }
 
@@ -192,6 +279,7 @@ export function useCustomer() {
       if (response.data.token) {
         await store.dispatch('login', response.data.token); // pass token to store
         await fetchUserData();
+        // await fetchOrders();
         // router.push('/my-account');
         const redirectToCheckout = localStorage.getItem('redirect_to_checkout');
 
@@ -243,5 +331,13 @@ export function useCustomer() {
     // Functions
     customer_register,
     customer_login,
+    orders,
+    cancel_orders,
+    pending_orders,
+    return_orders,
+    fetchOrders,
+    fetchReturnOrders,
+    fetchCancelOrders,
+    fetchPendingOrders,
   };
 }

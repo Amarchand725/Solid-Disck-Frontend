@@ -82,13 +82,14 @@
                                     </div>
                                 </div>
                                 <div class="remeber_pass">
-                                    <label class="ant-checkbox-wrapper css-i6rspj">
-                                        <span class="ant-checkbox ant-wave-target css-i6rspj">
-                                            <input v-model="i_have_read" id="check" class="ant-checkbox-input" type="checkbox">
-                                            <span class="ant-checkbox-inner"></span>
-                                        </span>
-                                    </label>
-                                    <label for="check">
+                                    <label class="check">
+                                        <input
+                                            v-model="i_have_read"
+                                            id="check"
+                                            class="ant-checkbox-input"
+                                            type="checkbox"
+                                        />
+                                        <span class="ant-checkbox-inner"></span>
                                         I have read and agree to {{ settings?.website_url }}
                                         <router-link to="/policies/terms-and-condition">Terms and Conditions</router-link>
                                     </label>
@@ -173,5 +174,29 @@
         color: #0074cc;
         font-size: 14px;
         margin-bottom: 10px;
+    }
+
+    .check {
+    display: inline-flex;
+    align-items: center;
+    font-size: 14px;
+    color: #000;
+    gap: 6px; /* better spacing between checkbox and text */
+    flex-wrap: wrap;
+    cursor: pointer;
+    line-height: 1.6;
+    }
+
+    .check input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+    cursor: pointer;
+    }
+
+    .terms-link {
+    text-decoration: underline;
+    color: inherit;
+    margin-left: 4px;
     }
 </style>

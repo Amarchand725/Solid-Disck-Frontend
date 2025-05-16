@@ -5,6 +5,7 @@ export default createStore({
     isLoggedIn: !!localStorage.getItem('auth_token'),
     token: localStorage.getItem('auth_token') || null,
     customer: JSON.parse(localStorage.getItem('customer_data')) || null,
+     customerOrders: JSON.parse(localStorage.getItem('order_data')) || [],
   },
   mutations: {
     setLogin(state, token) {
@@ -21,11 +22,16 @@ export default createStore({
       state.customer = customer;
       localStorage.setItem('customer_data', JSON.stringify(customer));
     },
+     setCustomerOrders(state, orders) {
+      state.customerOrders = orders;
+      localStorage.setItem('order_data', JSON.stringify(orders));
+    },
   },
   getters: {
     token: (state) => state.token,
     isLoggedIn: (state) => state.isLoggedIn,
     customer: (state) => state.customer,
+    customerOrders: (state) => state.customerOrders,
   },
   actions: {
     login({ commit }, token) {

@@ -452,14 +452,14 @@
                                                     <div class="order_card">
                                                         <div><span><svg width="36" height="37" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M32.4473 8.03086C32.482 8.37876 32.5 8.73144 32.5 9.08829C32.5 14.919 27.7564 19.6625 21.9258 19.6625C16.0951 19.6625 11.3516 14.919 11.3516 9.08829C11.3516 8.73144 11.3695 8.37876 11.4042 8.03086H8.98055L8.05537 0.628906H0.777344V2.74375H6.18839L8.56759 21.7774H34.1868L35.8039 8.03086H32.4473Z" fill="#FFBB38"></path><path d="M9.09669 26.0074H6.06485C4.31566 26.0074 2.89258 27.4305 2.89258 29.1797C2.89258 30.9289 4.31566 32.352 6.06485 32.352H6.24672C6.12935 32.6829 6.06485 33.0386 6.06485 33.4094C6.06485 35.1586 7.48793 36.5816 9.23711 36.5816C11.4247 36.5816 12.9571 34.4091 12.2274 32.352H22.1081C21.377 34.413 22.9157 36.5816 25.0985 36.5816C26.8476 36.5816 28.2707 35.1586 28.2707 33.4094C28.2707 33.0386 28.2061 32.6829 28.0888 32.352H30.3856V30.2371H6.06485C5.48178 30.2371 5.00742 29.7628 5.00742 29.1797C5.00742 28.5966 5.48178 28.1223 6.06485 28.1223H33.4407L33.9384 23.8926H8.83233L9.09669 26.0074Z" fill="#FFBB38"></path><path d="M21.9262 17.5477C26.5907 17.5477 30.3856 13.7528 30.3856 9.08829C30.3856 4.42378 26.5907 0.628906 21.9262 0.628906C17.2616 0.628906 13.4668 4.42378 13.4668 9.08829C13.4668 13.7528 17.2617 17.5477 21.9262 17.5477ZM20.8688 5.91602H22.9836V8.6503L24.7886 10.4554L23.2932 11.9508L20.8687 9.5262V5.91602H20.8688Z" fill="#FFBB38"></path></svg></span></div>
                                                         <div class="order_total">
-                                                            <p>Your Orders</p><span>0</span>
+                                                            <p>Your Orders</p><span>{{ orders.length }}</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div>
                                                     <table>
                                                         <tbody>
-                                                            <tr>
+                                                             <tr>
                                                                 <td>Orders</td>
                                                                 <td>Date</td>
                                                                 <td>Tracking</td>
@@ -467,6 +467,20 @@
                                                                 <td>Amount</td>
                                                                 <td>Action</td>
                                                             </tr>
+                                                           <tr v-if="!orders">
+                                                                <td colspan="6">No orders found.</td>
+                                                                </tr>
+                                                                <tr v-else v-for="order in orders" :key="order.id">
+                                                                <td>#{{ order.order_number }}</td>
+                                                                <td>{{ new Date(order.created_at).toLocaleDateString() }}</td>
+                                                                <td>{{ order.tracking_number || 'N/A' }}</td>
+                                                                <td>{{ order.order_status }}</td>
+                                                                <td>${{ order.total }}</td>
+                                                                <td>
+                                                                    <button>View</button>
+                                                                </td>
+                                                            </tr>
+
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -493,7 +507,7 @@
                                                     <div class="order_card">
                                                         <div><span><svg width="36" height="37" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M32.4473 8.03086C32.482 8.37876 32.5 8.73144 32.5 9.08829C32.5 14.919 27.7564 19.6625 21.9258 19.6625C16.0951 19.6625 11.3516 14.919 11.3516 9.08829C11.3516 8.73144 11.3695 8.37876 11.4042 8.03086H8.98055L8.05537 0.628906H0.777344V2.74375H6.18839L8.56759 21.7774H34.1868L35.8039 8.03086H32.4473Z" fill="#FFBB38"></path><path d="M9.09669 26.0074H6.06485C4.31566 26.0074 2.89258 27.4305 2.89258 29.1797C2.89258 30.9289 4.31566 32.352 6.06485 32.352H6.24672C6.12935 32.6829 6.06485 33.0386 6.06485 33.4094C6.06485 35.1586 7.48793 36.5816 9.23711 36.5816C11.4247 36.5816 12.9571 34.4091 12.2274 32.352H22.1081C21.377 34.413 22.9157 36.5816 25.0985 36.5816C26.8476 36.5816 28.2707 35.1586 28.2707 33.4094C28.2707 33.0386 28.2061 32.6829 28.0888 32.352H30.3856V30.2371H6.06485C5.48178 30.2371 5.00742 29.7628 5.00742 29.1797C5.00742 28.5966 5.48178 28.1223 6.06485 28.1223H33.4407L33.9384 23.8926H8.83233L9.09669 26.0074Z" fill="#FFBB38"></path><path d="M21.9262 17.5477C26.5907 17.5477 30.3856 13.7528 30.3856 9.08829C30.3856 4.42378 26.5907 0.628906 21.9262 0.628906C17.2616 0.628906 13.4668 4.42378 13.4668 9.08829C13.4668 13.7528 17.2617 17.5477 21.9262 17.5477ZM20.8688 5.91602H22.9836V8.6503L24.7886 10.4554L23.2932 11.9508L20.8687 9.5262V5.91602H20.8688Z" fill="#FFBB38"></path></svg></span></div>
                                                         <div class="order_total">
-                                                            <p>Cancel Orders</p><span>0</span>
+                                                            <p>Cancel Orders</p><span>{{ cancel_orders.length }}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -507,6 +521,19 @@
                                                                 <td>Status</td>
                                                                 <td>Amount</td>
                                                                 <td>Action</td>
+                                                            </tr>
+                                                            <tr v-if="!cancel_orders">
+                                                                <td colspan="6">No orders found.</td>
+                                                                </tr>
+                                                                <tr v-else v-for="cancel_order in cancel_orders" :key="cancel_order.id">
+                                                                <td>#{{ cancel_order.order_number }}</td>
+                                                                <td>{{ new Date(cancel_order.created_at).toLocaleDateString() }}</td>
+                                                                <td>{{ cancel_order.tracking_number || 'N/A' }}</td>
+                                                                <td>{{ cancel_order.order_status }}</td>
+                                                                <td>${{ cancel_order.total }}</td>
+                                                                <td>
+                                                                    <button>View</button>
+                                                                </td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -534,7 +561,7 @@
                                                     <div class="order_card">
                                                         <div><span><svg width="36" height="37" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M32.4473 8.03086C32.482 8.37876 32.5 8.73144 32.5 9.08829C32.5 14.919 27.7564 19.6625 21.9258 19.6625C16.0951 19.6625 11.3516 14.919 11.3516 9.08829C11.3516 8.73144 11.3695 8.37876 11.4042 8.03086H8.98055L8.05537 0.628906H0.777344V2.74375H6.18839L8.56759 21.7774H34.1868L35.8039 8.03086H32.4473Z" fill="#FFBB38"></path><path d="M9.09669 26.0074H6.06485C4.31566 26.0074 2.89258 27.4305 2.89258 29.1797C2.89258 30.9289 4.31566 32.352 6.06485 32.352H6.24672C6.12935 32.6829 6.06485 33.0386 6.06485 33.4094C6.06485 35.1586 7.48793 36.5816 9.23711 36.5816C11.4247 36.5816 12.9571 34.4091 12.2274 32.352H22.1081C21.377 34.413 22.9157 36.5816 25.0985 36.5816C26.8476 36.5816 28.2707 35.1586 28.2707 33.4094C28.2707 33.0386 28.2061 32.6829 28.0888 32.352H30.3856V30.2371H6.06485C5.48178 30.2371 5.00742 29.7628 5.00742 29.1797C5.00742 28.5966 5.48178 28.1223 6.06485 28.1223H33.4407L33.9384 23.8926H8.83233L9.09669 26.0074Z" fill="#FFBB38"></path><path d="M21.9262 17.5477C26.5907 17.5477 30.3856 13.7528 30.3856 9.08829C30.3856 4.42378 26.5907 0.628906 21.9262 0.628906C17.2616 0.628906 13.4668 4.42378 13.4668 9.08829C13.4668 13.7528 17.2617 17.5477 21.9262 17.5477ZM20.8688 5.91602H22.9836V8.6503L24.7886 10.4554L23.2932 11.9508L20.8687 9.5262V5.91602H20.8688Z" fill="#FFBB38"></path></svg></span></div>
                                                         <div class="order_total">
-                                                            <p>Pending Orders</p><span>0</span>
+                                                            <p>Pending Orders</p><span>{{ pending_orders.length }}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -548,6 +575,19 @@
                                                                 <td>Status</td>
                                                                 <td>Amount</td>
                                                                 <td>Action</td>
+                                                            </tr>
+                                                            <tr v-if="!pending_orders">
+                                                                <td colspan="6">No orders found.</td>
+                                                                </tr>
+                                                                <tr v-else v-for="pending_order in pending_orders" :key="pending_order.id">
+                                                                <td>#{{ pending_order.order_number }}</td>
+                                                                <td>{{ new Date(pending_order.created_at).toLocaleDateString() }}</td>
+                                                                <td>{{ pending_order.tracking_number || 'N/A' }}</td>
+                                                                <td>{{ pending_order.order_status }}</td>
+                                                                <td>${{ pending_order.total }}</td>
+                                                                <td>
+                                                                    <button>View</button>
+                                                                </td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -575,7 +615,7 @@
                                                     <div class="order_card">
                                                         <div><span><svg width="36" height="37" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M32.4473 8.03086C32.482 8.37876 32.5 8.73144 32.5 9.08829C32.5 14.919 27.7564 19.6625 21.9258 19.6625C16.0951 19.6625 11.3516 14.919 11.3516 9.08829C11.3516 8.73144 11.3695 8.37876 11.4042 8.03086H8.98055L8.05537 0.628906H0.777344V2.74375H6.18839L8.56759 21.7774H34.1868L35.8039 8.03086H32.4473Z" fill="#FFBB38"></path><path d="M9.09669 26.0074H6.06485C4.31566 26.0074 2.89258 27.4305 2.89258 29.1797C2.89258 30.9289 4.31566 32.352 6.06485 32.352H6.24672C6.12935 32.6829 6.06485 33.0386 6.06485 33.4094C6.06485 35.1586 7.48793 36.5816 9.23711 36.5816C11.4247 36.5816 12.9571 34.4091 12.2274 32.352H22.1081C21.377 34.413 22.9157 36.5816 25.0985 36.5816C26.8476 36.5816 28.2707 35.1586 28.2707 33.4094C28.2707 33.0386 28.2061 32.6829 28.0888 32.352H30.3856V30.2371H6.06485C5.48178 30.2371 5.00742 29.7628 5.00742 29.1797C5.00742 28.5966 5.48178 28.1223 6.06485 28.1223H33.4407L33.9384 23.8926H8.83233L9.09669 26.0074Z" fill="#FFBB38"></path><path d="M21.9262 17.5477C26.5907 17.5477 30.3856 13.7528 30.3856 9.08829C30.3856 4.42378 26.5907 0.628906 21.9262 0.628906C17.2616 0.628906 13.4668 4.42378 13.4668 9.08829C13.4668 13.7528 17.2617 17.5477 21.9262 17.5477ZM20.8688 5.91602H22.9836V8.6503L24.7886 10.4554L23.2932 11.9508L20.8687 9.5262V5.91602H20.8688Z" fill="#FFBB38"></path></svg></span></div>
                                                         <div class="order_total">
-                                                            <p>Return Orders</p><span>0</span>
+                                                            <p>Return Orders</p><span>{{ return_orders.length }}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -589,6 +629,19 @@
                                                                 <td>Status</td>
                                                                 <td>Amount</td>
                                                                 <td>Action</td>
+                                                            </tr>
+                                                            <tr v-if="!return_orders">
+                                                                <td colspan="6">No orders found.</td>
+                                                                </tr>
+                                                                <tr v-else v-for="return_order in return_orders" :key="return_order.id">
+                                                                <td>#{{ return_order.order_number }}</td>
+                                                                <td>{{ new Date(return_order.created_at).toLocaleDateString() }}</td>
+                                                                <td>{{ return_order.tracking_number || 'N/A' }}</td>
+                                                                <td>{{ return_order.order_status }}</td>
+                                                                <td>${{ return_order.total }}</td>
+                                                                <td>
+                                                                    <button>View</button>
+                                                                </td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -728,9 +781,45 @@
     </div>
 </template>
 <script setup>
-    import { ref, computed, watch } from 'vue';
+    import { useCustomer } from '@/composables/useCustomer';
+    import { ref, computed, watch , onMounted } from 'vue';
     import { useStore } from 'vuex';
     import { useRouter } from 'vue-router';
+
+    const {
+        orders,
+        loading: loadingOrders,
+        errors: errorsOrders,
+        fetchOrders
+        } = useCustomer();
+
+        const {
+        cancel_orders,
+        loading: loadingCancel,
+        errors: errorsCancel,
+        fetchCancelOrders
+        } = useCustomer();
+
+        const {
+        return_orders,
+        loading: loadingReturn,
+        errors: errorsReturn,
+        fetchReturnOrders
+        } = useCustomer();
+
+        const {
+        pending_orders,
+        loading: loadingPending,
+        errors: errorsPending,
+        fetchPendingOrders
+        } = useCustomer();
+    onMounted(() => {
+    fetchOrders()
+    fetchCancelOrders()
+    fetchReturnOrders()
+    fetchPendingOrders()
+        console.log('orders:', cancel_orders.value) // this should show your full nested category structure
+    })
 
     const store = useStore();
     const router = useRouter();
@@ -754,6 +843,7 @@
         form.value.phone = newCustomer.phone || ''
     }
     }, { immediate: true }); // runs immediately if data is already there
+
 
     const logout = () => {
         store.dispatch('logout');
