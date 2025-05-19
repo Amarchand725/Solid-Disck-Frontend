@@ -715,13 +715,14 @@
                                             </div>
                                         </div>
                                         <div id="rc-tabs-2-panel-10" role="tabpanel" tabindex="-1" aria-labelledby="rc-tabs-2-tab-10" aria-hidden="true" class="ant-tabs-tabpane ant-tabs-tabpane-hidden">
+                                            <form @submit.prevent="handleChangePassword">
                                             <div class="profile_info_wrapper changePasswordTab">
                                                 <div class="ant-row css-i6rspj">
                                                     <div class="ant-col ant-col-md-24 ant-col-xl-12 css-i6rspj">
                                                         <div class="first_comman ">
                                                             <label for="old_password">Old Password*</label>
                                                             <div class="toggler_icons">
-                                                                <input id="old_password" placeholder="*******" type="password" value="" name="old_password">
+                                                                <input id="old_password" placeholder="*******" type="password" v-model="currentPassword">
                                                                 <div>
                                                                     <svg viewBox="0 0 25 21" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
                                                                         <path d="M20.5483 16.3524C20.156 15.9557 19.7696 15.5605 19.3802 15.1683C18.7802 14.5653 18.1787 13.9638 17.5728 13.3667C17.4972 13.2911 17.4871 13.2388 17.5379 13.1415C19.3482 9.66037 17.2125 5.46008 13.3332 4.87747C12.1143 4.69441 10.9534 4.89636 9.85791 5.46299C9.78672 5.49931 9.73587 5.53563 9.65596 5.45572C8.88157 4.67262 8.10136 3.89678 7.32261 3.11803C7.30082 3.09624 7.28338 3.07154 7.24561 3.0265C7.5667 2.90591 7.8689 2.78387 8.17837 2.67926C10.0758 2.03563 12.0242 1.83513 14.0132 2.05161C18.879 2.58337 23.1752 5.85381 24.9768 10.3926C25 10.4522 25.0073 10.5379 24.9826 10.596C24.0484 12.8916 22.5955 14.792 20.6282 16.2986C20.6137 16.3117 20.5963 16.3219 20.5483 16.3524Z"
@@ -738,7 +739,7 @@
                                                         <div class="first_comman ">
                                                             <label for="new_password">New Password*</label>
                                                             <div class="toggler_icons">
-                                                                <input id="new_password" placeholder="*******" type="password" value="" name="new_password">
+                                                                <input id="new_password" placeholder="*******" type="password" v-model="newPassword">
                                                                 <div>
                                                                     <svg viewBox="0 0 25 21" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
                                                                         <path d="M20.5483 16.3524C20.156 15.9557 19.7696 15.5605 19.3802 15.1683C18.7802 14.5653 18.1787 13.9638 17.5728 13.3667C17.4972 13.2911 17.4871 13.2388 17.5379 13.1415C19.3482 9.66037 17.2125 5.46008 13.3332 4.87747C12.1143 4.69441 10.9534 4.89636 9.85791 5.46299C9.78672 5.49931 9.73587 5.53563 9.65596 5.45572C8.88157 4.67262 8.10136 3.89678 7.32261 3.11803C7.30082 3.09624 7.28338 3.07154 7.24561 3.0265C7.5667 2.90591 7.8689 2.78387 8.17837 2.67926C10.0758 2.03563 12.0242 1.83513 14.0132 2.05161C18.879 2.58337 23.1752 5.85381 24.9768 10.3926C25 10.4522 25.0073 10.5379 24.9826 10.596C24.0484 12.8916 22.5955 14.792 20.6282 16.2986C20.6137 16.3117 20.5963 16.3219 20.5483 16.3524Z"
@@ -755,7 +756,7 @@
                                                         <div class="first_comman ">
                                                             <label for="confirm_password">Confirm Password*</label>
                                                             <div class="toggler_icons">
-                                                                <input id="confirm_password" placeholder="*******" type="password" value="" name="confirm_password">
+                                                                <input id="confirm_password" placeholder="*******" type="password"  v-model="confirmPassword">
                                                                 <div>
                                                                     <svg width="20" height="20" viewBox="0 0 25 21" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                         <path d="M20.5483 16.3524C20.156 15.9557 19.7696 15.5605 19.3802 15.1683C18.7802 14.5653 18.1787 13.9638 17.5728 13.3667C17.4972 13.2911 17.4871 13.2388 17.5379 13.1415C19.3482 9.66037 17.2125 5.46008 13.3332 4.87747C12.1143 4.69441 10.9534 4.89636 9.85791 5.46299C9.78672 5.49931 9.73587 5.53563 9.65596 5.45572C8.88157 4.67262 8.10136 3.89678 7.32261 3.11803C7.30082 3.09624 7.28338 3.07154 7.24561 3.0265C7.5667 2.90591 7.8689 2.78387 8.17837 2.67926C10.0758 2.03563 12.0242 1.83513 14.0132 2.05161C18.879 2.58337 23.1752 5.85381 24.9768 10.3926C25 10.4522 25.0073 10.5379 24.9826 10.596C24.0484 12.8916 22.5955 14.792 20.6282 16.2986C20.6137 16.3117 20.5963 16.3219 20.5483 16.3524Z"
@@ -769,6 +770,7 @@
                                                 </div>
                                                 <button class="update_btn">Submit</button>
                                             </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -784,7 +786,11 @@
     import { useCustomer } from '@/composables/useCustomer';
     import { ref, computed, watch , onMounted } from 'vue';
     import { useStore } from 'vuex';
+    import axios from '@/plugins/axios';
+    import { useToast } from 'vue-toastification'
     import { useRouter } from 'vue-router';
+
+     const toast = useToast();
 
     const {
         orders,
@@ -849,4 +855,46 @@
         store.dispatch('logout');
         router.push('/login');
     };
+
+    const currentPassword = ref('')
+    const newPassword = ref('')
+    const confirmPassword = ref('')
+    const message = ref('')
+    const error = ref('')
+
+    const handleChangePassword = async () => {
+    message.value = ''
+    error.value = ''
+
+    if (newPassword.value !== confirmPassword.value) {
+        error.value = 'New passwords do not match.'
+        return
+    }
+
+    try {
+        const token = localStorage.getItem('auth_token');
+        const response = await axios.post('/customer/change-password', {
+            current_password: currentPassword.value,
+            new_password: newPassword.value,
+        }, {headers: { Authorization: `Bearer ${token}` }})
+
+        message.value = 'Password changed successfully.'
+        currentPassword.value = newPassword.value = confirmPassword.value = ''
+        if (message.value) {
+            toast.success(message.value, {
+                timeout: 5000,
+                closeOnClick: true,
+                pauseOnHover: true,
+            });
+        }
+    } catch (err) {
+        console.log(err.response);
+        error.value = err.response?.data?.message || 'Failed to change password.'
+        toast.error('Failed to change password', {
+            timeout: 5000,
+            closeOnClick: true,
+            pauseOnHover: true,
+        });
+    }
+    }
 </script>
