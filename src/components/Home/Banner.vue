@@ -55,7 +55,7 @@ const homeBanners = computed(() =>
 <style scoped>
 .banner-swiper {
   width: 100%;
-  height: 350px;
+  height: 370px;
   position: relative;
 }
 
