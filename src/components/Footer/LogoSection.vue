@@ -5,7 +5,7 @@
                 :alt="settings?.name" 
                 :title="settings?.name" 
                 loading="lazy" width="220" height="50" decoding="async" data-nimg="1" 
-                :src="settings?.logo || '/placeholders/220x50.svg'" 
+                :src="settings?.white_logo || '/placeholders/220x50.svg'" 
                 @error="onImageError"
                 style="color: transparent;"
             >

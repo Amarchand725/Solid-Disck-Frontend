@@ -17,33 +17,33 @@
             <img 
                 alt="SSL Secure Seal" 
                 title="SSL Secure Seal" 
-                loading="lazy" width="50" height="50" decoding="async" data-nimg="1" 
-                srcset="/assets/image/SSL_Seal.webp"
-                src="/assets/image/SSL_Seal.webp" 
+                loading="lazy" width="65" height="60" decoding="async" data-nimg="1" 
+                srcset="/assets/image/ssl.png"
+                src="/assets/image/ssl.png" 
                 style="color: transparent;"
             >
             <img 
                 alt="PCI Secure Seal" 
                 title="PCI Secure Seal" 
-                loading="lazy" width="50" height="50" decoding="async" data-nimg="1" 
-                srcset="/assets/image/PCI_Seal.webp"
-                src="/assets/image/PCI_Seal.webp" 
+                loading="lazy" width="65" height="60" decoding="async" data-nimg="1" 
+                srcset="/assets/image/pci.png"
+                src="/assets/image/pci.png" 
                 style="color: transparent;"
             >
             <img 
                 alt="DUNS Seal" 
                 title="DUNS Seal" 
-                loading="lazy" width="50" height="50" decoding="async" data-nimg="1" 
-                srcset="/assets/image/duns-seal-removebg-preview.avif"
-                src="/assets/image/duns-seal-removebg-preview.avif" 
+                loading="lazy" width="65" height="60" decoding="async" data-nimg="1" 
+                srcset="/assets/image/duns.png"
+                src="/assets/image/duns.png" 
                 style="color: transparent;"
             >
             <img 
                 alt="Norton Seal" 
                 title="Norton Seal" 
-                loading="lazy" width="50" height="50" decoding="async" data-nimg="1" 
-                srcset="/assets/image/Nortons-eal-removebg-preview.webp"
-                src="/assets/image/Nortons-eal-removebg-preview.webp" 
+                loading="lazy" width="65" height="40" decoding="async" data-nimg="1" 
+                srcset="/assets/image/Nortons-eal.png"
+                src="/assets/image/Nortons-eal.png" 
                 style="color: transparent;"
             >
         </div>
