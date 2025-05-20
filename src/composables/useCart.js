@@ -1,12 +1,15 @@
 import { ref } from 'vue'
 import { fullCart, cartItemCount, setCartData } from './cartState'
 import { useToast } from 'vue-toastification'
+import { useRouter } from 'vue-router'
 import axios from '@/plugins/axios'
 
 export function useCart() {
   const loading = ref(false)
+  const loading2 = ref(false)
   const toast = useToast()
   const message = ref('')
+  const router = useRouter()
 
   const handleError = (error, fallback = 'An error occurred.') => {
     const errorMessage = error.response?.data?.message || fallback
@@ -37,6 +40,25 @@ export function useCart() {
       handleError(error, 'Failed to add to cart.')
     } finally {
       loading.value = false
+    }
+  }
+
+
+  const buyItNow = async (productSlug, quantity = 1) => {
+    loading2.value = true
+    try {
+      const response = await axios.post('/cart/store', {
+        slug: productSlug,
+        quantity
+      })
+      setCartData(response.data)
+      message.value = response.data.message || 'Item added to cart.'
+      toast.success(message.value)
+      router.push('/checkout')
+    } catch (error) {
+      // handleError(error, 'Failed to add to cart.')
+    } finally {
+      loading2.value = false
     }
   }
 
@@ -135,6 +157,7 @@ export function useCart() {
 
   return {
     loading,
+    loading2,
     message,
     addToCart,
     updateCartItem,
@@ -146,5 +169,6 @@ export function useCart() {
     fullCart,
     cartItemCount,
     getCart,
+    buyItNow,
   }
 }
