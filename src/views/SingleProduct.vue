@@ -7,8 +7,9 @@
                 <span class="separator">&gt;</span>
             </span>
             
-            <CategoryBreadcrumb :categoryTrail="categoryTrail" />
-
+            <CategoryBreadcrumb 
+                :categoryTrail="categoryTrail"
+            />
             <strong title="productDetails.title">{{ productDetails?.slug }}</strong>
         </div>
         <div class="ant-row css-i6rspj">
@@ -55,6 +56,7 @@
     const productDetails = ref(null);
     const relatedProducts = ref([]);
     const categoryTrail = ref([]);
+    const categoryUrl = ref(null);
 
     const loadProduct = async () => {
         const slug = route.params.slug;
@@ -71,6 +73,7 @@
             productDetails.value = data.details;
             relatedProducts.value = data.related_products;
             categoryTrail.value = data.details.category_trail;
+            categoryUrl.value = data.details.category_url;
         } catch (err) {
             console.error('Failed to load product:', err);
         }

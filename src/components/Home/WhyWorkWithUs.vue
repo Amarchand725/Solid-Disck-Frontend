@@ -19,24 +19,52 @@
             <div class="bottom_card_main">
                 <div class="work_with_us_card" title="Connect with Our Experts – Call Now">
                     <a href="tel:+18887195848">
-                        <div class="inner"><img alt="why-work-with-us-image" title="why-work-with-us-image" loading="lazy" width="45" height="45" decoding="async" data-nimg="1" srcset="/assets/image/Call-Icon-home.avif"
-                            src="/assets/image/Call-Icon-home.avif" style="color: transparent;"></div><span>Call Now</span></a>
+                        <div class="inner">
+                            <img alt="why-work-with-us-image" title="why-work-with-us-image" loading="lazy" width="45" height="45" decoding="async" data-nimg="1" 
+                                srcset="/assets/image/Call-Icon-home.avif"
+                                src="/assets/image/Call-Icon-home.avif" 
+                                style="color: transparent;"
+                            >
+                        </div>
+                        <span>Call Now</span>
+                    </a>
                 </div>
                 <div class="work_with_us_card center" title="Make Smarter Choices – Compare Now">
-                    <a href="/compare">
-                        <div class="inner"><img alt="why-work-with-us-image" title="why-work-with-us-image" loading="lazy" width="45" height="45" decoding="async" data-nimg="1" srcset="/assets/image/Compare-Product-Icon.webp"
-                            src="/assets/image/Compare-Product-Icon.webp" style="color: transparent;"></div><span>Compare Now</span></a>
+                    <router-link to="/products/compare">
+                        <div class="inner">
+                            <img alt="why-work-with-us-image" title="why-work-with-us-image" loading="lazy" width="45" height="45" decoding="async" data-nimg="1" 
+                                srcset="/assets/image/Compare-Product-Icon.webp"
+                                src="/assets/image/Compare-Product-Icon.webp" 
+                                style="color: transparent;"
+                            >
+                        </div>
+                        <span>Compare Now</span>
+                    </router-link>
                 </div>
                 <div class="work_with_us_card" title="Choose Your Server Solution">
                     <a href="/configurator">
-                        <div class="inner"><img alt="why-work-with-us-image" title="why-work-with-us-image" loading="lazy" width="45" height="45" decoding="async" data-nimg="1" srcset="/assets/image/Shop-By-Server-Icon.webp"
-                            src="/assets/image/Shop-By-Server-Icon.webp" style="color: transparent;"></div><span>Shop By Server</span></a>
+                        <div class="inner">
+                            <img alt="why-work-with-us-image" title="why-work-with-us-image" loading="lazy" width="45" height="45" decoding="async" data-nimg="1" 
+                                srcset="/assets/image/Shop-By-Server-Icon.webp"
+                                src="/assets/image/Shop-By-Server-Icon.webp" 
+                                style="color: transparent;"
+                            >
+                        </div>
+                        <span>Shop By Server</span>
+                    </a>
                 </div>
-                <div class="work_with_us_card right" title="Compatible Upgrades for Your PC">
+                <!-- <div class="work_with_us_card right" title="Compatible Upgrades for Your PC">
                     <a href="/group-products">
-                        <div class="inner"><img alt="why-work-with-us-image" title="why-work-with-us-image" loading="lazy" width="50" height="50" decoding="async" data-nimg="1" srcset="/assets/image/group-product-icon.webp"
-                            src="/assets/image/group-product-icon.webp" style="color: transparent; filter: brightness(0) invert(1);"></div><span>Group Products</span></a>
-                </div>
+                        <div class="inner">
+                            <img alt="why-work-with-us-image" title="why-work-with-us-image" loading="lazy" width="50" height="50" decoding="async" data-nimg="1" 
+                                srcset="/assets/image/group-product-icon.webp"
+                                src="/assets/image/group-product-icon.webp" 
+                                style="color: transparent; filter: brightness(0) invert(1);"
+                            >
+                        </div>
+                        <span>Group Products</span>
+                    </a>
+                </div> -->
             </div>
             <router-link class="create_an_account" title="Create An Account" to="/register">Create An Account</router-link>
         </div>

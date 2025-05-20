@@ -3,23 +3,23 @@
         <div class="ant-col ant-col-10 css-i6rspj">
             <ul class="ant-menu-overflow ant-menu ant-menu-root ant-menu-horizontal ant-menu-light nav-menu-custom css-i6rspj" role="menu" tabindex="0" data-menu-list="true" style="width: 100%;">
                 <li class="ant-menu-overflow-item ant-menu-submenu ant-menu-submenu-horizontal" role="none" style="opacity: 1; order: 0;">
-                    <div class="dropdown-container">
-                            <button class="dropdown-btn">Shop By Category</button>
-                            <ul class="dropdown-menu">
-                              <CategoryMenu
-                                v-for="(item, index) in visibleCategories"
-                                :key="index"
-                                :item="item"
-                              />
-                             <li
-                              v-if="hasOverflow"
-                              class="dropdown-item view-more"
-                              @click.stop.prevent="toggleView"
-                            >
-                              {{ showAll ? 'View Less' : 'View More' }}
-                            </li>
-                            </ul>
-                    </div>
+                  <div class="dropdown-container">
+                    <button class="dropdown-btn">Shop By Category</button>
+                    <ul class="dropdown-menu">
+                      <CategoryMenu
+                        v-for="(item, index) in visibleCategories"
+                        :key="index"
+                        :item="item"
+                      />
+                      <li
+                        v-if="hasOverflow"
+                        class="dropdown-item view-more"
+                        @click.stop.prevent="toggleView"
+                      >
+                        {{ showAll ? 'View Less' : 'View More' }}
+                      </li>
+                    </ul>
+                  </div>
                 </li>
                 <li class="ant-menu-overflow-item ant-menu-overflow-item-rest ant-menu-submenu ant-menu-submenu-horizontal ant-menu-submenu-disabled" aria-hidden="true" role="none" style="opacity: 0; height: 0px; overflow-y: hidden; order: 2147483647; pointer-events: none; position: absolute;">
                     <div role="menuitem" class="ant-menu-submenu-title" aria-expanded="false" aria-haspopup="true" aria-disabled="true" data-menu-id="rc-menu-uuid-26089-1-rc-menu-more" aria-controls="rc-menu-uuid-26089-1-rc-menu-more-popup">

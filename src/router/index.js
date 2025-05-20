@@ -4,7 +4,7 @@ import { useStore } from 'vuex';  // Use Vuex to access the global state
 import { initAllPlugins } from '@/initPlugins';
 import Home from '../views/Home.vue'
 // import Wishlist from '../views/Wishlist.vue'
-// import CompareProduct from '../views/CompareProduct.vue'
+import CompareProduct from '../views/CompareProduct.vue'
 import Cart from '../views/Cart.vue'
 import Checkout from '../views/Checkout.vue'
 // import TrackOrder from '../views/TrackOrder.vue'
@@ -55,12 +55,12 @@ const routes = [
   //   component: Wishlist,
   //   meta: { title: 'Wishlist' }
   // },
-  // {
-  //   path: '/products/compare',
-  //   name: 'CompareProduct',
-  //   component: CompareProduct,
-  //   meta: { title: 'Compare Product' }
-  // },
+  {
+    path: '/products/compare',
+    name: 'CompareProduct',
+    component: CompareProduct,
+    meta: { title: 'Compare Product' }
+  },
   {
     path: '/cart',
     name: 'Cart',
@@ -72,17 +72,17 @@ const routes = [
     name: 'Checkout',
     component: Checkout,
     meta: { title: 'Checkout' },
-    beforeEnter: (to, from, next) => {
-      const store = useStore();
-      const isAuthenticated = store.getters.isLoggedIn || localStorage.getItem('auth_token');
+    // beforeEnter: (to, from, next) => {
+    //   const store = useStore();
+    //   const isAuthenticated = store.getters.isLoggedIn || localStorage.getItem('auth_token');
 
-      if (!isAuthenticated) {
-        localStorage.setItem('redirect_to_checkout', 'true');
-        next({ name: 'Login', query: { message: 'Please login or register to continue to checkout.' } });
-      } else {
-        next();
-      }
-    }
+    //   if (!isAuthenticated) {
+    //     localStorage.setItem('redirect_to_checkout', 'true');
+    //     next({ name: 'Login', query: { message: 'Please login or register to continue to checkout.' } });
+    //   } else {
+    //     next();
+    //   }
+    // }
   },
   {
     path: '/order-success/:orderNumber',
@@ -98,7 +98,8 @@ const routes = [
   //   meta: { title: 'Track Your Order' }
   // },
   {
-    path: '/categories/:slug',
+    path: '/categories/:categoryPath(.*)/:slug',
+    // path: '/products/:categoryPath(.*)/:slug',
     name: 'Shop',
     component: Shop,
     meta: { title: 'Shop' }

@@ -1,6 +1,11 @@
 <template>
   <li class="dropdown-item">
-    <router-link class="router-link-custom" :to="`/categories/${item.slug}`">{{ item.name }}</router-link>
+    <router-link 
+      class="router-link-custom" 
+      :to="`/categories/${item.slug}`"
+    >
+      {{ item.name }}
+    </router-link>
 
     <!-- Only show submenu if there are children -->
     <ul v-if="hasChildren" class="submenu">
@@ -21,6 +26,14 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  index: {
+    type: Number,
+    required: true
+  },
+  categoryTrail: {
+    type: Array,
+    required: true
+  }
 })
 
 // Ensure the current category does not render itself or already rendered children
@@ -33,6 +46,7 @@ const hasChildren = computed(() => {
 onMounted(() => {
   console.log('Rendering item:', props.item.name, 'Children:', props.item.children_recursive?.map(c => c.name))
 })
+// Methods (can be inside <script setup>)
 </script>
 <style>
 .router-link-custom {

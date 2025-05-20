@@ -15,31 +15,33 @@ export function usePlaceOrder() {
       isPlacing.value = true
       error.value = ''
       
-      const token = localStorage.getItem('auth_token')
-      // if (!token) {
-      //   localStorage.setItem('shipping', JSON.stringify(shipping))
-      //   localStorage.setItem('billing', JSON.stringify(billing))
-      //   localStorage.setItem('redirect_to_checkout', 'true')
-      //   toast.warning('Please login to continue placing your order.')
-      //   return router.push({ name: 'Login' })
-      // }
-      // console.log('billing: ' + JSON.stringify(billing, null, 2))
+      const token = localStorage.getItem('auth_token');
+
+      const headers = token
+        ? { Authorization: `Bearer ${token}` }
+        : {}; // No headers if guest
+
       const response = await axios.post('/orders/place-order', {
         shipping,
         billing,
         cart,
         payment_method_id: paymentMethodId
       }, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
+        headers
+      });
+
+      // const response = await axios.post('/orders/place-order', {
+      //   shipping,
+      //   billing,
+      //   cart,
+      //   payment_method_id: paymentMethodId
+      // }, {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`
+      //   }
+      // })
       // Handle success
       if (response.data.success==true) {
-        // Clean up
-        // localStorage.removeItem('shipping')
-        // localStorage.removeItem('billing')
-        // localStorage.removeItem('redirect_to_checkout')
         setCartData(response.data) 
         toast.success(response.data.message || 'You have placed your order successfully!')
         router.push({ name: 'OrderSuccess', params: { orderNumber: response.data.order_number } });
