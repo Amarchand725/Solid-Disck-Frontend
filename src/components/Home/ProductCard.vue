@@ -45,8 +45,11 @@
         </router-link>
     </div>
     <div class="TabProductCard_card_bottom__WLdA5">
-        <button @click="handleAddToCart" :disabled="loading" class="TabProductCard_add_to_cart_btn___s_fG" title="Add To Cart">
+        <button style="border-radius:0 0 0 0;" @click="handleAddToCart" :disabled="loading" class="TabProductCard_add_to_cart_btn___s_fG" title="Add To Cart">
             {{ loading ? 'Adding...' : 'Add to Cart' }}
+        </button>
+         <button @click="handleBuyItNow" :disabled="loading2" class="TabProductCard_add_to_cart_btn___s_fG" title="Buy It Now">
+            {{ loading2 ? 'Buying...' : 'Buy It Now' }}
         </button>
     </div>
 </template>
@@ -56,7 +59,8 @@ import { useCart } from '@/composables/useCart'
 
 const { settings } = useSettings()
 
-const { addToCart, loading } = useCart()
+const { addToCart, buyItNow, loading , loading2 } = useCart()
+
 
 const props = defineProps({
   product: Object
@@ -64,6 +68,10 @@ const props = defineProps({
 
 const handleAddToCart = async () => {
   await addToCart(props.product.slug, 1)
+}
+
+const handleBuyItNow = async () => {
+  await buyItNow(props.product.slug, 1)
 }
 
 const onImageError = (event) => {

@@ -103,3 +103,26 @@ const onLogoError = (event) => {
 const store = useStore();
 const isLoggedIn = computed(() => store.getters.isLoggedIn);
 </script>
+<style>
+.left-icons.shopper-approved {
+  border: 2px solid #ccc;
+  border-radius: 8px; /* Rounded corners on all sides */
+  padding: 1px;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.left-icons.shopper-approved:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Subtle hover effect */
+  border-color: #007bff; /* Optional: change border color on hover */
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+
+/* Hide on screens smaller than 768px (typical mobile size) */
+@media (max-width: 767px) {
+  .left-icons.shopper-approved {
+    display: none !important;
+  }
+}
+</style>
