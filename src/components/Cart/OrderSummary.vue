@@ -1,8 +1,8 @@
 <template>
     <div class="ant-col ant-col-xs-24 ant-col-sm-24 ant-col-md-4 ant-col-lg-6 ant-col-xl-6 css-i6rspj">
         <div class="order_summary_main">
-            <h1>Calculate Shipping</h1>
-            <div class="shipping-calculation w-full">
+            <!-- <h1>Calculate Shipping</h1> -->
+            <!-- <div class="shipping-calculation w-full">
                 <div class="title px-[30px] bg-[#F6F6F6]">
                     <h3 class="text-[18px] font-bold">Free Ground Shipping Within US</h3>
                 </div>
@@ -18,7 +18,6 @@
                                             <option value="ua" selected>Ukraine</option>
                                             <option value="ca">Canada</option>
                                             <option value="uk">United Kingdom</option>
-                                            <!-- Add more options as needed -->
                                             </select>
                                         </div>
                                     </div>
@@ -44,7 +43,7 @@
                     </div>
                     <div class="ant-col ant-col-xl-24 css-i6rspj"></div>
                 </div>
-            </div>
+            </div> -->
             <div class="sub_total sub">
                 <span>Subtotal:</span>
                 <p>{{ settings?.currency ?? '' }}{{ fullCart.subtotal }}</p>
