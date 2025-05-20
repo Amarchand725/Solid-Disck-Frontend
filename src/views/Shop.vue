@@ -112,7 +112,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="bottom_navigation">
+                            <!-- <div class="bottom_navigation">
                                 <p>Showing <b>1 - 10</b> Results</p>
                                 <div class="bottom_pagination">
                                     <ul class="ant-pagination css-i6rspj">
@@ -124,7 +124,7 @@
                                         <li title="10" class="ant-pagination-item ant-pagination-item-10" tabindex="0"><a rel="index follow">10</a></li>
                                     </ul>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
