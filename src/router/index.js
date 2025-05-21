@@ -98,7 +98,7 @@ const routes = [
   //   meta: { title: 'Track Your Order' }
   // },
   {
-    path: '/categories/:categoryPath(.*)/:slug',
+    path: '/categories/:categoryPath(.*)',
     // path: '/products/:categoryPath(.*)/:slug',
     name: 'Shop',
     component: Shop,

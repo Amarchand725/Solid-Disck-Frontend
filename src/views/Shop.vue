@@ -104,6 +104,7 @@
                                         <ProductList
                                             :product="product"
                                             :settings="settings"
+                                            :loading="loading"
                                             :quantities="quantities"
                                             @increase="increaseQuantity"
                                             @decrease="decreaseQuantity"
@@ -179,7 +180,9 @@
 
     // Load category and its products
     const loadCategory = async () => {
-        const slug = route.params.slug;
+        // const slug = route.params.slug;
+        const segments = route.path.split('/').filter(Boolean);
+        const slug = segments[segments.length - 1];
 
         if (!slug) {
             console.warn('Missing slug:', { slug });

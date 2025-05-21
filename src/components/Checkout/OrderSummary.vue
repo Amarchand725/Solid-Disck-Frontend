@@ -81,13 +81,18 @@
             ? { ...shippingForm, same_as_shipping: true }
             : { ...(billingFormData || {}), same_as_shipping: false }
 
-            const stripePaymentMethodId = await paymentRef.value.getPaymentMethodId()
-
+            // const stripePaymentMethodId = await paymentRef.value.getPaymentMethodId()
+            const paymentInfo = await paymentRef.value.getPaymentToken()
+            console.log(paymentInfo);
             const payload = {
                 shipping: shippingForm,
                 billing: billingForm,
                 cart: fullCart.value,
-                paymentMethodId: stripePaymentMethodId,
+                // paymentMethodId: paymentMethodId,
+                payment: {
+                    method: paymentInfo.method,                     // e.g., 'paypal' or 'payarc'
+                    payment_method_id: paymentInfo.payment_method_id // e.g., token string
+                }
             }
             await placeOrder(payload)
             console.log('Order placed!')

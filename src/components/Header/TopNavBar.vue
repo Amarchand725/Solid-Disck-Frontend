@@ -60,7 +60,7 @@
   const { categories2, loading, error, getCategories2 } = useCategories()
   onMounted(() => {
   getCategories2()
-  console.log('Categories:', categories2.value) // this should show your full nested category structure
+  // console.log('Categories:', categories2.value) // this should show your full nested category structure
 })
 
 const dropdownElement = ref(null);

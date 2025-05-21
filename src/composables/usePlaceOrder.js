@@ -10,7 +10,7 @@ export function usePlaceOrder() {
   const router = useRouter()
   const toast = useToast()
 
-  const placeOrder = async ({ shipping, billing, cart, paymentMethodId  }) => {
+  const placeOrder = async ({ shipping, billing, cart, payment  }) => {
     try {
       isPlacing.value = true
       error.value = ''
@@ -25,21 +25,11 @@ export function usePlaceOrder() {
         shipping,
         billing,
         cart,
-        payment_method_id: paymentMethodId
+        payment: payment
       }, {
         headers
       });
 
-      // const response = await axios.post('/orders/place-order', {
-      //   shipping,
-      //   billing,
-      //   cart,
-      //   payment_method_id: paymentMethodId
-      // }, {
-      //   headers: {
-      //     Authorization: `Bearer ${token}`
-      //   }
-      // })
       // Handle success
       if (response.data.success==true) {
         setCartData(response.data) 

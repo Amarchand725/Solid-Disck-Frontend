@@ -98,7 +98,8 @@
 defineProps({
   product: Object,
   settings: Object,
-  quantities: Object
+  quantities: Object,
+  loading: Boolean,
 })
 
 const emit = defineEmits(['increase', 'decrease', 'add-to-cart'])
