@@ -143,10 +143,10 @@
                                 <h3>Address:</h3>
                                 <p>{{ settings?.address ?? '' }}</p>
                             </div>
-                            <div class="item_inner">
+                            <!-- <div class="item_inner">
                                 <h3>Mailing Address:</h3>
                                 <p>{{ settings?.address ?? '' }}</p>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>

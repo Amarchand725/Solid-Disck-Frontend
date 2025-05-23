@@ -172,3 +172,21 @@ export function useCart() {
     buyItNow,
   }
 }
+
+export const buyItNow = async (productSlug, quantity = 1, router) => {
+  const toast = useToast()
+
+  try {
+    const response = await axios.post('/cart/store', {
+      slug: productSlug.slug,
+      quantity,
+    })
+
+    setCartData(response.data)
+    toast.success(response.data.message || 'Item added to cart.')
+    router.push('/checkout')
+  } catch (error) {
+    console.error('Buy it now failed:', error)
+    toast.error('Failed to add item to cart.')
+  }
+}

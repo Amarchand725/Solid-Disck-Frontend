@@ -61,25 +61,18 @@
                 </div>
                 <div class="ant-col ant-col-xs-24 ant-col-sm-24 ant-col-md-24 ant-col-lg-13 ant-col-xl-12 css-i6rspj">
                     <div class="main_info_cart_sec">
-                        <div v-if="productDetails?.discount_price">
+                        <div class="qr_code_cart">
                             <div class="cut_price_main">
                                 <span>
-                                {{ settings?.currency ?? '' }}{{ productDetails?.unit_price || 0 }}
+                                    {{ settings?.currency ?? '' }}{{ productDetails?.unit_price }}
                                 </span>
                                 <!-- <p>20% OFF</p> -->
                             </div>
                             <span class="product_price" style="margin-top: 15px;">
                                 {{ settings?.currency ?? '' }}{{ productDetails?.discount_price }}
                             </span>
+                            <span class="lease_price">Lease Pricing Available</span>
                         </div>
-
-                        <!-- If no discount_price, show unit_price or 0 -->
-                        <div v-else>
-                            <span class="product_price" style="margin-top: 15px;">
-                                {{ settings?.currency ?? '' }}{{ productDetails?.unit_price || 0 }}
-                            </span>
-                        </div>
-
                         <div class="reviewd_yet_main">
                             <p>Not Yet Reviewed</p>
                             <div class="star_main">
@@ -130,15 +123,16 @@
                                 </div>
                             </div>
                             <div class="availibility">
-                                <p><b>Availability:</b> <span style="color: green;">In Stock</span></p>
+                                <p><b>Availability:</b> In Stock</p>
                                 <span>Express Delivery in USA Get within 1 to 3 days</span>
                             </div>
                         </div>
-                        <button @click="handleAddToCart" :disabled="loading" title="Add To Cart" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined add_to_cart">
+                        <button style="margin-bottom:10px;" @click="handleAddToCart" :disabled="loading" title="Add To Cart" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined add_to_cart">
                             <span>{{ loading ? 'Adding...' : 'Add to Cart' }}</span>
                         </button>
-                        <button @click="handleBuyItNow" :disabled="loading" title="Buy It Now" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined add_to_cart">
-                            <span>{{ loading2 ? 'Buying...' : 'Buy It Now' }}</span>
+                        <br>
+                        <button style="background-color: #f5ad1d !important;" @click="handleBuyItNow" :disabled="loading2" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined add_to_cart" title="Buy It Now">
+                            {{ loading2 ? 'Buying...' : 'Buy It Now' }}
                         </button>
                         <div class="norton_image">
                             <img 
@@ -174,10 +168,11 @@
 
     const quantity = ref(1);
 
-    const { addToCart, buyItNow, loading, loading2 } = useCart()
+    const { addToCart, buyItNow ,  loading, loading2 , decreaseCartItem } = useCart()
     const handleAddToCart = async () => {
         await addToCart(props.productDetails.slug, quantity.value)
     }
+
     const handleBuyItNow = async () => {
         await buyItNow(props.productDetails.slug, quantity.value)
     }

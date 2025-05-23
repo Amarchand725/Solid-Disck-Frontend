@@ -83,10 +83,10 @@
                                         </p>
                                     </div>
                                 </div>
-                                <button @click="handleAddToCart(product)" title="Add To Cart" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined">
+                                <button style="border-radius:0 0 0 0;" @click="handleAddToCart(product)" title="Add To Cart" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined">
                                     {{ loadingMap[product.slug] ? 'Adding...' : 'Add to Cart' }}
                                 </button>
-                                <button @click="handleBuyItNow(product)" :disabled="loading2" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined" title="Buy It Now">
+                                <button style="background-color: #f5ad1d !important;" @click="handleBuyItNow(product)" :disabled="loading2" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined" title="Buy It Now">
                                     {{ buyingMap[product.slug] ? 'Buying...' : 'Buy It Now' }}
                                 </button>
                             </div>
