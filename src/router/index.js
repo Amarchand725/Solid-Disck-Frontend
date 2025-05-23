@@ -170,7 +170,10 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
-})
+  scrollBehavior(to, from, savedPosition) {
+    return { top: 0 }; // Scroll to top on every route
+  }
+});
 
 // Add a navigation guard to protect certain routes
 router.beforeEach((to, from, next) => {

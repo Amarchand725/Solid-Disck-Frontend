@@ -174,8 +174,8 @@
     }
 
     const handleBuyItNow = async () => {
-  await buyItNow(props.productDetails.slug, quantity.value)
-}
+        await buyItNow(props.productDetails.slug, quantity.value)
+    }
 
     function shortDescription(html, limit = '') {
         const text = (html || '').replace(/<[^>]*>/g, ''); // strip HTML tags safely

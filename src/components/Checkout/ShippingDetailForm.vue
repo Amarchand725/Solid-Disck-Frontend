@@ -219,6 +219,13 @@ watch(shippingCity, (val) => {
   shippingForm.shippingCity = val
 })
 
+watch(shippingCountries, (countries) => {
+  const us = countries.find((c) => c.name === 'United States')
+  if (us) {
+    shippingCountry.value = us.id
+  }
+}, { immediate: true })
+
 const handleShippingCountryChange = (event) => {
   shippingCountry.value = event.target.value
 }
@@ -227,8 +234,12 @@ const handleShippingStateChange = (event) => {
   shippingState.value = event.target.value
 }
 
-onMounted(() => {
-  getShippingCountries()
+onMounted(async () => {
+  await getShippingCountries()
+  const us = shippingCountries.find((c) => c.name === 'United States')
+  if (us) {
+    shippingCountry.value = us.id
+  }
 })
 
 // Define props & emits to sync with parent (if needed)

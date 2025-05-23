@@ -9,7 +9,7 @@ const getBrands = async () => {
   loading.value = true;
   try {
     const res = await axios.get('/brands');
-    brands.value = res.data.data;
+    return brands.value = res.data.data;
   } catch (err) {
     error.value = err;
   } finally {

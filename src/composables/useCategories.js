@@ -10,7 +10,7 @@ const getCategories = async () => {
   loading.value = true;
   try {
     const res = await axios.get('/categories');
-    categories.value = res.data.data;
+    return categories.value = res.data.data;
   } catch (err) {
     error.value = err;
   } finally {

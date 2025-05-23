@@ -27,4 +27,8 @@ onMounted(async () => {
      <Loader v-if="loading" />
   </div>
 </template>
-
+<style>
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+</style>

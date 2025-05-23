@@ -25,7 +25,14 @@
                         <div style="margin-bottom: 16px;">  
                             <h2 title="Customize Your Results">Customize Your Results</h2></div>
                         <div style="margin-bottom: 15px;">
-                            <button title="Reset Filters" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined reset_filter"><span>Reset Filters</span></button>
+                            <div class="flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-4 mb-6">
+                            <button 
+                                @click="resetFilters" 
+                                class="filter-input mt-3 md:mt-0 md:ml-4 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-md shadow-sm transition"
+                                >
+                                Reset Filters
+                                </button>
+                        </div>
                         </div>
                         <div class="ant-collapse ant-collapse-icon-position-start side_bar_tabs css-i6rspj">
                             <div title="Manufacturer" class="ant-collapse-item ant-collapse-item-active">
@@ -37,13 +44,21 @@
                                 <div class="ant-collapse-content ant-collapse-content-active" style="">
                                     <div class="ant-collapse-content-box">
                                         <div>
-                                            <div class="ant-select ant-select-outlined css-i6rspj ant-select-single ant-select-allow-clear ant-select-show-arrow ant-select-show-search" style="width: 100%;">
-                                                <div class="ant-select-selector"><span class="ant-select-selection-wrap"><span class="ant-select-selection-search"><input autocomplete="off" class="ant-select-selection-search-input" role="combobox" aria-expanded="false" aria-haspopup="listbox" aria-owns="rc_select_1_list" aria-autocomplete="list" aria-controls="rc_select_1_list" type="search" value="" id="rc_select_1"></span>
-                                                    <span
-                                                    class="ant-select-selection-placeholder">Select Manufacturer</span>
-                                                        </span>
-                                                </div><span class="ant-select-arrow" unselectable="on" aria-hidden="true" style="user-select: none;"><span role="img" aria-label="down" class="anticon anticon-down ant-select-suffix"><svg viewBox="64 64 896 896" focusable="false" data-icon="down" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"></path></svg></span></span>
-                                            </div>
+                                            <div class="flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-4 mb-6">
+                                           <select 
+                                            v-model="selectedBrand" 
+                                            @change="loadProducts"
+                                            class="filter-input w-full mt-3 px-4 py-2 border border-gray-300 rounded-md"
+                                            >
+                                            <option :value="null">All Brands</option>
+                                            <option v-for="brand in brands" :key="brand.id" :value="brand.slug">
+                                                {{ brand.name }}
+                                            </option>
+                                            </select>
+
+
+
+                                        </div>
                                         </div>
                                     </div>
                                 </div>
@@ -57,13 +72,19 @@
                                 <div class="ant-collapse-content ant-collapse-content-active" style="">
                                     <div class="ant-collapse-content-box">
                                         <div>
-                                            <div class="ant-select ant-select-outlined css-i6rspj ant-select-single ant-select-allow-clear ant-select-show-arrow ant-select-show-search" style="width: 100%;">
-                                                <div class="ant-select-selector"><span class="ant-select-selection-wrap"><span class="ant-select-selection-search"><input autocomplete="off" class="ant-select-selection-search-input" role="combobox" aria-expanded="false" aria-haspopup="listbox" aria-owns="rc_select_2_list" aria-autocomplete="list" aria-controls="rc_select_2_list" type="search" value="" id="rc_select_2"></span>
-                                                    <span
-                                                    class="ant-select-selection-placeholder">Select Category</span>
-                                                        </span>
-                                                </div><span class="ant-select-arrow" unselectable="on" aria-hidden="true" style="user-select: none;"><span role="img" aria-label="down" class="anticon anticon-down ant-select-suffix"><svg viewBox="64 64 896 896" focusable="false" data-icon="down" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"></path></svg></span></span>
-                                            </div>
+                                            <div class="flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-4 mb-6">
+                                          <select 
+                                            v-model="selectedCategory" 
+                                            @change="loadProducts"
+                                            class="filter-input w-full mt-3 px-4 py-2 border border-gray-300 rounded-md"
+                                            >
+                                            <option :value="null">All Categories</option>
+                                            <option v-for="cat in categories" :key="cat.id" :value="cat.slug">
+                                                {{ cat.name }}
+                                            </option>
+                                            </select>
+
+                                        </div>
                                         </div>
                                     </div>
                                 </div>
@@ -113,7 +134,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="bottom_navigation" v-if="pagination.total > 0">
+                            <div class="bottom_navigation" v-if="pagination && pagination.total > 0">
                                 <p>
                                     Showing <b>{{ showingStart }} - {{ showingEnd }}</b> Results
                                 </p>
@@ -145,127 +166,136 @@
     </div>
 </template>
 <script setup>
-    //Sub Component
-    import CategoryBreadcrumb from '@/components/SingleProduct/CategoryBreadcrumb.vue';
-    import ProductList from '@/components/Shop/ProductList.vue';
-    
-    import { ref, onMounted, watch, computed } from 'vue';
-    import { useRoute } from 'vue-router';
-    import { useBrands } from '@/composables/useBrands';
-    import { useProducts } from '@/composables/useProducts';
-    import { useSettings } from '@/composables/useSettings.js'
-    import { useCart } from '@/composables/useCart'
+import { ref, onMounted, watch, computed } from 'vue';
+import { useRoute } from 'vue-router';
+import { useBrands } from '@/composables/useBrands';
+import { useCategories } from '@/composables/useCategories';
+import { useProducts } from '@/composables/useProducts';
+import { useSettings } from '@/composables/useSettings.js'
+import { useCart } from '@/composables/useCart';
 
-    // Composables
-    const { settings } = useSettings();
-    const { getBrandBySlug } = useBrands();
-    const { products, pagination, loading, getProductsByBrand } = useProducts();
-    const { addToCart } = useCart();
+import CategoryBreadcrumb from '@/components/SingleProduct/CategoryBreadcrumb.vue';
+import ProductList from '@/components/Shop/ProductList.vue';
 
-    // Route & reactive state
-    const route = useRoute();
-    const category = ref(null);
-    const categoryTrail = ref([]);
+const { settings } = useSettings();
+const { getBrandBySlug } = useBrands();
+const { products, pagination, loading, getProductsByBrand } = useProducts();
+const { addToCart } = useCart();
+const route = useRoute();
+const { getCategories } = useCategories();
+const { getBrands } = useBrands();
 
-    // Store quantities per product
-    const quantities = ref({});
+const categories = ref([]);
+const brands = ref([]);
 
-    // Quantity handlers
-    const increaseQuantity = (product) => {
-        const key = product.slug;
-        quantities.value[key] = (quantities.value[key] || 1) + 1;
-    };
+const selectedCategory = ref(null);
+const selectedBrand = ref(null);
 
-    const decreaseQuantity = (product) => {
-        const key = product.slug;
-        if ((quantities.value[key] || 1) > 1) {
-            quantities.value[key]--;
-        }
-    };
 
-    // Add to cart using selected quantity
-    const handleAddToCart = async (product) => {
-        const quantity = quantities.value[product.slug] || 1;
-        await addToCart(product.slug, quantity);
-    };
+const category = ref(null);
+const categoryTrail = ref([]);
 
-    // Load category and its products
-    const loadBrand = async () => {
-        const segments = route.path.split('/').filter(Boolean);
-        const slug = segments[segments.length - 1];
+const quantities = ref({});
 
-        if (!slug) {
-            console.warn('Missing slug:', { slug });
-            return;
-        }
+const searchQuery = ref('');
+const brandSlug = computed(() => route.params.slug);
 
-        try {
-            const result = await getBrandBySlug(slug);
-            category.value = result;
-            categoryTrail.value = result?.category_trail || [];
+// Handlers
+const increaseQuantity = (product) => {
+  const key = product.slug;
+  quantities.value[key] = (quantities.value[key] || 1) + 1;
+};
 
-            await getProductsByBrand({
-                brandSlug: slug,
-                perPage: 10,
-                page: 1,
-                sortField: 'created_at',
-                sortDirection: 'desc',
-                search: '',
-            });
-        } catch (err) {
-            console.error('Failed to load brand products:', err);
-        }
-    };
+const decreaseQuantity = (product) => {
+  const key = product.slug;
+  if ((quantities.value[key] || 1) > 1) {
+    quantities.value[key]--;
+  }
+};
 
-    // Lifecycle
-    onMounted(loadBrand);
+const handleAddToCart = async (product) => {
+  const quantity = quantities.value[product.slug] || 1;
+  await addToCart(product.slug, quantity);
+};
 
-    // Watch for route slug changes
-    watch(() => [route.params.slug], loadBrand);
+// Load products with filters
+const loadProducts = async (page = 1) => {
+  await getProductsByBrand({
+    brandSlug: selectedBrand.value || undefined,
+    categorySlug: selectedCategory.value || undefined,
+    page,
+    perPage: 10,
+    sortField: 'created_at',
+    sortDirection: 'desc',
+    search: searchQuery.value,
+  });
+};
 
-    const goToPage = (page) => {
-        const segments = route.path.split('/').filter(Boolean);
-        const slug = segments[segments.length - 1];
 
-        getProductsByBrand({
-            brandSlug: slug,
-            page,
-            perPage: pagination.value.per_page,
-            sortField: 'created_at',
-            sortDirection: 'desc',
-            search: '',
-        });
-    };
+const loadBrand = async () => {
+  try {
+    const result = await getBrandBySlug(brandSlug.value);
+    category.value = result;
+    categoryTrail.value = result?.category_trail || [];
+    await loadProducts();
+  } catch (err) {
+    console.error('Failed to load brand products:', err);
+  }
+};
 
-    const showingStart = computed(() => {
-        const { current_page, per_page, total } = pagination.value;
-        return Math.min((current_page - 1) * per_page + 1, total);
-    });
+const resetFilters = () => {
+  selectedCategory.value = null;
+  selectedBrand.value = null;
+  searchQuery.value = '';
+  loadProducts();
+};
 
-    const showingEnd = computed(() => {
-        const { current_page, per_page, total } = pagination.value;
-        return Math.min(current_page * per_page, total);
-    });
+// Pagination
+const goToPage = (page) => loadProducts(page);
 
-    const visiblePages = computed(() => {
-        const pages = [];
-        const { current_page, last_page } = pagination.value;
-        const maxButtons = 5;
+const showingStart = computed(() => {
+  const { current_page, per_page, total } = pagination.value;
+  return Math.min((current_page - 1) * per_page + 1, total);
+});
 
-        let start = Math.max(current_page - Math.floor(maxButtons / 2), 1);
-        let end = start + maxButtons - 1;
+const showingEnd = computed(() => {
+  const { current_page, per_page, total } = pagination.value;
+  return Math.min(current_page * per_page, total);
+});
 
-        if (end > last_page) {
-            end = last_page;
-            start = Math.max(end - maxButtons + 1, 1);
-        }
+const visiblePages = computed(() => {
+  const pages = [];
+  const { current_page, last_page } = pagination.value;
+  const maxButtons = 5;
 
-        for (let i = start; i <= end; i++) {
-            pages.push(i);
-        }
+  let start = Math.max(current_page - Math.floor(maxButtons / 2), 1);
+  let end = start + maxButtons - 1;
 
-        return pages;
-    });
+  if (end > last_page) {
+    end = last_page;
+    start = Math.max(end - maxButtons + 1, 1);
+  }
+
+  for (let i = start; i <= end; i++) {
+    pages.push(i);
+  }
+
+  return pages;
+});
+
+// Watch route slug changes
+watch(() => brandSlug.value, loadBrand);
+
+onMounted(async () => {
+  categories.value = await getCategories();
+  console.log('Loaded categories:', categories.value); // 🔍 Check output
+
+  brands.value = await getBrands();
+  console.log('Loaded brands:', brands.value); // 🔍 Check output
+
+  selectedBrand.value = brandSlug.value;
+  await loadBrand();
+});
 </script>
 <style scoped>
     .bottom_navigation {
@@ -294,4 +324,32 @@
     color: white;
     border-color: #1890ff;
     }
+
+    .filter-input,
+.filter-select,
+.filter-button {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease-in-out;
+}
+
+.filter-input:focus,
+.filter-select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+.filter-button {
+  background-color: #e5e7eb;
+  color: #374151;
+  cursor: pointer;
+}
+
+.filter-button:hover {
+  background-color: #d1d5db;
+}
+
 </style>
