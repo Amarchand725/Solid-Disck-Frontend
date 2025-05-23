@@ -21,7 +21,7 @@ export function usePayarc() {
     // Simulate async call
     return new Promise((resolve) => {
       setTimeout(() => {
-        payarcToken.value = 'mocked-payarc-token-abc123'
+        payarcToken.value = getPayarcToken
         resolve(payarcToken.value)
       }, 500)
     })

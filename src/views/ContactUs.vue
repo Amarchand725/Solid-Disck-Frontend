@@ -118,7 +118,7 @@
                             </div>
                             <!-- <div class="item_inner">
                                 <h3>RMA:</h3>
-                                <p><a href="mailto:rma@etechbuy.com">rma@etechbuy.com</a></p>
+                                <p><a href="mailto:rma@Soliddiskdirect.com">rma@Soliddiskdirect.com</a></p>
                             </div> -->
                         </div>
                     </div>

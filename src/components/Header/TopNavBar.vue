@@ -108,7 +108,7 @@ onUnmounted(() => {
 .dropdown-btn {
   background-color: #003366;
   color: #fff;
-  padding: 8px 16px;
+  padding: 14px 16px;
   font-size: 14px;
   font-weight: 600;
   border: none;

@@ -104,13 +104,11 @@
                                         <ProductList
                                             :product="product"
                                             :settings="settings"
-                                            :loading="loader"
-                                            :loading2="loading2"
+                                            :loading="loading"
                                             :quantities="quantities"
                                             @increase="increaseQuantity"
                                             @decrease="decreaseQuantity"
                                             @add-to-cart="handleAddToCart"
-                                            @buy-it-now="handleBuyItNow"
                                         />
                                     </div>
                                 </div>
@@ -153,16 +151,16 @@
     
     import { ref, onMounted, watch, computed } from 'vue';
     import { useRoute } from 'vue-router';
-    import { useCategories } from '@/composables/useCategories';
+    import { useBrands } from '@/composables/useBrands';
     import { useProducts } from '@/composables/useProducts';
     import { useSettings } from '@/composables/useSettings.js'
     import { useCart } from '@/composables/useCart'
 
     // Composables
     const { settings } = useSettings();
-    const { getCategoryBySlug } = useCategories();
-    const { products, pagination, loading, getProductsByCategory } = useProducts();
-    const { addToCart, buyItNow, loading2, loader } = useCart();
+    const { getBrandBySlug } = useBrands();
+    const { products, pagination, loading, getProductsByBrand } = useProducts();
+    const { addToCart } = useCart();
 
     // Route & reactive state
     const route = useRoute();
@@ -191,13 +189,8 @@
         await addToCart(product.slug, quantity);
     };
 
-    const handleBuyItNow = async (product) => {
-        await buyItNow(product.slug, 1);
-    };
-
     // Load category and its products
-    const loadCategory = async () => {
-        // const slug = route.params.slug;
+    const loadBrand = async () => {
         const segments = route.path.split('/').filter(Boolean);
         const slug = segments[segments.length - 1];
 
@@ -207,12 +200,12 @@
         }
 
         try {
-            const result = await getCategoryBySlug(slug);
+            const result = await getBrandBySlug(slug);
             category.value = result;
             categoryTrail.value = result?.category_trail || [];
 
-            await getProductsByCategory({
-                categorySlug: slug,
+            await getProductsByBrand({
+                brandSlug: slug,
                 perPage: 10,
                 page: 1,
                 sortField: 'created_at',
@@ -220,22 +213,22 @@
                 search: '',
             });
         } catch (err) {
-            console.error('Failed to load category or products:', err);
+            console.error('Failed to load brand products:', err);
         }
     };
 
     // Lifecycle
-    onMounted(loadCategory);
+    onMounted(loadBrand);
 
     // Watch for route slug changes
-    watch(() => [route.params.slug], loadCategory);
+    watch(() => [route.params.slug], loadBrand);
 
     const goToPage = (page) => {
         const segments = route.path.split('/').filter(Boolean);
         const slug = segments[segments.length - 1];
 
-        getProductsByCategory({
-            categorySlug: slug,
+        getProductsByBrand({
+            brandSlug: slug,
             page,
             perPage: pagination.value.per_page,
             sortField: 'created_at',

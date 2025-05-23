@@ -3,7 +3,7 @@
         <main>
             <!-- Banner Section -->
             <Banner />
-
+            
             <!-- Central Content -->
              <CentralContent />
 

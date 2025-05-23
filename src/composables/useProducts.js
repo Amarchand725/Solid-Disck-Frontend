@@ -52,10 +52,38 @@ const getProductsByCategory = async ({
         search,
       }
     });
-    // products.value = res.data.data;
+
     products.value = res.data.data;
-    pagination.value = res.data.meta; // Save pagination data
-    pagination.value.links = res.data.links; // Optional: for page buttons
+    pagination.value = res.data.pagination;
+  } catch (err) {
+    error.value = err;
+  } finally {
+    loading.value = false;
+  }
+};
+
+const getProductsByBrand = async ({
+  brandSlug,
+  perPage = 10,
+  page = 1,
+  sortField = 'created_at',
+  sortDirection = 'desc',
+  search = ''
+}) => {
+  loading.value = true;
+  try {
+    const res = await axios.get(`/brands/${brandSlug}/products`, {
+      params: {
+        per_page: perPage,
+        page,
+        sort_field: sortField,
+        sort_direction: sortDirection,
+        search,
+      }
+    });
+    
+    products.value = res.data.data;
+    pagination.value = res.data.pagination;
   } catch (err) {
     error.value = err;
   } finally {
@@ -72,5 +100,6 @@ export function useProducts() {
     getProducts,
     getProductBySlug,
     getProductsByCategory,
+    getProductsByBrand,
   };
 }

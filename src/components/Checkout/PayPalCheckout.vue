@@ -4,7 +4,7 @@
 
 <script setup>
 import { onMounted, computed } from 'vue'
-import axios from 'axios'
+import axios from '@/plugins/axios'
 import { useCart } from '@/composables/useCart'
 
 const { fullCart } = useCart()
@@ -20,7 +20,8 @@ const handlePayment = async () => {
 defineExpose({ handlePayment })
 
 onMounted(async () => {
-  const { data } = await axios.get('/api/paypal/client-id')
+  const { data } = await axios.get('/paypal/client-id')
+  // console.log(data)
   const script = document.createElement('script')
   script.src = `https://www.paypal.com/sdk/js?client-id=${data.clientId}&currency=USD`
   document.head.appendChild(script)
@@ -39,7 +40,7 @@ onMounted(async () => {
         })
       },
       onApprove: async (data) => {
-        await axios.post('/api/paypal/capture', { orderID: data.orderID })
+        await axios.post('/paypal/capture', { orderID: data.orderID })
         alert('PayPal payment successful!')
       }
     }).render('#paypal-button-container')

@@ -13,7 +13,7 @@
                 <router-link 
                     class="popular_cards_main_inner-a" 
                     title="{{ brand.name }}" 
-                    to="#"
+                    :to="`/brands/${brand.slug}`"
                 >
                     <div class="manufacturer_inner">
                         <img 

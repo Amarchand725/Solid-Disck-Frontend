@@ -19,7 +19,7 @@ const getBrands = async () => {
 
 const getBrandBySlug = async (slug) => {
   try {
-    const res = await axios.get(`/brands/${slug}`);
+    const res = await axios.get(`/brands/show/${slug}`);  
     return res.data.data;
   } catch (err) {
     throw err;
