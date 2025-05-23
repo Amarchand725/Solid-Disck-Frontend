@@ -73,19 +73,6 @@
                     
                     <div class="ant-col ant-col-xs-19 css-i6rspj">
                         <div class="col_right">
-                            <!-- <div class="sort_bar">
-                                <div class="sort">
-                                    <p>SORT:</p>
-                                    <div onclick="openThis()" class="ant-select ant-select-outlined css-i6rspj ant-select-single ant-select-show-arrow" style="width: 145px;">
-                                        <div class="ant-select-selector"><span class="ant-select-selection-wrap"><span class="ant-select-selection-search"><input autocomplete="off" class="ant-select-selection-search-input" role="combobox" aria-expanded="false" aria-haspopup="listbox" aria-owns="rc_select_0_list" aria-autocomplete="list" aria-controls="rc_select_0_list" readonly="" unselectable="on" type="search" value="" id="rc_select_0" style="opacity: 0;"></span>
-                                            <span
-                                            class="ant-select-selection-item" title="Sort by latest">Sort by latest</span>
-                                                </span>
-                                        </div><span class="ant-select-arrow" unselectable="on" aria-hidden="true" style="user-select: none;"><span role="img" aria-label="caret-down" class="anticon anticon-caret-down"><svg viewBox="0 0 1024 1024" focusable="false" data-icon="caret-down" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M840.4 300H183.6c-19.7 0-30.7 20.8-18.5 35l328.4 380.8c9.4 10.9 27.5 10.9 37 0L858.9 335c12.2-14.2 1.2-35-18.5-35z"></path></svg></span></span>
-                                    </div>
-                                </div>
-                            </div> -->
-
                             <div class="product_list_wrapper">
                                 <div 
                                     v-if="loading" 

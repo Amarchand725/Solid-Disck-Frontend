@@ -113,7 +113,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="bottom_navigation" v-if="pagination.total > 0">
+                            <div class="bottom_navigation" v-if="pagination?.total > 0">
                                 <p>
                                     Showing <b>{{ showingStart }} - {{ showingEnd }}</b> Results
                                 </p>

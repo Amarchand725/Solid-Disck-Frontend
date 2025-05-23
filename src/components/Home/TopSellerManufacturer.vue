@@ -51,7 +51,14 @@
                         </div>
                     </div>
                 </div>
-                <!-- <a class="top-seller-manufacturer-product-tab-explore-more-btn" title="Explore More" href="#">Explore More</a> -->
+                <router-link 
+                    v-if="activeBrand" 
+                    class="top-seller-manufacturer-product-tab-explore-more-btn" 
+                    title="Explore More" 
+                    :to="`/brands/${activeBrand.slug}`"
+                >
+                    Explore More
+                </router-link>
             </div>
         </div>
     </section>
