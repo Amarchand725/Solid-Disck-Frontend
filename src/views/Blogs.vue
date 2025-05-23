@@ -10,7 +10,7 @@
                             <li><span class="ant-breadcrumb-link"><a href="#">Blogs</a></span></li>
                         </ol>
                     </nav>
-                    <h1>ETechBuy Blogs</h1></div>
+                    <h1>Soliddiskdirect Blogs</h1></div>
                     <div class="blogsSearchComp">
                         <input placeholder="Search Blog..." id="blog-search-bar" type="text">
                         <button type="button" id="blog-search-button">Search</button>
@@ -115,10 +115,10 @@
                                             low pricing, making it an excellent choice for modernizing IT infrastructure. &nbsp;Follow our blog to stay up to date on the newest networking trends.</p>
                                         <p>&nbsp;</p>
                                         <h3><strong>Where to Buy Aruba 10Gb Switches?</strong></h3>
-                                        <p>If you're looking for the best deals on Aruba CX 6300 and other Aruba 10Gb switches, check out <a class="links" href="#">Etechbuy’s Aruba switch collection</a>.
+                                        <p>If you're looking for the best deals on Aruba CX 6300 and other Aruba 10Gb switches, check out <a class="links" href="#">Soliddiskdirect’s Aruba switch collection</a>.
                                             You'll find a wide selection of Aruba products, competitive pricing, and expert advice to help you find the perfect networking solution.</p>
                                         <p>For further details or queries, please connect with us through:</p>
-                                        <p>Email: <a href="mailto:support@etechbuy.com">support@etechbuy.com</a></p>
+                                        <p>Email: <a href="mailto:support@Soliddiskdirect.com">support@Soliddiskdirect.com</a></p>
                                         <p>Call: (888) 719-5848</p>
                                         <p>Live Chat: Monday-Friday (8AM-5PM PST)</p>
                                         <p>&nbsp;</p>

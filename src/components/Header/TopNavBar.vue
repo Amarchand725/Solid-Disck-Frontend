@@ -60,7 +60,7 @@
   const { categories2, loading, error, getCategories2 } = useCategories()
   onMounted(() => {
   getCategories2()
-  console.log('Categories:', categories2.value) // this should show your full nested category structure
+  // console.log('Categories:', categories2.value) // this should show your full nested category structure
 })
 
 const dropdownElement = ref(null);
@@ -108,7 +108,7 @@ onUnmounted(() => {
 .dropdown-btn {
   background-color: #003366;
   color: #fff;
-  padding: 8px 16px;
+  padding: 14px 16px;
   font-size: 14px;
   font-weight: 600;
   border: none;

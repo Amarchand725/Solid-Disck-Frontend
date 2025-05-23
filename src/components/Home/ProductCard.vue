@@ -25,14 +25,23 @@
     </router-link>
     <div class="TabProductCard_pricing__n1Y_K">
         <span class="TabProductCard_price__JKv5c">
-            <div>
-                <span style="font-size: 16px; font-weight: 400; text-decoration: line-through; margin-right: 8px; color: rgb(0, 0, 0);">
-                    {{ settings?.currency ?? '' }}{{ product.unit_price }}
+            <div v-if="product?.discount_price">
+                <div>
+                    <span style="font-size: 16px; font-weight: 400; text-decoration: line-through; margin-right: 8px; color: rgb(0, 0, 0);">
+                    {{ settings?.currency ?? '' }}{{ product?.unit_price || 0 }}
+                    </span>
+                </div>
+                <span class="TabProductCard_product_price__miZKi" style="margin-top: 18px;">
+                    {{ settings?.currency ?? '' }}{{ product?.discount_price }}
                 </span>
             </div>
-            <span class="TabProductCard_product_price__miZKi" style="margin-top: 18px;">
-                {{ settings?.currency ?? '' }}{{ product.discount_price }}
-            </span>
+
+            <!-- If no discount_price, show unit_price or 0 -->
+            <div v-else>
+                <span class="TabProductCard_product_price__miZKi" style="margin-top: 18px;">
+                    {{ settings?.currency ?? '' }}{{ product?.unit_price || 0 }}
+                </span>
+            </div>
         </span>
         <router-link 
             :to="`/products/${product.category_url}/${product.slug}`"

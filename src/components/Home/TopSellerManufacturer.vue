@@ -51,7 +51,7 @@
                         </div>
                     </div>
                 </div>
-                <a class="top-seller-manufacturer-product-tab-explore-more-btn" title="Explore More" href="#">Explore More</a>
+                <!-- <a class="top-seller-manufacturer-product-tab-explore-more-btn" title="Explore More" href="#">Explore More</a> -->
             </div>
         </div>
     </section>

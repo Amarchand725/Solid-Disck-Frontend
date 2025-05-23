@@ -1,101 +1,163 @@
 <template>
-    <div class="payment_method_main">
-        <div class="head_main">
-            <h3>Payment Method</h3>
-            <img 
-                loading="lazy" width="150" height="20" decoding="async" data-nimg="1" 
-                srcset="/assets/image/payment_icons.avif" 
-                src="/assets/image/payment_icons.avif" 
-                style="color: transparent;"
-            >
-        </div>
-        <div class="payment_method_radio">
-            <div class="ant-radio-group ant-radio-group-outline css-i6rspj">
-                <label class="ant-radio-wrapper ant-radio-wrapper-checked css-i6rspj">
-                    <span class="ant-radio ant-wave-target ant-radio-checked">
-                        <input class="ant-radio-input" type="radio" value="boa">
-                        <span class="ant-radio-inner"></span>
-                    </span>
-                    <span>Credit Card</span>
-                </label>
-            </div>
-        </div>
-        <div class="payment_method_main_wrapper">
-            <div class="ant-row payment_method_row css-i6rspj">
-                <div class="container">
-                    <div id="errors-output" role="alert" style="color: red;"></div>
-                    <div class="form-group card_number_main">
-                        <div id="card-element" class="border p-2 rounded"></div>
-                        <!-- <p v-if="cardError" class="text-red-500">{{ cardError }}</p> -->
-                    </div>
-                    <div id="field-errors" role="alert" style="color: red;"></div>
-                    <input id="flexresponse" type="hidden" name="flexresponse">
-                </div>
-            </div>
-        </div>
-        <div style="display: flex; justify-content: center; margin-top: 20px;"></div>
-        <div style="display: flex; justify-content: center; margin-top: 20px;">
-            <button @click="handlePlaceOrder" :disabled="loading" type="button" id="pay-button" class="w-full h-[50px] black-btn flex justify-center items-center bank_of_america_btn_main">
-                {{ loading ? 'Placing Order...' : 'Place Order' }}
-            </button>
-            <!-- <p v-if="error" class="error">{{ error }}</p> -->
-            <!-- <img id="loadingIcon" height="30px" width="30px" src="/loading.gif" style="margin-left: 10px; display: none;" alt="Loading"> -->
-        </div>
+  <div class="payment_method_main">
+    <div class="head_main">
+      <h3>Payment Method</h3>
+      <img 
+        loading="lazy" width="150" height="20" decoding="async"
+        src="/assets/image/payment_icons.avif"
+        style="color: transparent;"
+      />
     </div>
+
+    <!-- Payment Selection -->
+    <div class="payment_method_radio">
+      <div class="ant-radio-group">
+        <label
+            class="ant-radio-wrapper"
+            v-for="method in ['Paypal', 'Payarc']"
+            :key="method"
+            style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;"
+        >
+            <span class="ant-radio ant-wave-target">
+                <input
+                class="ant-radio-input"
+                type="radio"
+                :value="method"
+                v-model="selectedMethod"
+                />
+                <span class="ant-radio-inner"></span>
+            </span>
+            <span class="capitalize">{{ method }}</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Dynamic Method Form -->
+    <div class="payment_method_main_wrapper">
+      <component :is="selectedComponent" ref="gatewayRef" />
+    </div>
+
+    <!-- Order Button -->
+    <!-- <div class="text-center mt-5">
+      <button @click="handlePlaceOrder" :disabled="loading" class="black-btn">
+        {{ loading ? 'Placing Order...' : 'Place Order' }}
+      </button>
+    </div> -->
+    <div style="display: flex; justify-content: center; margin-top: 20px;">
+        <button @click="handlePlaceOrder" :disabled="loading" type="button" id="pay-button" class="w-full h-[50px] black-btn flex justify-center items-center bank_of_america_btn_main">
+            {{ loading ? 'Placing Order...' : 'Place Order' }}
+        </button>
+        <!-- <p v-if="error" class="error">{{ error }}</p> -->
+        <!-- <img id="loadingIcon" height="30px" width="30px" src="/loading.gif" style="margin-left: 10px; display: none;" alt="Loading"> -->
+    </div>
+  </div>
 </template>
 <script setup>
-import { onMounted, ref } from 'vue'
-import { useStripe } from '@/composables/useStripe'
+    import PayPalCheckout from '@/components/Checkout/PayPalCheckout.vue'
+    import PayarcForm from '@/components/Checkout/PayarcForm.vue'
 
-// Declare loading as a prop
-defineProps({
-  loading: Boolean,
-  error: String,
+    import { ref, watch, computed } from 'vue'
+    import { usePaypal } from '@/composables/usePaypal'
+    import { usePayarc } from '@/composables/usePayarc'
+    
+    const selectedMethod = ref('Paypal')
+    const loading = ref(false)
+
+    const gatewayRef = ref(null)
+
+    const selectedComponent = computed(() => {
+        return selectedMethod.value === 'Paypal' ? PayPalCheckout : PayarcForm
+    })
+
+    defineProps({
+        selectedMethod: String,
+        loading: Boolean,
+    })
+
+    const emit = defineEmits(['place-order'])
+
+    const paymentError = ref('')
+    const { mountPaypal, paypalResponse } = usePaypal()
+    const { mountPayarc, getPayarcToken } = usePayarc()
+
+    watch(() => selectedMethod, async (method) => {
+        try {
+            if (method === 'Paypal') {
+            await mountPaypal('paypal-button', '100.00') // amount should be dynamic
+            } else if (method === 'Payarc') {
+            await mountPayarc('payarc-form')
+            }
+        } catch (err) {
+            paymentError.value = err.message
+        }
+    })
+
+    // defineExpose({
+    //     async getPaymentToken() {
+    //         if (!gatewayRef.value) throw new Error('Payment form not mounted')
+
+    //         if (selectedMethod.value === 'Paypal') {
+    //             return paypalResponse.value
+    //         }
+
+    //         if (selectedMethod.value === 'Payarc') {
+    //             const cardData = gatewayRef.value.getCardData?.()
+    //         if (!cardData) throw new Error('Card data missing')
+    //             return await getPayarcToken(cardData)
+    //         }
+    //     }
+    // })
+
+    defineExpose({
+        async getPaymentToken() {
+            if (!gatewayRef.value) throw new Error('Payment form not mounted')
+
+            if (selectedMethod.value === 'Paypal') {
+                if (!paypalResponse.value) throw new Error('PayPal response missing')
+                return {
+                    method: 'paypal',
+                    payment_method_id: paypalResponse.value.id || paypalResponse.value.orderID // or whatever your backend expects
+                }
+            }
+
+            if (selectedMethod.value === 'Payarc') {
+                const cardData = gatewayRef.value.getCardData?.()
+            if (!cardData) throw new Error('Card data missing')
+
+            const token = await getPayarcToken(cardData)
+                return {
+                    method: 'payarc',
+                    payment_method_id: token
+                }
+            }
+
+            throw new Error('Unsupported payment method')
+        }
+    })
+
+    function handlePlaceOrder() {
+        emit('place-order')
+        if (!gatewayRef.value) return
+        gatewayRef.value.handlePayment?.()
+    }
+</script>
+
+<!-- <script setup>
+import { ref, computed } from 'vue'
+import PayPalCheckout from '@/components/Checkout/PayPalCheckout.vue'
+import PayarcForm from '@/components/Checkout/PayarcForm.vue'
+
+const selectedMethod = ref('Paypal')
+const loading = ref(false)
+
+const gatewayRef = ref(null)
+
+const selectedComponent = computed(() => {
+  return selectedMethod.value === 'Paypal' ? PayPalCheckout : PayarcForm
 })
-
-const cardError = ref('')
-const { mountStripe, getPaymentMethodId } = useStripe()
-
-onMounted(() => {
-  mountStripe('card-element').catch(err => {
-    cardError.value = err.message
-
-    console.log(cardError);
-  })
-})
-
-defineExpose({
-  getPaymentMethodId
-})
-
-const emit = defineEmits(['place-order'])
 
 function handlePlaceOrder() {
-  emit('place-order')
+  if (!gatewayRef.value) return
+  gatewayRef.value.handlePayment?.()
 }
-</script>
-<style>
-    .form-control {
-        width: 100%;
-        padding: .375rem .75rem;
-        font-size: 1rem;
-        line-height: 1.5;
-        border: 1px solid #ced4da;
-        border-radius: .25rem;
-        box-sizing: border-box;
-    }
-
-    .form-select {
-        width: 100%;
-        padding: .375rem .75rem;
-        font-size: 1rem;
-        line-height: 1.5;
-        border: 1px solid #ced4da;
-        border-radius: .25rem;
-        box-sizing: border-box;
-    }
-
-    .form-group {
-        margin-bottom: 1rem;
-    }
-</style>
+</script> -->

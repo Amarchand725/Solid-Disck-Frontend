@@ -9,6 +9,7 @@ import Cart from '../views/Cart.vue'
 import Checkout from '../views/Checkout.vue'
 // import TrackOrder from '../views/TrackOrder.vue'
 import Shop from '../views/Shop.vue'
+import BrandProducts from '../views/BrandProducts.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import SingleProduct from '../views/SingleProduct.vue'
@@ -98,11 +99,17 @@ const routes = [
   //   meta: { title: 'Track Your Order' }
   // },
   {
-    path: '/categories/:categoryPath(.*)/:slug',
+    path: '/categories/:categoryPath(.*)',
     // path: '/products/:categoryPath(.*)/:slug',
     name: 'Shop',
     component: Shop,
     meta: { title: 'Shop' }
+  },
+  {
+    path: '/brands/:slug',
+    name: 'BrandProducts',
+    component: BrandProducts,
+    meta: { title: 'Brand Products' }
   },
   {
     path: '/products/:categoryPath(.*)/:slug',

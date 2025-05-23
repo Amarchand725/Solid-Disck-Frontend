@@ -57,13 +57,13 @@
                                 <ProductCard :product="product" />
                             </div>
                         </div>
-                        <a 
+                        <!-- <a 
                             class="top-seller-category-product-tab-explore-more-btn" 
                             title="Explore More" 
                             href="#"
                         >
                             Explore More
-                        </a>
+                        </a> -->
                     </div>
                 </div>
             </div>

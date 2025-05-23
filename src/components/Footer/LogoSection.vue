@@ -19,7 +19,7 @@
             <div class="info-detail">
                 <span>Phone</span>
                 <span>
-                    <a href="tel:+{{ settings?.phone ?? '' }}" title="Call ETechBuy">{{ settings?.phone ?? '' }}</a>
+                    <a href="tel:+{{ settings?.phone ?? '' }}" title="Call Soliddiskdirect">{{ settings?.phone ?? '' }}</a>
                 </span>
             </div>
             <div class="info-detail">

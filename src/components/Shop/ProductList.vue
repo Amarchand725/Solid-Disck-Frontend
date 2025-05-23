@@ -39,13 +39,13 @@
                     
                     <span>|</span>
 
-                    <p v-if="product && product.brand" :title="product.brand.name">
+                    <p v-if="product && product.brand" :title="product?.brand?.name">
                         Brand:&nbsp;
                         <router-link 
                             style="color: black;"
                             to="#" 
                         >
-                            {{ product?.brand.name }}
+                            {{ product?.brand?.name }}
                         </router-link>
                         &nbsp;
                     </p>
@@ -57,10 +57,24 @@
             <div class="product_view_right">
                 <p class="in_stock" title="In Stock"><b>●</b> In Stock</p>
                 <div class="shipping"><b>Product Condition: </b>
-                    <p :title="product?.condition.name">{{ product?.condition.name }}</p>
+                    <p :title="product?.condition?.name">{{ product?.condition?.name }}</p>
                 </div>
-                <div class="__className_139476 cut_price">{{ settings?.currency ?? '' }} {{ product?.unit_price }}</div>
-                <div class="__className_139476 main_price">{{ settings?.currency ?? '' }} {{ product?.discount_price }}</div>
+                <div v-if="product?.discount_price">
+                    <div class="__className_139476 cut_price">
+                        {{ settings?.currency ?? '' }} {{ product?.unit_price || 0 }}
+                    </div>
+                    <div class="__className_139476 main_price">
+                        {{ settings?.currency ?? '' }} {{ product?.discount_price }}
+                    </div>
+                </div>
+
+                <!-- If no discount_price, show unit_price or 0 -->
+                <div v-else>
+                    <div class="__className_139476 main_price">
+                        {{ settings?.currency ?? '' }} {{ product?.unit_price || 0 }}
+                    </div>
+                </div>
+
                 <div class="quantity_main">
                     <div class="qty_wrapper">
                         <span>Qty:</span>
@@ -90,6 +104,9 @@
                 <button @click="handleAddToCart(product)" :disabled="loading" title="Add To Cart" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined">
                     <span>{{ loading ? 'Adding...' : 'Add to Cart' }}</span>
                 </button>
+                <button @click="handleBuyItNow(product)" :disabled="loading2" title="Buy it now" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined">
+                    <span>{{ loading2 ? 'Buying...' : 'Buy It Now' }}</span>
+                </button>
             </div>
         </div>
     </div>
@@ -98,10 +115,12 @@
 defineProps({
   product: Object,
   settings: Object,
-  quantities: Object
+  quantities: Object,
+  loading: Boolean,
+  loading2: Boolean,
 })
 
-const emit = defineEmits(['increase', 'decrease', 'add-to-cart'])
+const emit = defineEmits(['increase', 'decrease', 'add-to-cart', 'buy-it-now'])
 
 function increaseQuantity(product) {
   emit('increase', product)
@@ -113,6 +132,10 @@ function decreaseQuantity(product) {
 
 function handleAddToCart(product) {
   emit('add-to-cart', product)
+}
+
+function handleBuyItNow(product) {
+  emit('buy-it-now', product)
 }
 
 function onImageError(e) {

@@ -31,6 +31,9 @@ const getCategories2 = async () => {
 };
 
 const getCategoryBySlug = async (slug) => {
+  if (!slug) {
+    throw new Error('Invalid route parameters');
+  }
   try {
     const res = await axios.get(`/categories/show/${slug}`);
     return res.data.data;

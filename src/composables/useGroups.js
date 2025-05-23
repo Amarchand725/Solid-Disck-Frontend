@@ -9,7 +9,6 @@ const getGroups = async () => {
   loading.value = true;
   try {
     const res = await axios.get('/get-groups');
-    console.log('API response:', res);
     groups.value = res.data.data;
   } catch (err) {
     // console.error('API error:', err);

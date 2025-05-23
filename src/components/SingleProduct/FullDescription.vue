@@ -31,7 +31,7 @@
                     </div>
                 </div>
             </div>
-            <div class="specification_main_custom" v-html="productDetails?.full_description"></div>
+            <div class="specification_main_custom" v-html="productDetails?.full_description || productDetails?.short_description"></div>
         </div>
     </div>
 </template>
@@ -45,20 +45,16 @@
         const specsSection = document.querySelector(".specification_main_custom");
         const reviewsSection = document.querySelector(".tab-content-item");
 
-        // Initial State
         specsSection.style.display = "block";
         reviewsSection.style.display = "none";
-        tabs[0].classList.add("border-bottom-black"); // 'Specifications' active
+        tabs[0].classList.add("border-bottom-black"); 
 
         tabs.forEach((tab, index) => {
             tab.addEventListener("click", () => {
-                // Reset all tab classes
                 tabs.forEach(t => t.classList.remove("border-bottom-black"));
 
-                // Add active class to clicked tab
                 tab.classList.add("border-bottom-black");
 
-                // Toggle content sections
                 if (tab.getAttribute("title") === "Specifications") {
                 specsSection.style.display = "block";
                 reviewsSection.style.display = "none";

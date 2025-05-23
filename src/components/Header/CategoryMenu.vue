@@ -4,8 +4,9 @@
     <router-link
       v-if="!isMobile"
       class="router-link-custom"
-      :to="`/categories/${item.slug}`"
-    >
+      :to="`/categories/${item.category_url}`"
+      >
+      <!-- :to="`/categories/${item.slug}`" -->
       {{ item.name }}
     </router-link>
 
@@ -66,14 +67,6 @@ const props = defineProps({
   item: {
     type: Object,
     required: true,
-  },
-  index: {
-    type: Number,
-    required: true
-  },
-  categoryTrail: {
-    type: Array,
-    required: true
   }
 })
 

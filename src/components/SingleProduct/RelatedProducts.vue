@@ -62,13 +62,32 @@
                                         </div>
                                         <p class="count">(0)</p>
                                     </div>
-                                    <div class="price_main">
+                                    <!-- <div class="price_main">
                                         <p class="price cut">{{ settings?.currency ?? '' }}{{ product?.unit_price }}</p>
                                         <p class="price">{{ settings?.currency ?? '' }}{{ product?.discount_price }}</p>
+                                    </div> -->
+                                    <!-- If discount_price exists -->
+                                    <div class="price_main" v-if="product?.discount_price">
+                                        <p class="price cut">
+                                            {{ settings?.currency ?? '' }}{{ product?.unit_price || 0 }}
+                                        </p>
+                                        <p class="price">
+                                            {{ settings?.currency ?? '' }}{{ product?.discount_price }}
+                                        </p>
+                                    </div>
+
+                                    <!-- If no discount_price, show unit_price or 0 -->
+                                    <div class="price_main" v-else>
+                                        <p class="price">
+                                            {{ settings?.currency ?? '' }}{{ product?.unit_price || 0 }}
+                                        </p>
                                     </div>
                                 </div>
-                                <button title="Add To Cart" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined">
-                                    <span>Add To Cart</span>
+                                <button style="border-radius:0 0 0 0;" @click="handleAddToCart(product)" title="Add To Cart" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined">
+                                    {{ loadingMap[product.slug] ? 'Adding...' : 'Add to Cart' }}
+                                </button>
+                                <button style="background-color: #f5ad1d !important;" @click="handleBuyItNow(product)" :disabled="loading2" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined" title="Buy It Now">
+                                    {{ buyingMap[product.slug] ? 'Buying...' : 'Buy It Now' }}
                                 </button>
                             </div>
                         </div>
@@ -89,11 +108,37 @@
 </template>
 <script setup>
     import { useSettings } from '@/composables/useSettings.js'
+    import { useCart } from '@/composables/useCart'
+    import { ref } from 'vue'
+    
     const { settings } = useSettings()
+    const { addToCart, buyItNow } = useCart()
+
+    const loadingMap = ref({})
+    const buyingMap = ref({})
+
 
     const props = defineProps({
         products: Array
     })
+
+    const handleAddToCart = async (product) => {
+        loadingMap.value[product.slug] = true
+        try {
+            await addToCart(product.slug, 1)
+        } finally {
+            loadingMap.value[product.slug] = false
+        }
+    }
+
+    const handleBuyItNow = async (product) => {
+        buyingMap.value[product.slug] = true
+        try {
+            await buyItNow(product.slug, 1)
+        } finally {
+            buyingMap.value[product.slug] = false
+        }
+    }
 
     function shortDescription(html, limit = '') {
         const text = (html || '').replace(/<[^>]*>/g, ''); // strip HTML tags safely
