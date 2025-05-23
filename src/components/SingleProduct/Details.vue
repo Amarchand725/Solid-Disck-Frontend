@@ -127,8 +127,12 @@
                                 <span>Express Delivery in USA Get within 1 to 3 days</span>
                             </div>
                         </div>
-                        <button @click="handleAddToCart" :disabled="loading" title="Add To Cart" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined add_to_cart">
+                        <button style="margin-bottom:10px;" @click="handleAddToCart" :disabled="loading" title="Add To Cart" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined add_to_cart">
                             <span>{{ loading ? 'Adding...' : 'Add to Cart' }}</span>
+                        </button>
+                        <br>
+                        <button style="background-color: #f5ad1d !important;" @click="handleBuyItNow" :disabled="loading2" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined add_to_cart" title="Buy It Now">
+                            {{ loading2 ? 'Buying...' : 'Buy It Now' }}
                         </button>
                         <div class="norton_image">
                             <img 
@@ -164,10 +168,14 @@
 
     const quantity = ref(1);
 
-    const { addToCart, loading, decreaseCartItem } = useCart()
+    const { addToCart, buyItNow ,  loading, loading2 , decreaseCartItem } = useCart()
     const handleAddToCart = async () => {
         await addToCart(props.productDetails.slug, quantity.value)
     }
+
+    const handleBuyItNow = async () => {
+  await buyItNow(props.productDetails.slug, quantity.value)
+}
 
     function shortDescription(html, limit = '') {
         const text = (html || '').replace(/<[^>]*>/g, ''); // strip HTML tags safely
