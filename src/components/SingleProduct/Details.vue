@@ -62,15 +62,32 @@
                 <div class="ant-col ant-col-xs-24 ant-col-sm-24 ant-col-md-24 ant-col-lg-13 ant-col-xl-12 css-i6rspj">
                     <div class="main_info_cart_sec">
                         <div class="qr_code_cart">
-                            <div class="cut_price_main">
+                            <!-- <div class="cut_price_main">
                                 <span>
                                     {{ settings?.currency ?? '' }}{{ productDetails?.unit_price }}
                                 </span>
-                                <!-- <p>20% OFF</p> -->
+                                <p>20% OFF</p>
                             </div>
                             <span class="product_price" style="margin-top: 15px;">
                                 {{ settings?.currency ?? '' }}{{ productDetails?.discount_price }}
-                            </span>
+                            </span> -->
+                            <div v-if="productDetails?.discount_price">
+                                <div class="cut_price_main">
+                                    <span>
+                                    {{ settings?.currency ?? '' }}{{ productDetails?.unit_price || 0 }}
+                                    </span>
+                                </div>
+                                <span class="product_price" style="margin-top: 15px;">
+                                    {{ settings?.currency ?? '' }}{{ productDetails.discount_price }}
+                                </span>
+                                </div>
+
+                                <div v-else>
+                                <span class="product_price" style="margin-top: 15px;">
+                                    {{ settings?.currency ?? '' }}{{ productDetails?.unit_price || 0 }}
+                                </span>
+                            </div>
+
                             <span class="lease_price">Lease Pricing Available</span>
                         </div>
                         <div class="reviewd_yet_main">
@@ -123,7 +140,7 @@
                                 </div>
                             </div>
                             <div class="availibility">
-                                <p><b>Availability:</b> In Stock</p>
+                                <p><b>Availability:</b> <p style="color: green; font-weight: 600; margin-top: 8px;">In Stock</p></p>
                                 <span>Express Delivery in USA Get within 1 to 3 days</span>
                             </div>
                         </div>

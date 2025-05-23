@@ -55,9 +55,6 @@
                                                 {{ brand.name }}
                                             </option>
                                             </select>
-
-
-
                                         </div>
                                         </div>
                                     </div>
