@@ -81,18 +81,30 @@
             ? { ...shippingForm, same_as_shipping: true }
             : { ...(billingFormData || {}), same_as_shipping: false }
 
-            // const stripePaymentMethodId = await paymentRef.value.getPaymentMethodId()
             const paymentInfo = await paymentRef.value.getPaymentToken()
-            console.log(paymentInfo);
             const payload = {
                 shipping: shippingForm,
                 billing: billingForm,
                 cart: fullCart.value,
-                // paymentMethodId: paymentMethodId,
-                payment: {
-                    method: paymentInfo.method,                     // e.g., 'paypal' or 'payarc'
-                    payment_method_id: paymentInfo.payment_method_id // e.g., token string
+                payment: {}
+            }
+
+            // Conditional logic based on payment method
+            if (paymentInfo.method === 'payarc') {
+                payload.payment = {
+                    method: 'payarc',
+                    card_number: paymentInfo.card_number,
+                    expiry: paymentInfo.expiry,
+                    cvv: paymentInfo.cvv,
+                    name: paymentInfo.name,
+                    email: paymentInfo.email
                 }
+            } else if (paymentInfo.method === 'paypal') {
+                payload.payment = {
+                    method: 'paypal',
+                }
+            } else {
+                throw new Error('Unsupported payment method selected')
             }
             await placeOrder(payload)
             console.log('Order placed!')

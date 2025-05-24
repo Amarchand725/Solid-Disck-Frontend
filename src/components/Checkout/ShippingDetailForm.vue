@@ -160,8 +160,104 @@
     </form>
   </div>
 </template>
-
 <script setup>
+import { reactive, ref, watch, onMounted, defineProps, defineEmits } from 'vue'
+import { useLocations } from '@/composables/useLocations.js'
+
+const {
+  countries: shippingCountries,
+  states: shippingStates,
+  cities: shippingCities,
+  getCountries: getShippingCountries,
+  getStatesByCountry: getShippingStatesByCountry,
+  getCitiesByState: getShippingCitiesByState
+} = useLocations()
+
+const shippingCountry = ref('')
+const shippingState = ref('')
+const shippingCity = ref('')
+
+// Sync refs into shippingForm reactive for validation
+const shippingForm = reactive({
+  email: '',
+  first_name: '',
+  last_name: '',
+  company: '',
+  address: '',
+  shippingCountry: '',
+  shippingState: '',
+  shippingCity: '',
+  zip: '',
+  phone: ''
+})
+
+const errors = reactive({})
+
+watch(shippingCountry, async (val) => {
+  shippingForm.shippingCountry = val
+  if (val) {
+    shippingState.value = ''
+    shippingCity.value = ''
+    shippingForm.shippingState = ''
+    shippingForm.shippingCity = ''
+    await getShippingStatesByCountry(val)
+    emit('update:country', val)
+  }
+})
+
+watch(shippingState, async (val) => {
+  shippingForm.shippingState = val
+  if (val) {
+    shippingCity.value = ''
+    shippingForm.shippingCity = ''
+    await getShippingCitiesByState(val)
+  }
+})
+
+watch(shippingCity, (val) => {
+  shippingForm.shippingCity = val
+})
+
+const handleShippingCountryChange = (event) => {
+  shippingCountry.value = event.target.value
+}
+
+const handleShippingStateChange = (event) => {
+  shippingState.value = event.target.value
+}
+
+onMounted(async () => {
+  await getShippingCountries()
+  // Access the array inside the ref using .value
+  const us = shippingCountries.value.find((c) => c.name === 'United States')
+  if (us) {
+    shippingCountry.value = us.id
+  }
+})
+
+// Removed the watch on shippingCountries to avoid duplicated logic
+// If you want to keep it, make sure to handle `.value` correctly
+
+// Define props & emits to sync with parent (if needed)
+const props = defineProps({
+  country: [Number, String],
+  zip: String,
+  formData: Object,
+})
+
+const emit = defineEmits(['update:country', 'update:zip', 'update:formData'])
+
+const handleZipChange = (event) => {
+  shippingForm.zip = event.target.value
+  emit('update:zip', event.target.value)
+}
+
+watch(shippingForm, () => {
+  emit('update:formData', { ...shippingForm }) // important: spread the object
+}, { deep: true })
+</script>
+
+<!-- <script setup>
 import { reactive, ref, watch, onMounted, defineProps, defineEmits } from 'vue'
 import { useLocations } from '@/composables/useLocations.js'
 
@@ -259,7 +355,7 @@ const handleZipChange = (event) => {
 watch(shippingForm, () => {
   emit('update:formData', { ...shippingForm }) // important: spread the object
 }, { deep: true })
-</script>
+</script> -->
 
 <style scoped>
 .error-text {

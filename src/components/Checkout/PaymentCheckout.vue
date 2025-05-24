@@ -13,151 +13,149 @@
     <div class="payment_method_radio">
       <div class="ant-radio-group">
         <label
-            class="ant-radio-wrapper"
-            v-for="method in ['Paypal', 'Payarc']"
-            :key="method"
-            style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;"
+          class="ant-radio-wrapper"
+          v-for="method in ['Paypal', 'Payarc']"
+          :key="method"
+          style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;"
         >
-            <span class="ant-radio ant-wave-target">
-                <input
-                class="ant-radio-input"
-                type="radio"
-                :value="method"
-                v-model="selectedMethod"
-                />
-                <span class="ant-radio-inner"></span>
-            </span>
-            <span class="capitalize">{{ method }}</span>
+          <span class="ant-radio ant-wave-target">
+            <input
+              class="ant-radio-input"
+              type="radio"
+              :value="method"
+              v-model="selectedMethod"
+            />
+            <span class="ant-radio-inner"></span>
+          </span>
+          <span class="capitalize">{{ method }}</span>
         </label>
       </div>
     </div>
 
-    <!-- Dynamic Method Form -->
+    <!-- Dynamic Method Form (Payarc only) -->
     <div class="payment_method_main_wrapper">
       <component :is="selectedComponent" ref="gatewayRef" />
     </div>
 
-    <!-- Order Button -->
-    <!-- <div class="text-center mt-5">
-      <button @click="handlePlaceOrder" :disabled="loading" class="black-btn">
+    <div style="display: flex; justify-content: center; margin-top: 20px;">
+      <button @click="handlePlaceOrder" :disabled="loading" type="button" id="pay-button" class="w-full h-[50px] black-btn flex justify-center items-center bank_of_america_btn_main">
         {{ loading ? 'Placing Order...' : 'Place Order' }}
       </button>
-    </div> -->
-    <div style="display: flex; justify-content: center; margin-top: 20px;">
-        <button @click="handlePlaceOrder" :disabled="loading" type="button" id="pay-button" class="w-full h-[50px] black-btn flex justify-center items-center bank_of_america_btn_main">
-            {{ loading ? 'Placing Order...' : 'Place Order' }}
-        </button>
-        <!-- <p v-if="error" class="error">{{ error }}</p> -->
-        <!-- <img id="loadingIcon" height="30px" width="30px" src="/loading.gif" style="margin-left: 10px; display: none;" alt="Loading"> -->
     </div>
   </div>
 </template>
+
 <script setup>
-    import PayPalCheckout from '@/components/Checkout/PayPalCheckout.vue'
-    import PayarcForm from '@/components/Checkout/PayarcForm.vue'
-
-    import { ref, watch, computed } from 'vue'
-    import { usePaypal } from '@/composables/usePaypal'
-    import { usePayarc } from '@/composables/usePayarc'
-    
-    const selectedMethod = ref('Paypal')
-    const loading = ref(false)
-
-    const gatewayRef = ref(null)
-
-    const selectedComponent = computed(() => {
-        return selectedMethod.value === 'Paypal' ? PayPalCheckout : PayarcForm
-    })
-
-    defineProps({
-        selectedMethod: String,
-        loading: Boolean,
-    })
-
-    const emit = defineEmits(['place-order'])
-
-    const paymentError = ref('')
-    const { mountPaypal, paypalResponse } = usePaypal()
-    const { mountPayarc, getPayarcToken } = usePayarc()
-
-    watch(() => selectedMethod, async (method) => {
-        try {
-            if (method === 'Paypal') {
-            await mountPaypal('paypal-button', '100.00') // amount should be dynamic
-            } else if (method === 'Payarc') {
-            await mountPayarc('payarc-form')
-            }
-        } catch (err) {
-            paymentError.value = err.message
-        }
-    })
-
-    // defineExpose({
-    //     async getPaymentToken() {
-    //         if (!gatewayRef.value) throw new Error('Payment form not mounted')
-
-    //         if (selectedMethod.value === 'Paypal') {
-    //             return paypalResponse.value
-    //         }
-
-    //         if (selectedMethod.value === 'Payarc') {
-    //             const cardData = gatewayRef.value.getCardData?.()
-    //         if (!cardData) throw new Error('Card data missing')
-    //             return await getPayarcToken(cardData)
-    //         }
-    //     }
-    // })
-
-    defineExpose({
-        async getPaymentToken() {
-            if (!gatewayRef.value) throw new Error('Payment form not mounted')
-
-            if (selectedMethod.value === 'Paypal') {
-                if (!paypalResponse.value) throw new Error('PayPal response missing')
-                return {
-                    method: 'paypal',
-                    payment_method_id: paypalResponse.value.id || paypalResponse.value.orderID // or whatever your backend expects
-                }
-            }
-
-            if (selectedMethod.value === 'Payarc') {
-                const cardData = gatewayRef.value.getCardData?.()
-            if (!cardData) throw new Error('Card data missing')
-
-            const token = await getPayarcToken(cardData)
-                return {
-                    method: 'payarc',
-                    payment_method_id: token
-                }
-            }
-
-            throw new Error('Unsupported payment method')
-        }
-    })
-
-    function handlePlaceOrder() {
-        emit('place-order')
-        if (!gatewayRef.value) return
-        gatewayRef.value.handlePayment?.()
-    }
-</script>
-
-<!-- <script setup>
-import { ref, computed } from 'vue'
-import PayPalCheckout from '@/components/Checkout/PayPalCheckout.vue'
 import PayarcForm from '@/components/Checkout/PayarcForm.vue'
+import { ref, computed } from 'vue'
+import { usePayarc } from '@/composables/usePayarc'
+import axios from '@/plugins/axios'
 
 const selectedMethod = ref('Paypal')
 const loading = ref(false)
-
 const gatewayRef = ref(null)
 
 const selectedComponent = computed(() => {
-  return selectedMethod.value === 'Paypal' ? PayPalCheckout : PayarcForm
+  return selectedMethod.value === 'Payarc' ? PayarcForm : null
 })
 
-function handlePlaceOrder() {
-  if (!gatewayRef.value) return
-  gatewayRef.value.handlePayment?.()
+const emit = defineEmits(['place-order'])
+
+const { mountPayarc } = usePayarc()
+const paymentError = ref('')
+
+const handlePlaceOrder = async () => {
+  loading.value = true
+  try {
+    emit('place-order') // Unified trigger
+  } catch (err) {
+    paymentError.value = err.message || 'Payment error occurred'
+  } finally {
+    loading.value = false
+  }
 }
+
+// Expose method for OrderSummary.vue
+defineExpose({
+  async getPaymentToken() {
+    if (selectedMethod.value === 'Payarc') {
+      const cardData = await gatewayRef.value?.getCardData?.()
+      if (!cardData) throw new Error('Card data missing')
+
+      return {
+        method: 'payarc',
+        card_number: cardData.number,
+        expiry: cardData.expiry,
+        cvv: cardData.cvv,
+        name: cardData.name || '',
+        email: cardData.email || '',
+      }
+    } else if (selectedMethod.value === 'Paypal') {
+      return {
+        method: 'paypal',
+      }
+    }
+
+    throw new Error('Unsupported method for tokenization')
+  }
+})
+</script>
+
+
+<!-- <script setup>
+import PayarcForm from '@/components/Checkout/PayarcForm.vue'
+import { ref, computed } from 'vue'
+import { usePayarc } from '@/composables/usePayarc'
+import axios from '@/plugins/axios'
+
+const selectedMethod = ref('Paypal')
+const loading = ref(false)
+const gatewayRef = ref(null)
+
+const selectedComponent = computed(() => {
+  return selectedMethod.value === 'Payarc' ? PayarcForm : null
+})
+
+const emit = defineEmits(['place-order'])
+
+const { mountPayarc } = usePayarc()
+
+const paymentError = ref('')
+
+const handlePlaceOrder = async () => {
+  loading.value = true
+
+  try {
+    if (selectedMethod.value === 'Payarc') {
+      emit('place-order') 
+      gatewayRef.value?.handlePayment?.()
+    } else if (selectedMethod.value === 'Paypal') {
+      emit('place-order', { method: 'paypal' })
+    }
+  } catch (err) {
+    paymentError.value = err.message || 'Payment error occurred'
+  } finally {
+    loading.value = false
+  }
+}
+
+defineExpose({
+  async getPaymentToken() {
+    if (selectedMethod.value === 'Payarc') {
+      const cardData = gatewayRef.value.getCardData?.()
+      if (!cardData) throw new Error('Card data missing')
+
+      return {
+        method: 'payarc',
+        card_number: cardData.number,
+        expiry: cardData.expiry,
+        cvv: cardData.cvv,
+        name: cardData.name || '',
+        email: cardData.email || '',
+      }
+    }
+
+    throw new Error('Unsupported method for tokenization')
+  },
+})
 </script> -->

@@ -9,6 +9,7 @@
           type="text"
           placeholder="John Doe"
           :class="['form-control', errors.name ? 'input-error' : '']"
+          value="John Doe"
         />
         <p v-if="errors.name" class="text-red-500 text-sm mt-1 error-message">{{ errors.name }}</p>
       </div>
@@ -21,6 +22,7 @@
           type="text"
           placeholder="4111 1111 1111 1111"
           :class="['form-control', errors.name ? 'input-error' : '']"
+          value="4242 4242 4242 4242"
         />
         <p v-if="errors.number" class="text-red-500 text-sm mt-1 error-message">{{ errors.number }}</p>
       </div>
@@ -33,6 +35,7 @@
           type="text"
           placeholder="MM/YY"
           :class="['form-control', errors.name ? 'input-error' : '']"
+          value="12/34"
         />
         <p v-if="errors.expiry" class="text-red-500 text-sm mt-1 error-message">{{ errors.expiry }}</p>
       </div>
@@ -45,6 +48,7 @@
           type="text"
           placeholder="123"
           :class="['form-control', errors.name ? 'input-error' : '']"
+          value="123"
         />
         <p v-if="errors.cvv" class="text-red-500 text-sm mt-1 error-message">{{ errors.cvv }}</p>
       </div>
@@ -57,6 +61,7 @@
           type="text"
           placeholder="12345"
           :class="['form-control', errors.name ? 'input-error' : '']"
+          value="12345"
         />
         <p v-if="errors.zip" class="text-red-500 text-sm mt-1 error-message">{{ errors.zip }}</p>
       </div>
