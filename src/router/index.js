@@ -21,6 +21,7 @@ import BlogDetails from '../views/BlogDetails.vue'
 import ContactUs from '../views/ContactUs.vue'
 import MyAccount from '../views/MyAccount.vue'
 import OrderSuccess from '../views/OrderSuccess.vue'
+import TrackOrder from '../views/TrackOrder.vue'
 
 const routes = [
   {
@@ -43,6 +44,12 @@ const routes = [
     name: 'MyAccount',
     component: MyAccount,
     meta: { title: 'MyAccount' }
+  },
+  {
+    path: '/track-order',
+    name: 'TrackOrder',
+    component: TrackOrder,
+    meta: { title: 'TrackOrder' }
   },
   {
     path: '/',

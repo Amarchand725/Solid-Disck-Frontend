@@ -26,7 +26,7 @@
             <BestSellingProduct />
 
             <!-- Blogs Section -->
-            <Blogs />
+            <BlogsComponent />
         </main>
     </div>
 </template>
@@ -40,7 +40,7 @@
     import FeaturedCategories from '@/components/Home/FeaturedCategories.vue';
     import FeaturedManufacturer from '@/components/Home/FeaturedManufacturer.vue';
     import BestSellingProduct from '@/components/Home/BestSellingProduct.vue';
-    import Blogs from '@/components/Home/Blogs.vue';
+    import BlogsComponent from '@/components/Home/BlogsComponent.vue';
 </script>
 
 <style scoped>

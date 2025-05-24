@@ -57,13 +57,15 @@
                                 <ProductCard :product="product" />
                             </div>
                         </div>
-                        <!-- <a 
+
+                        <router-link 
+                            v-if="activeCategory" 
                             class="top-seller-category-product-tab-explore-more-btn" 
                             title="Explore More" 
-                            href="#"
+                            :to="`/categories/${activeCategory.slug}`"
                         >
                             Explore More
-                        </a> -->
+                        </router-link>
                     </div>
                 </div>
             </div>

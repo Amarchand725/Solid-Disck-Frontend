@@ -333,6 +333,7 @@ onMounted(async () => {
   border: 1px solid #ccc;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   transition: all 0.2s ease-in-out;
+  width: -webkit-fill-available;
 }
 
 .filter-input:focus,

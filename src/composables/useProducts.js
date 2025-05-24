@@ -6,6 +6,7 @@ const products = ref([]);
 const pagination = ref({});
 const loading = ref(false);
 const error = ref(null);
+const searchResults = ref([]); 
 
 const getProducts = async () => {
   loading.value = true;
@@ -91,6 +92,26 @@ const getProductsByBrand = async ({
   }
 };
 
+const searchProducts = async (keyword) => {
+  if (!keyword) {
+    searchResults.value = []
+    return
+  }
+
+  loading.value = true
+  try {
+    const res = await axios.get('/products/search', {
+      params: { keyword }
+    })
+    searchResults.value = res.data.data || []
+  } catch (err) {
+    error.value = err
+    searchResults.value = []
+  } finally {
+    loading.value = false
+  }
+}
+
 export function useProducts() {
   return {
     products,
@@ -101,5 +122,7 @@ export function useProducts() {
     getProductBySlug,
     getProductsByCategory,
     getProductsByBrand,
+    searchProducts,
+    searchResults
   };
 }
