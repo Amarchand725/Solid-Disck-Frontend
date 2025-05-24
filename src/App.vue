@@ -31,4 +31,7 @@ onMounted(async () => {
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+:root {
+      --primary-color: #001e4c !important;
+}
 </style>

@@ -36,10 +36,12 @@
         </div>
         <div class="ant-col ant-col-14 contact-now-container css-i6rspj">
             <div class="track-order-container">
+              <router-link to="/track-order" class="track-order-container">
                 <div class="contact-now-link trackorder_link" role="button" tabindex="0" style="cursor: pointer;">
                     <img src="/assets/image/Track-Order-Icon.webp" alt="Track Order Icon" title="Track Your Order">
-                    <span class="contact-now" title="Track Your Order">Track Order</span>
+                    <span style="color:black" class="contact-now" title="Track Your Order">Track Order</span>
                 </div>
+                </router-link>
             </div>
             <a href="mailto:{{ settings?.support_email ?? '' }}" class="contact-now-link">
                 <img src="/assets/image/Mail-Icon.webp" alt="Mail Icon" title="Contact our support team">
