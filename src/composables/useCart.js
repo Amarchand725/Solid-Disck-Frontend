@@ -4,6 +4,20 @@ import { useToast } from 'vue-toastification'
 import { useRouter } from 'vue-router'
 import axios from '@/plugins/axios'
 
+// Utility to get or create guest_id
+function getGuestId() {
+  let guestId = localStorage.getItem('guest_id')
+  if (!guestId) {
+    guestId = crypto.randomUUID() // modern browsers, fallback if needed
+    localStorage.setItem('guest_id', guestId)
+  }
+  return guestId
+}
+
+function isLoggedIn() {
+  return false
+}
+
 export function useCart() {
   const loading = ref(false)
   const loading2 = ref(false)
@@ -17,9 +31,18 @@ export function useCart() {
     toast.error(errorMessage)
   }
 
+  // Helper to add guest_id to request data or params if no logged user
+  function withGuestId(payload = {}) {
+    if (!isLoggedIn()) {
+      return { ...payload, guest_id: getGuestId() }
+    }
+    return payload
+  }
+
   const getCart = async () => {
     try {
-      const response = await axios.get('/cart')
+      const params = !isLoggedIn() ? { guest_id: getGuestId() } : {}
+      const response = await axios.get('/cart', { params })
       setCartData(response.data)
     } catch (error) {
       toast.error('Failed to load cart')
@@ -29,10 +52,8 @@ export function useCart() {
   const addToCart = async (productSlug, quantity = 1) => {
     loading.value = true
     try {
-      const response = await axios.post('/cart/store', {
-        slug: productSlug,
-        quantity
-      })
+        const payload = withGuestId({ slug: productSlug, quantity })
+        const response = await axios.post('/cart/store', payload)
       setCartData(response.data)
       message.value = response.data.message || 'Item added to cart.'
       toast.success(message.value)
@@ -47,10 +68,8 @@ export function useCart() {
   const buyItNow = async (productSlug, quantity = 1) => {
     loading2.value = true
     try {
-      const response = await axios.post('/cart/store', {
-        slug: productSlug,
-        quantity
-      })
+      const payload = withGuestId({ slug: productSlug, quantity })
+      const response = await axios.post('/cart/store', payload)
       setCartData(response.data)
       message.value = response.data.message || 'Item added to cart.'
       toast.success(message.value)
@@ -65,10 +84,8 @@ export function useCart() {
   const updateCartItem = async (productSlug, quantity) => {
     loading.value = true
     try {
-      const response = await axios.put('/cart/store', {
-        slug: productSlug,
-        quantity
-      })
+      const payload = withGuestId({ slug: productSlug, quantity })
+      const response = await axios.put('/cart/store', payload)
       message.value = response.data.message || 'Cart updated.'
       toast.success(message.value)
     } catch (error) {
@@ -81,9 +98,8 @@ export function useCart() {
   const updateShipping = async (rate) => {
     loading.value = true
     try {
-      const response = await axios.put('/cart/update-shipping', {
-        rate
-      })
+      const payload = withGuestId({ rate })
+      const response = await axios.put('/cart/update-shipping', payload)
       setCartData(response.data)
       message.value = response.data.message || 'Shipping updated.'
       // toast.success(message.value)
@@ -97,9 +113,8 @@ export function useCart() {
   const increaseCartItem = async (item_id) => {
     loading.value = true    
     try {
-      const response = await axios.put('/cart/increase', {
-        cart_item_id: item_id
-      })
+      const payload = withGuestId({ cart_item_id: item_id })
+      const response = await axios.put('/cart/increase', payload)
       setCartData(response.data)
       message.value = response.data.message || 'Quantity increased.'
       toast.success(message.value)
@@ -113,9 +128,8 @@ export function useCart() {
   const decreaseCartItem = async (item_id) => {
     loading.value = true
     try {
-      const response = await axios.put('/cart/decrease', {
-        cart_item_id: item_id
-      })
+      const payload = withGuestId({ cart_item_id: item_id })
+      const response = await axios.put('/cart/decrease', payload)
       setCartData(response.data)
       message.value = response.data.message || 'Quantity decreased.'
       toast.success(message.value)
@@ -129,9 +143,10 @@ export function useCart() {
   const removeCartItem = async (item_id) => {
     loading.value = true
     try {
-      const response = await axios.delete('/cart/remove', {
-        data: { cart_item_id: item_id }
-      })
+      const config = {
+        data: withGuestId({ cart_item_id: item_id })
+      }
+      const response = await axios.delete('/cart/remove', config)
       setCartData(response.data)
       message.value = response.data.message || 'Item removed from cart.'
       toast.success(message.value)
@@ -145,7 +160,10 @@ export function useCart() {
   const clearCart = async () => {
     loading.value = true
     try {
-      const response = await axios.delete('/cart/clear')
+      const config = {
+        data: withGuestId()
+      }
+      const response = await axios.delete('/cart/clear', config)
       message.value = response.data.message || 'Cart cleared.'
       toast.success(message.value)
     } catch (error) {
