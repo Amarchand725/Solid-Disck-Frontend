@@ -56,11 +56,11 @@
                 tab.classList.add("border-bottom-black");
 
                 if (tab.getAttribute("title") === "Specifications") {
-                specsSection.style.display = "block";
-                reviewsSection.style.display = "none";
+                    specsSection.style.display = "block";
+                    reviewsSection.style.display = "none";
                 } else if (tab.getAttribute("title") === "Reviews") {
-                specsSection.style.display = "none";
-                reviewsSection.style.display = "block";
+                    specsSection.style.display = "none";
+                    reviewsSection.style.display = "block";
                 }
             });
         });

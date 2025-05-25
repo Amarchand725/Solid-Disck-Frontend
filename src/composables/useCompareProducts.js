@@ -1,46 +1,61 @@
 // composables/useCompareProducts.js
-import { ref, computed } from 'vue';
+import { ref, computed } from 'vue'
+import axios from '@/plugins/axios';
 
 export default function useCompareProducts() {
-    const selectedProducts = ref([]);
+  const selectedProducts = ref([null, null, null])
+  const products = ref([])
+  const loading = ref(false)
+  const error = ref(null)
 
-    const addProduct = (product) => {
-        if (selectedProducts.value.length === 0) {
-            selectedProducts.value.push(product);
-        } else {
-            // Only allow same category
-            const currentCategory = selectedProducts.value[0].category;
-            if (product.category === currentCategory) {
-                const exists = selectedProducts.value.find(p => p.id === product.id);
-                if (!exists) {
-                    selectedProducts.value.push(product);
-                }
-            } else {
-                alert("Only products from the same category can be compared. Click reset to change.");
-            }
+  const fetchProducts = async () => {
+    loading.value = true
+    error.value = null
+    try {
+      const response = await axios.get('/products')
+      products.value = response.data.data || response.data || []
+    } catch (err) {
+      error.value = err.message || 'Failed to fetch products'
+    } finally {
+      loading.value = false
+    }
+  }
+
+    const addProduct = (product, index) => {
+        if (!selectedCategory.value && product.category) {
+            selectedCategory.value = product.category
         }
-    };
+        selectedProducts.value[index] = product
+    }
 
-    const removeProduct = (productId) => {
-        selectedProducts.value = selectedProducts.value.filter(p => p.id !== productId);
-    };
+  const removeProduct = (index) => {
+    selectedProducts.value[index] = null
+  }
 
-    const resetComparison = () => {
-        selectedProducts.value = [];
-    };
+  const resetComparison = () => {
+    selectedProducts.value = [null, null, null]
+  }
 
     const canAddProduct = (product) => {
-        return (
-            selectedProducts.value.length === 0 ||
-            selectedProducts.value[0].category === product.category
-        );
-    };
+        if (!selectedCategory.value) return true
+        return product.category?.id === selectedCategory.value?.id
+    }
 
-    return {
-        selectedProducts,
-        addProduct,
-        removeProduct,
-        resetComparison,
-        canAddProduct,
-    };
+  const selectedCategory = computed(() => {
+    const nonNullProducts = selectedProducts.value.filter(p => p)
+    return nonNullProducts.length > 0 ? nonNullProducts[0].category : null
+  })
+
+  return {
+    selectedProducts,
+    products,
+    loading,
+    error,
+    fetchProducts,
+    addProduct,
+    removeProduct,
+    resetComparison,
+    canAddProduct,
+    selectedCategory
+  }
 }
