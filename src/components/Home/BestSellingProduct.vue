@@ -49,7 +49,7 @@
                 </div>
             </div>
             <div class="col-sm-4">
-                <div style="padding:38px !important;" class="payment_shipping_box payment_shipping_box_center">
+                <div style="padding:34px !important;" class="payment_shipping_box payment_shipping_box_center">
                     <div class="icon_p">
                         <img src="/assets/logos/payment-shipping-icon2.png" alt="Happy Face Icon">
                     </div>
@@ -58,7 +58,7 @@
                 </div>
             </div>
             <div class="col-sm-4">
-                <div style="padding:34px !important;" class="payment_shipping_box">
+                <div style="padding:30px !important;" class="payment_shipping_box">
                     <div class="icon_p">
                         <img src="/assets/logos/payment-shipping-icon3.png" alt="Delivery Truck Icon">
                     </div>

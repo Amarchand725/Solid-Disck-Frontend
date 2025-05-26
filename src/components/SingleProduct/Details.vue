@@ -139,7 +139,7 @@
                             </div>
                         </div>
                         <span v-if="productDetails?.unit_price > 0">
-                            <button style="margin-bottom:10px;" @click="handleAddToCart" :disabled="loading" title="Add To Cart" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined add_to_cart">
+                            <button style="button:hover:background: inherit !important;margin-bottom:10px;" @click="handleAddToCart" :disabled="loading" title="Add To Cart" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined add_to_cart">
                                 <span>{{ loading ? 'Adding...' : 'Add to Cart' }}</span>
                             </button>
                             <br>
@@ -209,3 +209,12 @@
         event.target.src = '/placeholders/270x280.svg'
     }
 </script>
+<style>
+.add_to_cart:hover {
+  background: #001e4c !important;
+  color: white !important;
+  border: none !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+}
+</style>

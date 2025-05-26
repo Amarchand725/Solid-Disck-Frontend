@@ -14,13 +14,13 @@
                         style="color: transparent; margin-top: 3px;"
                     >
                 </a> -->
-                <img 
+                <!-- <img 
                     alt="Payment Gateways" 
-                    loading="lazy" width="200" height="80" decoding="async" data-nimg="1" 
+                    loading="lazy" width="100" height="50" decoding="async" data-nimg="1" 
                     srcset="/assets/logos/secure.png"
                     src="/assets/logos/secure.png" 
                     style="color: transparent;"
-                >
+                > -->
                 <img 
                     alt="Payment Gateways" 
                     loading="lazy" width="400" height="80" decoding="async" data-nimg="1" 
