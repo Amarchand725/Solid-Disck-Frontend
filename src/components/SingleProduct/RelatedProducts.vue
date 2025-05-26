@@ -165,3 +165,12 @@
         event.target.src = '/placeholders/270x280.svg'
     }
 </script>
+
+<style>
+.swiper-button-prev{
+    display: none!important;
+}
+.swiper-button-next {
+    display: none!important;
+}
+</style>

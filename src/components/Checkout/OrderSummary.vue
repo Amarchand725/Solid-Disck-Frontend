@@ -109,7 +109,6 @@
                 throw new Error('Unsupported payment method selected')
             }
             await placeOrder(payload)
-            console.log('Order placed!')
         } catch (err) {
             console.error('Checkout failed:', err.message || err)
         } finally {
