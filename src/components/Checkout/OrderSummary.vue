@@ -48,7 +48,7 @@
             <div class="sub_total total"><span>Total:</span>
                 <p>{{ settings?.currency ?? '' }}{{ fullCart.total }}</p>
             </div>
-            <PaymentCheckout :error="error" :loading="loading" @placeOrder="handlePlaceOrder" ref="paymentRef" />
+            <PaymentCheckout :error="error" :loading="placingOrder" @placeOrder="handlePlaceOrder" ref="paymentRef" />
         </div>
     </div>
 </template>
@@ -69,10 +69,12 @@
     const { cartItemCount, fullCart } = useCart()
 
     const paymentRef = ref()
+    const placingOrder = ref(false)
 
-    const { placeOrder, loading, error, success } = usePlaceOrder()
+    const { placeOrder, error, success } = usePlaceOrder()
 
     const handlePlaceOrder = async () => {
+        placingOrder.value = true
         try {
             const shippingForm = props.shippingDetails ?? {}
             const billingFormData = props.billingDetails ?? {}
@@ -107,9 +109,10 @@
                 throw new Error('Unsupported payment method selected')
             }
             await placeOrder(payload)
-            console.log('Order placed!')
         } catch (err) {
             console.error('Checkout failed:', err.message || err)
+        } finally {
+            placingOrder.value = false
         }
     }
 
