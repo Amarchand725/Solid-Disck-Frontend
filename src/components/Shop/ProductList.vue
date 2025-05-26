@@ -55,10 +55,12 @@
         </div>
         <div class="ant-col ant-col-xs-8 css-i6rspj">
             <div class="product_view_right">
-                <p class="in_stock" title="In Stock"><b>●</b> In Stock</p>
+                <p v-if="product?.unit_price > 0" class="in_stock" title="In Stock"><b>●</b> In Stock</p>
+                <p v-else style="color: red; font-weight: 600; margin-top: 8px;" title="Call For Price"><b>●</b> Call For Price</p>
                 <div class="shipping"><b>Product Condition: </b>
                     <p :title="product?.condition?.name">{{ product?.condition?.name }}</p>
                 </div>
+
                 <div v-if="product?.discount_price">
                     <div class="__className_139476 cut_price">
                         {{ settings?.currency ?? '' }} {{ product?.unit_price || 0 }}
@@ -68,10 +70,12 @@
                     </div>
                 </div>
 
-                <!-- If no discount_price, show unit_price or 0 -->
                 <div v-else>
-                    <div class="__className_139476 main_price">
+                    <div v-if="product?.unit_price > 0" class="__className_139476 main_price">
                         {{ settings?.currency ?? '' }} {{ product?.unit_price || 0 }}
+                    </div>
+                    <div v-else class="__className_139476 main_price">
+                        Call For Price
                     </div>
                 </div>
 
@@ -101,22 +105,30 @@
                         </span>
                     </div>
                 </div>
-                <button @click="handleAddToCart(product)" :disabled="loading" title="Add To Cart" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined">
-                    <span>{{ loading ? 'Adding...' : 'Add to Cart' }}</span>
-                </button>
-                <button style="background-color: #f5ad1d !important;" @click="handleBuyItNow(product)" :disabled="loading2" title="Buy it now" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined">
-                    <span>{{ loading2 ? 'Buying...' : 'Buy It Now' }}</span>
-                </button>
+                <span v-if="product?.unit_price > 0">
+                    <button @click="handleAddToCart(product)" :disabled="loading" title="Add To Cart" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined">
+                        <span>{{ loading ? 'Adding...' : 'Add to Cart' }}</span>
+                    </button>
+                    <button style="background-color: #f5ad1d !important;" @click="handleBuyItNow(product)" :disabled="loading2" title="Buy it now" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined">
+                        <span>{{ loading2 ? 'Buying...' : 'Buy It Now' }}</span>
+                    </button>
+                </span>
+                <span v-else>
+                    <button @click="togglePhoneNumber" title="Call For Price" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined">
+                        <span>{{ showNumber ? phone : 'Call For Price' }}</span>
+                    </button>
+                </span>
             </div>
         </div>
     </div>
 </template>
 <script setup>
 import { buyItNow } from '@/composables/useCart.js' // Adjust path if needed
-import { useToast } from 'vue-toastification'
 import { useRouter } from 'vue-router'
+import { ref } from 'vue'
+
 const router = useRouter()
-defineProps({
+const props = defineProps({
   product: Object,
   settings: Object,
   quantities: Object,
@@ -158,5 +170,12 @@ function shortDescription(html, limit = '') {
     }
 
     return text;
+}
+
+const showNumber = ref(false)
+const phone = ref(props.settings?.phone || 'N/A')
+
+const togglePhoneNumber = () => {
+  showNumber.value = !showNumber.value
 }
 </script>

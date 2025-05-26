@@ -1,11 +1,13 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from 'vue';
+import App from './App.vue';
 import store from './vuexstore/store';
-import router from './router'
+import router from './router';
 import { createPinia } from 'pinia';
-import Toast from 'vue-toastification'
+import Toast from 'vue-toastification';
+import Antd from 'ant-design-vue';
+// import 'ant-design-vue/dist/antd.css';
 
-import 'vue-toastification/dist/index.css'
+import 'vue-toastification/dist/index.css';
 
 import 'bootstrap';
 
@@ -20,4 +22,5 @@ const app = createApp(App)
       app.use(store)
       app.use(router)
       app.use(Toast)
+      app.use(Antd)
       app.mount('#app')

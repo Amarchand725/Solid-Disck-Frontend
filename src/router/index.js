@@ -5,6 +5,7 @@ import { initAllPlugins } from '@/initPlugins';
 import Home from '../views/Home.vue'
 // import Wishlist from '../views/Wishlist.vue'
 import CompareProduct from '../views/CompareProduct.vue'
+import Configurator from '../views/Configurator.vue'
 import Cart from '../views/Cart.vue'
 import Checkout from '../views/Checkout.vue'
 // import TrackOrder from '../views/TrackOrder.vue'
@@ -68,6 +69,12 @@ const routes = [
     name: 'CompareProduct',
     component: CompareProduct,
     meta: { title: 'Compare Product' }
+  },
+  {
+    path: '/products/configurator',
+    name: 'Configurator',
+    component: Configurator,
+    meta: { title: 'Configurator' }
   },
   {
     path: '/cart',

@@ -6,7 +6,7 @@
                     <div class="header_left">
                         <router-link class="nav-link" to="/">
                             <img 
-                                alt="Logo" title="{{ settings?.name ?? '' }}" fetchpriority="high" 
+                                alt="Logo" :title="settings?.name" fetchpriority="high" 
                                 width="220" height="50" decoding="async" data-nimg="1" 
                                 :src="settings?.logo || '/placeholders/220x50.svg'"
                                 @error="onLogoError"

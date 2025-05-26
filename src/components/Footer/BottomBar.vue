@@ -16,6 +16,13 @@
                 </a> -->
                 <img 
                     alt="Payment Gateways" 
+                    loading="lazy" width="200" height="80" decoding="async" data-nimg="1" 
+                    srcset="/assets/logos/secure.png"
+                    src="/assets/logos/secure.png" 
+                    style="color: transparent;"
+                >
+                <img 
+                    alt="Payment Gateways" 
                     loading="lazy" width="400" height="80" decoding="async" data-nimg="1" 
                     srcset="/assets/image/payment-getways.jpg"
                     src="/assets/image/payment-getways.jpg" 
