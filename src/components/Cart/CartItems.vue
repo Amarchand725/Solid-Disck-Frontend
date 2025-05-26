@@ -151,7 +151,8 @@
                     <div class="remove_all_link" @click="clearCart()" style="cursor: pointer;">Remove All</div>
                 </div>
                 <div class="continue-shopping">
-                    <router-link to="/checkout" style="background-color: rgb(245, 173, 29);">
+                    <router-link :to="fullCart?.items?.length ? '/checkout' : '#'"
+                            @click.prevent="!fullCart?.items?.length && toast.error('Your cart is empty!')" style="background-color: rgb(245, 173, 29);">
                         Proceed to Checkout
                     </router-link>
                     <router-link to="/">Continue Shopping</router-link>
@@ -174,6 +175,9 @@
     }
 </script>
 <script setup>
+    import { useToast } from 'vue-toastification'
+    import { useRouter } from 'vue-router'
+    import { ref } from 'vue'
     const onImageError = (event) => {
         event.target.src = '/placeholders/70x70.svg'
     }
@@ -188,5 +192,18 @@
 
         // Otherwise, return the full text
         return text;
+    }
+
+    const toast = useToast()
+
+    const router = useRouter()
+
+    const handleProceedToCheckout = () => {
+        if (!props.fullCart?.items?.length) {
+            toast.error('Your cart is empty!')
+            return
+        }
+
+        router.push('/checkout')
     }
 </script>
