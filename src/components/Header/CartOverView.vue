@@ -48,7 +48,7 @@
           </li>
         </ul>
       </div>
-      <div class="cart_overview_modal_footer">
+      <div class="cart_overview_modal_footer" v-if="fullCart && fullCart.items && fullCart.items.length">
         <div class="subtotal">
           <span>Subtotal:</span>
           <p>{{ settings?.currency ?? '' }}{{ fullCart.subtotal }}</p>
@@ -56,6 +56,11 @@
         <div class="footer_btn">
           <router-link class="view_cart_btn" to="/cart">View Cart</router-link>
           <router-link class="checkout_btn" to="/checkout">Checkout</router-link>
+        </div>
+      </div>
+      <div class="cart_overview_modal_footer" v-else>
+        <div class="subtotal text-center">
+          <span>Cart is empty</span>
         </div>
       </div>
     </div>

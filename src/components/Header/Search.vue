@@ -1,5 +1,5 @@
 <template>
-  <div class="search_bar_main">
+  <div class="search_bar_main" ref="searchContainer">
     <span class="ant-input-group-wrapper ant-input-search ant-input-group-wrapper-outlined css-i6rspj ant-input-search-with-button header-search-input">
       <span class="ant-input-wrapper ant-input-group css-i6rspj">
         <input
@@ -24,18 +24,25 @@
     <div class="search_dropdown" v-if="searchResults?.length">
         <ul>
             <li v-for="item in searchResults" :key="item.id">
-                <a :href="`/products/${item.category_url}/${item.slug}`">{{ item.title }}</a>
+                <router-link 
+                  :to="`/products/${item.category_url}/${item.slug}`"
+                >
+                {{ item.title }}
+              </router-link>
             </li>
         </ul>
     </div>
   </div>
 </template>
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useProducts } from '@/composables/useProducts'
 
 const searchTerm = ref('')
 const { searchResults, searchProducts } = useProducts()
+
+const searchContainer = ref(null)
+
 const handleSearch = () => {
   if (!searchTerm.value.trim()) {
     searchResults.value = []
@@ -43,6 +50,30 @@ const handleSearch = () => {
   }
   searchProducts(searchTerm.value)
 }
+
+// 🟢 Close dropdown on outside click
+const handleClickOutside = (event) => {
+  if (searchContainer.value && !searchContainer.value.contains(event.target)) {
+    searchResults.value = []
+  }
+}
+
+// 🟢 Close dropdown on Escape key
+const handleEscape = (event) => {
+  if (event.key === 'Escape') {
+    searchResults.value = []
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside)
+  document.addEventListener('keydown', handleEscape)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside)
+  document.removeEventListener('keydown', handleEscape)
+})
 </script>
 <style scoped>
 .search_dropdown {

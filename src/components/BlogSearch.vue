@@ -1,9 +1,3 @@
-<!-- <template>
-    <div class="blogsSearchComp">
-        <input placeholder="Search Blog..." id="blog-search-bar" type="text">
-        <button type="button" id="blog-search-button">Search</button>
-    </div>
-</template> -->
 <template>
   <div class="blogsSearchComp">
     <input
