@@ -2,11 +2,11 @@
   <div class="payment_method_main">
     <div class="head_main">
       <h3>Payment Method</h3>
-      <img 
+      <!-- <img 
         loading="lazy" width="150" height="20" decoding="async"
         src="/assets/image/payment_icons.avif"
         style="color: transparent;"
-      />
+      /> -->
     </div>
 
     <!-- Payment Selection -->
@@ -17,7 +17,7 @@
           v-for="method in ['Paypal', 'Payarc']"
           :key="method"
           style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;"
-        >
+        > 
           <span class="ant-radio ant-wave-target">
             <input
               class="ant-radio-input"
@@ -28,6 +28,13 @@
             <span class="ant-radio-inner"></span>
           </span>
           <span class="capitalize">{{ method }}</span>
+           <img
+          :src="getPaymentMethodImage(method).url" 
+          :alt="method"
+          :width="getPaymentMethodImage(method).width" 
+          :height="getPaymentMethodImage(method).height" 
+          style="object-fit: contain;margin-left: auto;"
+        />
         </label>
       </div>
     </div>
@@ -99,6 +106,29 @@ defineExpose({
     throw new Error('Unsupported method for tokenization')
   }
 })
+const getPaymentMethodImage = (method) => {
+  switch (method.toLowerCase()) {
+    case 'paypal':
+      return { 
+        url: '/assets/image/paypal_logo_icon_170865.png', 
+        width: 150, 
+        height: 60 
+      }
+    case 'payarc':
+      return { 
+        url: '/assets/image/payment_icons.avif', 
+        width: 150, 
+        height: 24 
+      }
+    default:
+      return { 
+        url: '/assets/image/payment_icons.avif', 
+        width: 40, 
+        height: 24 
+      }
+  }
+}
+
 </script>
 
 

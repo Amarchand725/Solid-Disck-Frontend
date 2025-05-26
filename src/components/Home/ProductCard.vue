@@ -54,7 +54,7 @@
         </router-link>
     </div>
     <div class="TabProductCard_card_bottom__WLdA5">
-        <button style="border-radius:0 0 0 0;" @click="handleAddToCart" :disabled="loading" class="TabProductCard_add_to_cart_btn___s_fG" title="Add To Cart">
+        <button style="border-radius:0 0 0 0; " @click="handleAddToCart" :disabled="loading" class="TabProductCard_add_to_cart_btn___s_fG" title="Add To Cart">
             {{ loading ? 'Adding...' : 'Add to Cart' }}
         </button>
          <button style="background-color: #f5ad1d !important;" @click="handleBuyItNow" :disabled="loading2" class="TabProductCard_add_to_cart_btn___s_fG" title="Buy It Now">

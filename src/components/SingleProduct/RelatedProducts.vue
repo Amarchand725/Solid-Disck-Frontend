@@ -84,7 +84,7 @@
                         </div>
 
                         <span v-if="product?.unit_price > 0">
-                            <button @click="handleAddToCart(product)" :title="'Add To Cart'" type="button" class="ant-btn">
+                            <button style="border-radius:0 0 0 0; " @click="handleAddToCart(product)" :title="'Add To Cart'" type="button" class="ant-btn">
                                 {{ loadingMap[product.slug] ? 'Adding...' : 'Add to Cart' }}
                             </button>
                             <button style="background-color: #f5ad1d !important;" @click="handleBuyItNow(product)" class="ant-btn" title="Buy It Now">

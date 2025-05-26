@@ -55,7 +55,8 @@
                 <p>{{ settings?.currency ?? '' }}{{ fullCart.total }}</p>
             </div>
             <p class="tax">Tax and Shipping calculated at checkout.</p>
-            <router-link class="checkout-btn" to="/checkout">
+            <router-link class="checkout-btn" :to="fullCart?.items?.length ? '/checkout' : '#'"
+                            @click.prevent="!fullCart?.items?.length && toast.error('Your cart is empty!')">
                 <button type="button" class="ant-btn css-i6rspj ant-btn-primary ant-btn-color-primary ant-btn-variant-solid">
                     <span style="font-size: 14px; font-weight: 600; color: rgb(255, 255, 255);">Proceed to Checkout</span>
                 </button>
@@ -65,6 +66,8 @@
 </template>
 <script setup>
 import { fullCart } from '@/composables/cartState';
+import { useToast } from 'vue-toastification'
+const toast = useToast()
 
     const props = defineProps({
         settings: Object,
