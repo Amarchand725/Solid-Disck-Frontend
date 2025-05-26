@@ -167,6 +167,11 @@
 </script>
 
 <style>
+.ant-btn:hover {
+  background: #001e4c !important;
+  color: white !important;
+  border: none !important;
+}
 .swiper-button-prev{
     display: none!important;
 }
