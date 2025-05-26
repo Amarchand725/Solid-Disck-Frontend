@@ -2,7 +2,7 @@
     <div>
         <main>
             <!-- Banner Section -->
-            <Banner />
+            <Slider />
             
             <!-- Central Content -->
              <CentralContent />
@@ -33,7 +33,7 @@
 
 <script setup>
     import WhyWorkWithUs from '@/components/Home/WhyWorkWithUs.vue';
-    import Banner from '@/components/Home/Banner.vue';
+    import Slider from '@/components/Home/Slider.vue';
     import CentralContent from '@/components/Home/CentralContent.vue';
     import TopSellerManufacturer from '@/components/Home/TopSellerManufacturer.vue';
     import TopSellerCategory from '@/components/Home/TopSellerCategory.vue';
