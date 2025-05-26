@@ -33,18 +33,69 @@
                             </h3>
                             </router-link>
 
-                            <!-- Rating and pricing sections remain the same -->
-                            <div class="checkbox_main"> ... </div>
-                            <div class="price_main" v-if="product?.discount_price"> ... </div>
-                            <div class="price_main" v-else> ... </div>
+                            <div class="checkbox_main">
+                                <div class="star_main">
+                                    <span role="img" aria-label="star" class="anticon anticon-star" style="color: rgb(189, 189, 189);">
+                                        <svg viewBox="64 64 896 896" focusable="false" data-icon="star" width="1em" height="1em" fill="currentColor" aria-hidden="true">
+                                            <path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 00.6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0046.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z"></path>
+                                        </svg>
+                                    </span>
+                                    <span role="img" aria-label="star" class="anticon anticon-star" style="color: rgb(189, 189, 189);">
+                                        <svg viewBox="64 64 896 896" focusable="false" data-icon="star" width="1em" height="1em" fill="currentColor" aria-hidden="true">
+                                            <path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 00.6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0046.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z"></path>
+                                        </svg>
+                                    </span>
+                                    <span role="img" aria-label="star" class="anticon anticon-star" style="color: rgb(189, 189, 189);">
+                                        <svg viewBox="64 64 896 896" focusable="false" data-icon="star" width="1em" height="1em" fill="currentColor" aria-hidden="true">
+                                            <path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 00.6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0046.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z"></path></svg></span><span role="img" aria-label="star" class="anticon anticon-star" style="color: rgb(189, 189, 189);"><svg viewBox="64 64 896 896" focusable="false" data-icon="star" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 00.6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0046.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z"></path></svg></span><span role="img" aria-label="star" class="anticon anticon-star" style="color: rgb(189, 189, 189);"><svg viewBox="64 64 896 896" focusable="false" data-icon="star" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M908.1 353.1l-253.9-36.9L540.7 86.1c-3.1-6.3-8.2-11.4-14.5-14.5-15.8-7.8-35-1.3-42.9 14.5L369.8 316.2l-253.9 36.9c-7 1-13.4 4.3-18.3 9.3a32.05 32.05 0 00.6 45.3l183.7 179.1-43.4 252.9a31.95 31.95 0 0046.4 33.7L512 754l227.1 119.4c6.2 3.3 13.4 4.4 20.3 3.2 17.4-3 29.1-19.5 26.1-36.9l-43.4-252.9 183.7-179.1c5-4.9 8.3-11.3 9.3-18.3 2.7-17.5-9.5-33.7-27-36.3z"></path>
+                                        </svg>
+                                    </span>
+                                </div>
+                                <p class="count">(0)</p>
+                            </div>
+                            <div class="price_main">
+                                <!-- If discount price is available -->
+                                <template v-if="product?.discount_price">
+                                    <p class="price cut">
+                                    {{ settings?.currency ?? '' }}{{ product?.unit_price || 0 }}
+                                    </p>
+                                    <p class="price">
+                                    {{ settings?.currency ?? '' }}{{ product?.discount_price }}
+                                    </p>
+                                </template>
+
+                                <!-- If no discount but valid unit_price -->
+                                <p
+                                    v-else-if="product?.unit_price > 0"
+                                    class="price"
+                                >
+                                    {{ settings?.currency ?? '' }}{{ product?.unit_price || 0 }}
+                                </p>
+
+                                <!-- Else, Call For Price -->
+                                <a
+                                    v-else
+                                    :href="`tel:${settings?.phone}`"
+                                    class="price call_for_price"
+                                >
+                                    Call For Price: {{ settings?.phone }}
+                                </a>
+                            </div>
                         </div>
 
-                        <button @click="handleAddToCart(product)" :title="'Add To Cart'" type="button" class="ant-btn">
-                            {{ loadingMap[product.slug] ? 'Adding...' : 'Add to Cart' }}
-                        </button>
-                        <button style="background-color: #f5ad1d !important;" @click="handleBuyItNow(product)" class="ant-btn" title="Buy It Now">
-                            {{ buyingMap[product.slug] ? 'Buying...' : 'Buy It Now' }}
-                        </button>
+                        <span v-if="product?.unit_price > 0">
+                            <button @click="handleAddToCart(product)" :title="'Add To Cart'" type="button" class="ant-btn">
+                                {{ loadingMap[product.slug] ? 'Adding...' : 'Add to Cart' }}
+                            </button>
+                            <button style="background-color: #f5ad1d !important;" @click="handleBuyItNow(product)" class="ant-btn" title="Buy It Now">
+                                {{ buyingMap[product.slug] ? 'Buying...' : 'Buy It Now' }}
+                            </button>
+                        </span>
+                        <span v-else>
+                            <button @click="togglePhoneNumber" title="Call For Price" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined">
+                                <span>{{ showNumber ? phone : 'Call For Price' }}</span>
+                            </button>
+                        </span>
                     </div>
                 </SwiperSlide>
             </Swiper>
@@ -101,6 +152,13 @@
 
         // Otherwise, return the full text
         return text;
+    }
+
+    const showNumber = ref(false)
+    const phone = ref(settings?.phone || 'N/A')
+
+    const togglePhoneNumber = () => {
+        showNumber.value = !showNumber.value
     }
 
     const onImageError = (event) => {

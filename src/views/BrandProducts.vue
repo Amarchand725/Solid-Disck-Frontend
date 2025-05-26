@@ -285,11 +285,7 @@ watch(() => brandSlug.value, loadBrand);
 
 onMounted(async () => {
   categories.value = await getCategories();
-  console.log('Loaded categories:', categories.value); // 🔍 Check output
-
   brands.value = await getBrands();
-  console.log('Loaded brands:', brands.value); // 🔍 Check output
-
   selectedBrand.value = brandSlug.value;
   await loadBrand();
 });

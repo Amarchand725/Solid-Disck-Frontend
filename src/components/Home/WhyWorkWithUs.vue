@@ -18,7 +18,7 @@
             <h2>ASK, COMPARE &amp; ORDER</h2>
             <div class="bottom_card_main">
                 <div class="work_with_us_card" title="Connect with Our Experts – Call Now">
-                    <a href="tel:+18887195848">
+                    <a :href="`tel:${settings?.phone}`">
                         <div class="inner">
                             <img alt="why-work-with-us-image" title="why-work-with-us-image" loading="lazy" width="45" height="45" decoding="async" data-nimg="1" 
                                 srcset="/assets/image/Call-Icon-home.avif"
@@ -42,7 +42,7 @@
                     </router-link>
                 </div>
                 <div class="work_with_us_card" title="Choose Your Server Solution">
-                    <a href="/configurator">
+                    <router-link to="/products/configurator">
                         <div class="inner">
                             <img alt="why-work-with-us-image" title="why-work-with-us-image" loading="lazy" width="45" height="45" decoding="async" data-nimg="1" 
                                 srcset="/assets/image/Shop-By-Server-Icon.webp"
@@ -51,7 +51,7 @@
                             >
                         </div>
                         <span>Shop By Server</span>
-                    </a>
+                    </router-link>
                 </div>
                 <!-- <div class="work_with_us_card right" title="Compatible Upgrades for Your PC">
                     <a href="/group-products">
@@ -87,7 +87,8 @@
 <script setup>
 import { onMounted, computed } from 'vue'
 import { useBanners } from '@/composables/useBanners.js'
-import router from '@/router'
+import { useSettings } from '@/composables/useSettings.js'
+const { settings } = useSettings();
 
 const { banners, getBanners } = useBanners()
 

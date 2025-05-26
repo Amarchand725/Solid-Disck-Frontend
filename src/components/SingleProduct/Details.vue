@@ -71,12 +71,15 @@
                                 <span class="product_price" style="margin-top: 15px;">
                                     {{ settings?.currency ?? '' }}{{ productDetails.discount_price }}
                                 </span>
-                                </div>
+                            </div>
 
-                                <div v-else>
-                                <span class="product_price" style="margin-top: 15px;">
+                            <div v-else>
+                                <span v-if="productDetails?.unit_price > 0" class="product_price" style="margin-top: 15px;">
                                     {{ settings?.currency ?? '' }}{{ productDetails?.unit_price || 0 }}
                                 </span>
+                                <a v-else :href="`tel:${settings?.phone}`" class="call_for_price">
+                                    Call For Price: {{ settings?.phone }}
+                                </a>
                             </div>
 
                             <span class="lease_price">Lease Pricing Available</span>
@@ -135,13 +138,15 @@
                                 <span>Express Delivery in USA Get within 1 to 3 days</span>
                             </div>
                         </div>
-                        <button style="margin-bottom:10px;" @click="handleAddToCart" :disabled="loading" title="Add To Cart" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined add_to_cart">
-                            <span>{{ loading ? 'Adding...' : 'Add to Cart' }}</span>
-                        </button>
-                        <br>
-                        <button style="background-color: #f5ad1d !important;" @click="handleBuyItNow" :disabled="loading2" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined add_to_cart" title="Buy It Now">
-                            {{ loading2 ? 'Buying...' : 'Buy It Now' }}
-                        </button>
+                        <span v-if="productDetails?.unit_price > 0">
+                            <button style="margin-bottom:10px;" @click="handleAddToCart" :disabled="loading" title="Add To Cart" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined add_to_cart">
+                                <span>{{ loading ? 'Adding...' : 'Add to Cart' }}</span>
+                            </button>
+                            <br>
+                            <button style="background-color: #f5ad1d !important;" @click="handleBuyItNow" :disabled="loading2" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined add_to_cart" title="Buy It Now">
+                                {{ loading2 ? 'Buying...' : 'Buy It Now' }}
+                            </button>
+                        </span>
                         <div class="norton_image">
                             <img 
                                 alt="Norton" 

@@ -14,11 +14,11 @@
 
     </router-link>
     <span class="TabProductCard_category__yj7NY" v-if="product.category">
-        {{ product.category.name }}
+        {{ product?.category?.name }}
     </span>
     <router-link 
         class="TabProductCard_title_main__m3y_P"    
-        title="{{ product.title }}" 
+        :title="product?.title" 
         :to="`/products/${product.category_url}/${product.slug}`"
         >
         {{ product.title }}
