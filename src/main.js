@@ -7,6 +7,12 @@ import Toast from 'vue-toastification';
 import Antd from 'ant-design-vue';
 // import 'ant-design-vue/dist/antd.css';
 
+import { initAllPlugins } from './initPlugins.js';
+// For vanilla JS or Vue's mounted hook
+document.addEventListener('DOMContentLoaded', () => {
+  initAllPlugins();
+});
+
 import 'vue-toastification/dist/index.css';
 
 import 'bootstrap';

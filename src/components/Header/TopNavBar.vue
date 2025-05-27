@@ -49,7 +49,7 @@
             </a>
             <a href="tel:+{{ settings?.phone ?? '' }}" class="contact-now-link">
                 <img src="/assets/image/Call-Icon.webp" alt="Call Icon" title="Call {{ settings?.name ?? '' }}">
-                <span class="contact-now" title="Call {{ settings?.name ?? '' }}">{{ settings?.phone ?? '' }}</span>
+                <span class="contact-now" :title="settings?.phone">{{ settings?.phone ?? '' }}</span>
             </a>
         </div>
     </div>

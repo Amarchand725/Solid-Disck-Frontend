@@ -26,7 +26,7 @@
                     <div class="card_container">
                         <div 
                             class="item"
-                            v-for="blog in blogs" 
+                            v-for="blog in blogs.slice(0, 3)"
                             :key="blog.id"
                         >
                             <div class="image-wrapper">

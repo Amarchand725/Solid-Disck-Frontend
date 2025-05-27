@@ -12,27 +12,6 @@ const pagination = ref({
 const loading = ref(false);
 const error = ref(null);
 
-// const getBlogs = async (page = 1, query = '') => {
-//   loading.value = true;
-//   searchQuery.value = query;
-//   try {
-//     const res = await axios.get('/blogs', {
-//       params: {
-//         page, // pass the current page
-//         per_page: pagination.value.per_page,
-//         search: searchQuery.value,
-//       },
-//     });
-
-//     blogs.value = res.data.data;
-//     pagination.value = res.data.pagination; // assign pagination data
-//   } catch (err) {
-//     error.value = err;
-//   } finally {
-//     loading.value = false;
-//   }
-// };
-
 const getBlogs = async ({
   page = 1,
   perPage = 10,
