@@ -8,7 +8,7 @@
                             <img 
                                 alt="Logo" :title="settings?.name" fetchpriority="high" 
                                 width="220" height="50" decoding="async" data-nimg="1" 
-                                :src="settings?.logo || '/placeholders/220x50.svg'"
+                                :src="settings?.logo || '/assets/image/cOPCmXsTYZD8imXv03nHXTUesUat0VzFcRfOt5to.webp'"
                                 @error="onLogoError"
                                 style="color: transparent; object-fit: contain; margin-left: -25px; width: 100%; height: auto;">
                         </router-link>

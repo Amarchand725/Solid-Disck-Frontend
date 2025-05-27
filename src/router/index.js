@@ -113,6 +113,13 @@ const routes = [
   //   meta: { title: 'Track Your Order' }
   // },
   {
+    path: '/products:slug?',
+    // path: '/products/:categoryPath(.*)/:slug',
+    name: 'Search',
+    component: Shop,
+    meta: { title: 'Shop' }
+  },
+  {
     path: '/categories/:categoryPath(.*)',
     // path: '/products/:categoryPath(.*)/:slug',
     name: 'Shop',

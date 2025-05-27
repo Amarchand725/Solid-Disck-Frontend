@@ -1,5 +1,6 @@
+
 export function initAllPlugins() {
-  // Tabs logic
+  // Existing ant-tabs logic
   const tabs = document.querySelectorAll(".ant-tabs-tab");
   const tabBtns = document.querySelectorAll(".ant-tabs-tab-btn");
   const panels = document.querySelectorAll("[id^='rc-tabs-2-panel']");
@@ -73,10 +74,6 @@ export function initAllPlugins() {
     });
   }
 }
-
-document.addEventListener("DOMContentLoaded", function () {
-  initAllPlugins();
-});
 
 // export function initAllPlugins() {
 //   const tabs = document.querySelectorAll(".ant-tabs-tab");

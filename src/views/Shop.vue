@@ -114,6 +114,9 @@
                     Loading...
                   </div>
                 </div>
+                <div v-else-if="products.length === 0" class="no-products">
+                  No products found.
+                </div>
 
                 <div v-else>
                   <div class="product_view_comp_main" v-for="product in products" :key="product.id">
@@ -133,7 +136,7 @@
               </div>
 
               <!-- Pagination -->
-              <div class="bottom_navigation" v-if="pagination.total > 0">
+              <div class="bottom_navigation" v-if="pagination && pagination.total > 0">
                 <p>
                   Showing <b>{{ showingStart }} - {{ showingEnd }}</b> Results
                 </p>
@@ -180,7 +183,7 @@
     // Composables
     const { settings } = useSettings();
     const { getCategoryBySlug } = useCategories();
-    const { products, pagination, loading, getProductsByCategory } = useProducts();
+    const { products, pagination, loading, getProductsByCategory , searchProductsForPage } = useProducts();
     const { addToCart, buyItNow, loading2, loader } = useCart();
 
     const { getCategories } = useCategories();
@@ -223,60 +226,80 @@
     };
 
     // Load category and its products
-    const loadCategory = async () => {
-        // const slug = route.params.slug;
-        const segments = route.path.split('/').filter(Boolean);
-        const slug = segments[segments.length - 1];
+    const loadInitialData = async () => {
+      const segments = route.path.split('/').filter(Boolean);
+      const slug = segments[segments.length - 1];
+      const searchQuery = route.query.search;
 
-        if (!slug) {
-            console.warn('Missing slug:', { slug });
-            return;
-        }
+      try {
+          if (searchQuery) {
+              await searchProductsForPage(searchQuery);
+          } else if (slug) {
+              const result = await getCategoryBySlug(slug);
+              category.value = result;
+              categoryTrail.value = result?.category_trail || [];
 
-        try {
-            const result = await getCategoryBySlug(slug);
-            category.value = result;
-            categoryTrail.value = result?.category_trail || [];
+              await getProductsByCategory({
+                  categorySlug: slug,
+                  perPage: 10,
+                  page: 1,
+                  sortField: 'created_at',
+                  sortDirection: 'desc',
+                  search: '',
+              });
+          }
+      } catch (err) {
+          console.error("Failed to load data:", err);
+      }
+  };
 
-            await getProductsByCategory({
-                categorySlug: slug,
-                perPage: 10,
-                page: 1,
-                sortField: 'created_at',
-                sortDirection: 'desc',
-                search: '',
-            });
-        } catch (err) {
-            console.error('Failed to load category or products:', err);
-        }
-    };
+   const loadProducts = async (page = 1) => {
+  const querySearch = route.query.search;
+  const segments = route.path.split('/').filter(Boolean);
+  const slugParam = segments[segments.length - 1];
 
-    const loadProducts = async () => {
-    const segments = route.path.split('/').filter(Boolean);
-    const slug = segments[segments.length - 1];
-
-    try {
-        await getProductsByCategory({
-            categorySlug: selectedCategory.value,
-            brand: selectedBrand.value,
-            subCategory: selectedCategory.value,
-            perPage: 10,
-            page: 1,
-            sortField: 'created_at',
-            sortDirection: 'desc',
-            search: '',
-        });
-    } catch (err) {
-        console.error("Failed to load filtered products:", err);
+  try {
+    if (querySearch) {
+      await searchProductsForPage({
+        search: querySearch,
+        brand: selectedBrand.value,
+        subCategory: selectedCategory.value,
+        perPage: 10,
+        page,
+        sortField: 'created_at',
+        sortDirection: 'desc',
+      });
+    } else {
+      await getProductsByCategory({
+        categorySlug: slugParam,
+        brand: selectedBrand.value,
+        subCategory: selectedCategory.value,
+        perPage: 10,
+        page,
+        sortField: 'created_at',
+        sortDirection: 'desc',
+      });
     }
+  } catch (err) {
+    console.error("Failed to load products:", err);
+  }
 };
 
     // Lifecycle
-    onMounted(async () => {
-    await loadCategory();
-    categories.value = await getCategories();
-    brands.value = await getBrands();
-});
+   onMounted(async () => {
+      categories.value = await getCategories();
+      brands.value = await getBrands();
+      await loadInitialData();
+
+      console.log(products.value)
+  });
+
+  watch(
+      () => [route.params.slug, route.query.search],
+      async () => {
+          await loadInitialData();
+      }
+  );
 
 
     const resetFilters = () => {
@@ -286,20 +309,27 @@
     };
 
     // Watch for route slug changes
-    watch(() => [route.params.slug], loadCategory);
+    // watch(() => [route.params.slug], loadCategory);
 
-    const goToPage = (page) => {
-        const segments = route.path.split('/').filter(Boolean);
-        const slug = segments[segments.length - 1];
+    const goToPage = async (page) => {
+      const segments = route.path.split('/').filter(Boolean);
+      const slugParam = segments[segments.length - 1];
+      const querySearch = route.query.search;
 
-        getProductsByCategory({
-            categorySlug: slug,
-            page,
-            perPage: pagination.value.per_page,
-            sortField: 'created_at',
-            sortDirection: 'desc',
-            search: '',
+      try {
+        await getProductsByCategory({
+          categorySlug: querySearch ? null : slugParam,
+          search: querySearch || '',
+          brand: selectedBrand.value,
+          subCategory: selectedCategory.value,
+          page,
+          perPage: pagination.value.per_page,
+          sortField: 'created_at',
+          sortDirection: 'desc',
         });
+      } catch (err) {
+        console.error("Failed to paginate products:", err);
+      }
     };
 
     const showingStart = computed(() => {
@@ -387,5 +417,11 @@
 .filter-button:hover {
   background-color: #d1d5db;
 }
-
+.no-products {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: #666;
+  font-style: italic;
+}
 </style>
