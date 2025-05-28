@@ -27,7 +27,7 @@
             />
             <span class="ant-radio-inner"></span>
           </span>
-          <span class="capitalize">{{ method }}</span>
+          <span class="capitalize">{{ getPaymentMethodImage(method).title }}</span>
            <img
           :src="getPaymentMethodImage(method).url" 
           :alt="method"
@@ -128,12 +128,14 @@ const getPaymentMethodImage = (method) => {
       return {
         url: '/assets/image/paypal_logo_icon_170865.png',
         width: 150,
+        title: "Pay By PayPal",
         height: 60,
       }
     case 'payarc':
       return {
         url: '/assets/image/payment_icons.avif',
-        width: 150,
+        width: 130,
+        title: "Pay by Debit/Credit Card",
         height: 24,
       }
     default:

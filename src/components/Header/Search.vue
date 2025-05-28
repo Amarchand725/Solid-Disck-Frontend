@@ -24,8 +24,8 @@
     <div class="search_dropdown" v-if="searchTerm && (searchResults?.length || searchResults?.length === 0)">
       <ul v-if="searchResults.length">
         <li v-for="item in searchResults" :key="item.id">
-          <router-link :to="`/products/${item.category_url}/${item.slug}`">
-            {{ item.title }}
+          <router-link :to="`/products/${item.category_url}/${item.slug}`"  @click="clearSearch">
+            {{ item.title }} ({{ item.mpn }})
           </router-link>
         </li>
       </ul>
@@ -62,7 +62,13 @@ const handleSearch2 = () => {
     // router.push({ name: 'Shop', params: { search: encodeURIComponent(searchTerm.value.trim()) } })
     router.push({ path: '/products', query: { search: searchTerm.value.trim() } });
     searchResults.value = [] // Optional: clear dropdown
+    searchTerm.value = '';
   }
+}
+
+const clearSearch = () => {
+  searchTerm.value = '';
+  searchResults.value = [];
 }
 
 // 🟢 Close dropdown on outside click
