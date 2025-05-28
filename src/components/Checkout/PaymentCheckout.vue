@@ -128,14 +128,14 @@ const getPaymentMethodImage = (method) => {
       return {
         url: '/assets/image/paypal_logo_icon_170865.png',
         width: 150,
-        title: "Pay By PayPal",
+        title: "PayPal",
         height: 60,
       }
     case 'payarc':
       return {
         url: '/assets/image/payment_icons.avif',
         width: 130,
-        title: "Pay by Debit/Credit Card",
+        title: "Debit/Credit Card",
         height: 24,
       }
     default:
