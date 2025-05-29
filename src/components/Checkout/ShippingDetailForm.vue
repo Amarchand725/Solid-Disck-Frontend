@@ -211,6 +211,9 @@ watch(shippingState, async (val) => {
     shippingCity.value = ''
     shippingForm.shippingCity = ''
     await getShippingCitiesByState(val)
+
+    // Emit state for external logic (e.g., parent or composable)
+    emit('update:state', val)
   }
 })
 
@@ -235,9 +238,6 @@ onMounted(async () => {
   }
 })
 
-// Removed the watch on shippingCountries to avoid duplicated logic
-// If you want to keep it, make sure to handle `.value` correctly
-
 // Define props & emits to sync with parent (if needed)
 const props = defineProps({
   country: [Number, String],
@@ -245,7 +245,7 @@ const props = defineProps({
   formData: Object,
 })
 
-const emit = defineEmits(['update:country', 'update:zip', 'update:formData'])
+const emit = defineEmits(['update:country', 'update:zip', 'update:formData', 'update:state'])
 
 const handleZipChange = (event) => {
   shippingForm.zip = event.target.value
