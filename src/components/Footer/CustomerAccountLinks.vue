@@ -18,32 +18,32 @@
                 alt="SSL Secure Seal" 
                 title="SSL Secure Seal" 
                 loading="lazy" width="65" height="60" decoding="async" data-nimg="1" 
-                srcset="/assets/image/ssl.png"
-                src="/assets/image/ssl.png" 
+                srcset="/assets/image/ssl.webp"
+                src="/assets/image/ssl.webp" 
                 style="color: transparent;"
             >
             <img 
                 alt="PCI Secure Seal" 
                 title="PCI Secure Seal" 
                 loading="lazy" width="65" height="60" decoding="async" data-nimg="1" 
-                srcset="/assets/image/pci.png"
-                src="/assets/image/pci.png" 
+                srcset="/assets/image/pci.webp"
+                src="/assets/image/pci.webp" 
                 style="color: transparent;"
             >
             <img 
                 alt="DUNS Seal" 
                 title="DUNS Seal" 
                 loading="lazy" width="65" height="60" decoding="async" data-nimg="1" 
-                srcset="/assets/image/duns.png"
-                src="/assets/image/duns.png" 
+                srcset="/assets/image/duns.webp"
+                src="/assets/image/duns.webp" 
                 style="color: transparent;"
             >
             <img 
                 alt="Norton Seal" 
                 title="Norton Seal" 
                 loading="lazy" width="65" height="40" decoding="async" data-nimg="1" 
-                srcset="/assets/image/Nortons-eal.png"
-                src="/assets/image/Nortons-eal.png" 
+                srcset="/assets/image/Nortons-eal.webp"
+                src="/assets/image/Nortons-eal.webp" 
                 style="color: transparent;"
             >
         </div>
