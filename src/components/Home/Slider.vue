@@ -8,17 +8,20 @@
     >
       <SwiperSlide v-for="(slider, index) in sliders" :key="index">
         <router-link to="/">
-          <img
-            :src="slider.image || '/placeholders/1500x400.svg'"
-            :alt="slider.title || 'Slider'"
-            :title="slider.title || 'Slider'"
-            width="1500"
-            height="400"
-            decoding="async"
-            loading="lazy" 
-            @error="onImageError"
-            class="banner-image"
-          />
+        <img
+          :src="slider.image || '/placeholders/1600x400.svg'"
+          :srcset="generateSrcset(slider.image)"
+          :sizes="'(max-width: 600px) 400px, (max-width: 900px) 600px, (max-width: 1100px) 800px, (max-width: 1300px) 1000px, (max-width: 1500px) 1200px, 1600px'"
+          :alt="slider.title || 'Slider'"
+          :title="slider.title || 'Slider'"
+          width="1600"
+          height="400"
+          decoding="async"
+          loading="lazy"
+          @error="onImageError"
+          class="banner-image"
+        />
+
         </router-link>
       </SwiperSlide>
     </Swiper>
@@ -48,7 +51,37 @@ const onImageError = (event) => {
 }
 
 </script>
+<script>
+export default {
+  props: {
+    slider: {
+      type: Object,
+      required: true
+    }
+  },
+  methods: {
+    generateSrcset(imageUrl) {
+      if (!imageUrl) return '/placeholders/1600x400.svg';
 
+      // Extract extension
+      const extMatch = imageUrl.match(/\.(webp|jpg|jpeg|png)$/i);
+      const ext = extMatch ? extMatch[0] : '.webp';
+
+      // Remove extension to get base (everything before .webp)
+      const base = imageUrl.replace(ext, '');
+
+      // Your sizes (adjust as needed)
+      const sizes = [400, 600, 800, 1000, 1200, 1600];
+
+      // Map sizes to URLs like base-400w.webp
+      return sizes
+        .map(size => `${base}-${size}w${ext} ${size}w`)
+        .concat([`${imageUrl} 1600w`])
+        .join(', ');
+    }
+  }  // <-- no comma needed here, last property
+}
+</script>
 
 <style scoped>
 .banner-swiper {
