@@ -39,22 +39,22 @@
         </div>
         <div class="social-icons">
             <a target="_blank" class="footer_icon" v-if="settings && settings.instagram_link" :href="settings?.instagram_link">
-                <img src="/assets/image/Instagram-Footer-Icon.webp" aria-label="Visit our Instagram Page" title="Visit our Instagram Page" alt="Instagram Footer Icon">
+                <img src="/assets/image/Instagram-Footer-Icon.webp" aria-label="Visit our Instagram Page" loading="lazy" title="Visit our Instagram Page" alt="Instagram Footer Icon">
             </a>
             <a target="_blank" class="footer_icon" v-if="settings && settings.facebook_link" :href="settings?.facebook_link">
-                <img src="/assets/image/Facebook-Footer-Icon.webp" aria-label="Visit our Facebook Page" title="Visit our Facebook Page" alt="Facebook Footer Icon">
+                <img src="/assets/image/Facebook-Footer-Icon.webp" aria-label="Visit our Facebook Page" loading="lazy" title="Visit our Facebook Page" alt="Facebook Footer Icon">
             </a>
             <a target="_blank" class="footer_icon" v-if="settings && settings.youtube_link" :href="settings?.youtube_link">
-                <img src="/assets/image/Youtube-Footer-Icon.webp" aria-label="Visit our Youtube Channel" title="Visit our Youtube Channel" alt="Youtube Footer Icon">
+                <img src="/assets/image/Youtube-Footer-Icon.webp" aria-label="Visit our Youtube Channel" loading="lazy" title="Visit our Youtube Channel" alt="Youtube Footer Icon">
             </a>
             <a target="_blank" class="footer_icon" v-if="settings && settings.twitter_link" :href="settings?.twitter_link">
-                <img src="/assets/image/Twitter-Footer-Icon.webp" aria-label="Visit our Twitter Page" title="Visit our Twitter Page" alt="Twitter Footer Icon">
+                <img src="/assets/image/Twitter-Footer-Icon.webp" aria-label="Visit our Twitter Page" loading="lazy" title="Visit our Twitter Page" alt="Twitter Footer Icon">
             </a>
             <a target="_blank" class="footer_icon" v-if="settings && settings.pinterest_link" :href="settings?.pinterest_link">
-                <img src="/assets/image/Pinterest-Footer-Icon.webp" aria-label="Visit our Pinterest Page" title="Visit our Pinterest Page" alt="Pinterest Footer Icon">
+                <img src="/assets/image/Pinterest-Footer-Icon.webp" aria-label="Visit our Pinterest Page" loading="lazy" title="Visit our Pinterest Page" alt="Pinterest Footer Icon">
             </a>
             <a target="_blank" class="footer_icon" v-if="settings && settings.reddit" :href="settings?.reddit">
-                <img src="/assets/image/Reddit-Footer-Icon.webp" aria-label="Visit our Reddit Community Page" title="Visit our Reddit Community Page" alt="Reddit Footer Icon">
+                <img src="/assets/image/Reddit-Footer-Icon.webp" aria-label="Visit our Reddit Community Page" loading="lazy" title="Visit our Reddit Community Page" alt="Reddit Footer Icon">
             </a>
         </div>
     </div>

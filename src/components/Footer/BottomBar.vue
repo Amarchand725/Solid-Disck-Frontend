@@ -23,9 +23,9 @@
                 > -->
                 <img 
                     alt="Payment Gateways" 
-                    loading="lazy" width="400" height="80" decoding="async" data-nimg="1" 
-                    srcset="/assets/image/payment-getways.jpg"
-                    src="/assets/image/payment-getways.jpg" 
+                    loading="lazy" width="400" height="80" decoding="async" data-nimg="1"  
+                    srcset="/assets/image/payment-getways.webp"
+                    src="/assets/image/payment-getways.webp" 
                     style="color: transparent;"
                 >
             </div>

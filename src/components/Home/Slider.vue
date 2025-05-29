@@ -15,6 +15,7 @@
             width="1500"
             height="400"
             decoding="async"
+            loading="lazy" 
             @error="onImageError"
             class="banner-image"
           />

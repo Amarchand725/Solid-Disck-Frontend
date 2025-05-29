@@ -12,7 +12,7 @@
           style="padding-left: 12px"
         />
         <span class="ant-input-group-addon">
-          <button type="button" @click="handleSearch" class="ant-btn ant-btn-primary ant-btn css-i6rspj ant-btn-primary ant-btn-color-primary ant-btn-variant-solid ant-input-search-button">
+          <button type="button" @click="handleSearch2" class="ant-btn ant-btn-primary ant-btn css-i6rspj ant-btn-primary ant-btn-color-primary ant-btn-variant-solid ant-input-search-button">
             <img src="/assets/image/search-icon.webp" alt="Search Icon" style="width: 15px; filter: brightness(0) invert(1);" />
           </button>
         </span>
@@ -21,22 +21,28 @@
 
     <!-- ... existing template above ... -->
     <!-- Search Results Dropdown -->
-    <div class="search_dropdown" v-if="searchResults?.length">
-        <ul>
-            <li v-for="item in searchResults" :key="item.id">
-                <router-link 
-                  :to="`/products/${item.category_url}/${item.slug}`"
-                >
-                {{ item.title }}
-              </router-link>
-            </li>
-        </ul>
+    <div class="search_dropdown" v-if="searchTerm && (searchResults?.length || searchResults?.length === 0)">
+      <ul v-if="searchResults.length">
+        <li v-for="item in searchResults" :key="item.id">
+          <router-link :to="`/products/${item.category_url}/${item.slug}`"  @click="clearSearch">
+            {{ item.title }} ({{ item.mpn }})
+          </router-link>
+        </li>
+      </ul>
+
+      <!-- No Results Found -->
+      <div v-else class="no-results">
+        No Product found.
+      </div>
     </div>
   </div>
 </template>
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useProducts } from '@/composables/useProducts'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const searchTerm = ref('')
 const { searchResults, searchProducts } = useProducts()
@@ -49,6 +55,20 @@ const handleSearch = () => {
     return
   }
   searchProducts(searchTerm.value)
+}
+
+const handleSearch2 = () => {
+  if (searchTerm.value.trim()) {
+    // router.push({ name: 'Shop', params: { search: encodeURIComponent(searchTerm.value.trim()) } })
+    router.push({ path: '/products', query: { search: searchTerm.value.trim() } });
+    searchResults.value = [] // Optional: clear dropdown
+    searchTerm.value = '';
+  }
+}
+
+const clearSearch = () => {
+  searchTerm.value = '';
+  searchResults.value = [];
 }
 
 // 🟢 Close dropdown on outside click

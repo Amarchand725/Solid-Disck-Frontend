@@ -3,7 +3,12 @@ import { useRoute } from 'vue-router';
 import axios from '@/plugins/axios';
 
 const products = ref([]);
-const pagination = ref({});
+const pagination = ref({
+  total: 0,
+  current_page: 1,
+  per_page: 10,
+  last_page: 1,
+});
 const loading = ref(false);
 const error = ref(null);
 const searchResults = ref([]); 
@@ -112,6 +117,27 @@ const searchProducts = async (keyword) => {
   }
 }
 
+const searchProductsForPage = async (keyword) => {
+  if (!keyword) {
+    searchResults.value = []
+    return
+  }
+
+  loading.value = true
+  try {
+    const res = await axios.get('/products/search2', {
+      params: { keyword }
+    })
+    products.value = res.data.data;
+    pagination.value = res.data.pagination;
+  } catch (err) {
+    error.value = err
+    searchResults.value = []
+  } finally {
+    loading.value = false
+  }
+}
+
 export function useProducts() {
   return {
     products,
@@ -123,6 +149,7 @@ export function useProducts() {
     getProductsByCategory,
     getProductsByBrand,
     searchProducts,
-    searchResults
+    searchResults,
+    searchProductsForPage
   };
 }

@@ -48,7 +48,7 @@
           <span v-else>Submitting...</span>
         </button>
   
-        <p class="bottom_para">Quotes processed weekdays 6:00 am - 6:00 pm (PST)...</p>
+        <p class="bottom_para">Quotes processed weekdays 6:00 am - 6:00 pm (CDT)...</p>
       </form>
     </div>
   </template>
