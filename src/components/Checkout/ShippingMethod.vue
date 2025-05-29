@@ -95,7 +95,8 @@ const selectedIndex = ref(null)
 const selectRate = (rate, index) => {
   selectedRate.value = rate
   selectedIndex.value = index
-  updateShipping(rate)
+    //   updateShipping(rate)
+    updateShipping(rate, country.value)
 }
 </script>
 <style scoped>
