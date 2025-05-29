@@ -21,6 +21,7 @@
                         :zip="shippingZip"
                         @update:country="shippingCountry = $event"
                         @update:zip="shippingZip = $event"
+                        @update:state="shippingState = $event"
                         v-model:formData="shippingDetails"
                     />
                     <div class="head_main two">
@@ -49,20 +50,20 @@
     import ShippingDetailForm from '@/components/Checkout/ShippingDetailForm.vue';    
     import BillingDetailsForm from '@/components/Checkout/BillingDetailsForm.vue';
 
-    import { ref, watch, onMounted } from 'vue'
+    import { ref, watch} from 'vue'
     import { useShippingRates } from '@/composables/useShippingRates.js'
+    import { useCart } from '@/composables/useCart.js'
+    const { updateTax } = useCart()
 
     const shippingCountry = ref(null)
     const shippingZip = ref('')
+    const shippingState = ref(null) 
 
     const shippingDetails = ref({})
     const billingDetails = ref({})
 
     // ✅ Pass refs to the composable
     const {
-        shippingRates,
-        loading,
-        error,
         fetchRates
     } = useShippingRates(shippingCountry, shippingZip)
 
@@ -77,6 +78,13 @@
     watch(() => shippingZip.value, (zip) => {
         if (zip && shippingCountry.value) {
             fetchRates(shippingCountry.value, zip)
+        }
+    })
+    
+    // 🚀 Watch for country + state change to update tax
+    watch([shippingCountry, shippingState], ([country, state]) => {
+        if (country && state) {
+            updateTax(country, state)
         }
     })
 </script>
