@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="ant-tabs-content-holder">
-                <div class="ant-tabs-content ant-tabs-content-right" v-if="activeCategory && activeCategory.products.length">
+                <div class="ant-tabs-content ant-tabs-content-right" v-if="activeCategory && activeCategory.limited_products.length">
                     <div 
                         role="tabpanel" tabindex="0" 
                         :id="`rc-tabs-1-panel-${activeCategory.id}`"
@@ -49,7 +49,7 @@
                     >
                         <div class="top-seller-category-product-tab-content-main-cards">
                             <div
-                                v-for="product in activeCategory.products"
+                                v-for="product in activeCategory.limited_products"
                                 :key="product.id" 
                                 class="TabProductCard_industries_card_main__imFgg"
                                 >
