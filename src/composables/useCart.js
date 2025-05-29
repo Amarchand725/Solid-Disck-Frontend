@@ -95,11 +95,16 @@ export function useCart() {
     }
   }
 
-  const updateShipping = async (rate) => {
+  const updateShipping = async (rate, country) => {
     loading.value = true
     try {
-      const payload = withGuestId({ rate })
+      const payload = withGuestId({ 
+        rate,
+        country,
+      })
+      console.log(payload);
       const response = await axios.put('/cart/update-shipping', payload)
+      // console.log(response);
       setCartData(response.data)
       message.value = response.data.message || 'Shipping updated.'
       // toast.success(message.value)
@@ -109,6 +114,22 @@ export function useCart() {
       loading.value = false
     }
   }
+
+  const updateTax = async (country, state) => {
+    loading.value = true
+    try {
+      const payload = withGuestId({ country, state }) // Include guest ID if needed
+      const response = await axios.put('/cart/update-tax', payload)
+      setCartData(response.data)
+      message.value = response.data.message || 'Tax updated.'
+      // toast.success(message.value)
+    } catch (error) {
+      handleError(error, 'Failed to update tax.')
+    } finally {
+      loading.value = false
+    }
+  }
+
 
   const increaseCartItem = async (item_id) => {
     loading.value = true    
@@ -180,6 +201,7 @@ export function useCart() {
     addToCart,
     updateCartItem,
     updateShipping,
+    updateTax,
     increaseCartItem,
     decreaseCartItem,
     removeCartItem,

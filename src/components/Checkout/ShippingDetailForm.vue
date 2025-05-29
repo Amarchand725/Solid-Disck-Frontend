@@ -252,7 +252,7 @@ const handleZipChange = (event) => {
   emit('update:zip', event.target.value)
 }
 
-watch(shippingForm, () => {
+watch(shippingForm, () => { 
   emit('update:formData', { ...shippingForm }) // important: spread the object
 }, { deep: true })
 </script>

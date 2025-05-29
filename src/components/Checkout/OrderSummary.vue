@@ -41,9 +41,9 @@
                 <div class="sub_total"><span>Shipping:</span>
                     <p>{{ settings?.currency ?? '' }}{{ fullCart.shipping_cost }}</p>
                 </div>
-                <!-- <div class="sub_total"><span>Tax:</span>
-                    <p> (0%) $0.00</p>
-                </div> -->
+                <div class="sub_total"><span>Tax:</span>
+                    <p> ( {{ fullCart?.tax_rate }} %) {{ settings?.currency ?? '' }} {{ fullCart?.tax_amount }}</p>
+                </div>
             </div>
             <div class="sub_total total"><span>Total:</span>
                 <p>{{ settings?.currency ?? '' }}{{ fullCart.total }}</p>
