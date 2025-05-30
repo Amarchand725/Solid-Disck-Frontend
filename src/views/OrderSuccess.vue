@@ -1,5 +1,7 @@
 <template>
-  <div v-if="loading">Loading...</div>
+  <div v-if="loading" class="loader-wrapper">
+    <img src="/assets/image/Spinner-2.gif" alt="Loading..." class="loader-img" />
+  </div>
   <div v-else>
     <div class="thank-you-container">
       <div class="thank-you-card">
