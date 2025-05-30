@@ -34,4 +34,14 @@ body {
 :root {
       --primary-color: #001e4c !important;
 }
+
+.manufacturer_inner:hover {
+    box-shadow: 0 8px 16px #005ac7 !important;
+    border-color: transparent;
+}
+
+.popular_cards_main_inner:hover{
+  box-shadow: 0 8px 16px #005ac7 !important;
+    border-color: transparent;
+}
 </style>
