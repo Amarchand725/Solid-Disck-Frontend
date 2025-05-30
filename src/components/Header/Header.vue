@@ -5,12 +5,19 @@
                 <div class="ant-col ant-col-xs-24 ant-col-sm-24 ant-col-md-4 css-i6rspj">
                     <div class="header_left">
                         <router-link class="nav-link" to="/">
-                            <img 
-                                alt="Logo" :title="settings?.name" fetchpriority="high" 
-                                width="220" height="50" decoding="async" data-nimg="1" 
+                            <img
+                                :alt="settings?.name || 'Solid Disk Direct Logo'"
+                                :title="settings?.name || 'Solid Disk Direct'"
+                                fetchpriority="high"
+                                decoding="async"
+                                width="220"
+                                height="50"
                                 :src="settings?.logo || '/assets/image/cOPCmXsTYZD8imXv03nHXTUesUat0VzFcRfOt5to.webp'"
+                                :srcset="generateLogoSrcset(settings?.logo)"
+                                sizes="(max-width: 600px) 120px, (max-width: 1024px) 180px, 220px"
                                 @error="onLogoError"
-                                style="color: transparent; object-fit: contain; margin-left: -25px; width: 100%; height: auto;">
+                                style="object-fit: contain; margin-left: -25px; width: 100%; height: auto;"
+                                />
                         </router-link>
                     </div>
                 </div>
@@ -102,6 +109,17 @@ const onLogoError = (event) => {
 
 const store = useStore();
 const isLoggedIn = computed(() => store.getters.isLoggedIn);
+
+function generateLogoSrcset(logoUrl) {
+  if (!logoUrl) return ''
+  const ext = logoUrl.match(/\.(webp|png|jpg|jpeg)$/i)?.[0] || '.webp'
+  const base = logoUrl.replace(ext, '')
+
+  return [
+    `${base}-100w${ext} 100w`,
+    `${base}${ext} 220w`
+  ].join(', ')
+}
 </script>
 <style>
 .left-icons.shopper-approved {

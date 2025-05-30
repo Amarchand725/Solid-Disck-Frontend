@@ -36,7 +36,7 @@
             </div>
         </div>
     </section>
-   <div style="background: #fafafa;padding: 26px 0;" class="payment_shipping">
+   <div style="background: #001e4c !important;padding: 26px 0;" class="payment_shipping">
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
@@ -138,7 +138,7 @@ const onImageError = (event) => {
 
 /* Satisfaction Guaranteed Section */
 .payment_shipping_box_center {
-    background-color: #f0f8ff;
+    /* background-color: #f0f8ff; */
 }
 
 .payment_shipping_box_center h4 {
