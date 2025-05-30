@@ -8,7 +8,15 @@
                 :navigation="true"
                 :pagination="{ clickable: true }"
                 :autoplay="{ delay: 3000 }"
-                loop
+                 :loop="true"
+                :breakpoints="{
+                    320: { slidesPerView: 1, spaceBetween: 10 },
+                    480: { slidesPerView: 1.2, spaceBetween: 15 },
+                    640: { slidesPerView: 2, spaceBetween: 15 },
+                    768: { slidesPerView: 2.5, spaceBetween: 20 },
+                    1024: { slidesPerView: 3, spaceBetween: 20 },
+                    1280: { slidesPerView: 4, spaceBetween: 20 }
+                }"
                 class="top_related_swiper"
             >
                 <SwiperSlide v-for="product in products" :key="product.id">
@@ -178,4 +186,36 @@
 .swiper-button-next {
     display: none!important;
 }
+@media (max-width: 768px) {
+  .top_related_products h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+
+  .item h3 {
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .price_main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .ant-btn {
+    font-size: 14px;
+    padding: 6px 12px;
+    margin-bottom: 8px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .ant-btn {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+}
+
 </style>

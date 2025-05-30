@@ -109,15 +109,17 @@
           <div class="ant-col ant-col-xs-19 css-i6rspj">
             <div class="col_right">
               <div class="product_list_wrapper">
-                <div v-if="loading" class="product_view_comp_main">
+                <!-- <div v-if="loading" class="product_view_comp_main">
                   <div class="ant-row css-i6rspj">
                     Loading...
                   </div>
                 </div>
                 <div v-else-if="products.length === 0" class="no-products">
                   No products found.
+                </div> -->
+                <div v-if="loading" class="loader-overlay">
+                  <img src="/assets/image/Spinner-2.gif" alt="Loading..." class="spinner-gif" />
                 </div>
-
                 <div v-else>
                   <div class="product_view_comp_main" v-for="product in products" :key="product.id">
                     <ProductList
@@ -172,13 +174,16 @@
     import CategoryBreadcrumb from '@/components/SingleProduct/CategoryBreadcrumb.vue';
     import ProductList from '@/components/Shop/ProductList.vue';
     
-    import { ref, onMounted, watch, computed } from 'vue';
+    import { ref, onMounted, watch, computed , nextTick  } from 'vue';
     import { useRoute } from 'vue-router';
     import { useBrands } from '@/composables/useBrands';
     import { useCategories } from '@/composables/useCategories';
     import { useProducts } from '@/composables/useProducts';
     import { useSettings } from '@/composables/useSettings.js'
     import { useCart } from '@/composables/useCart'
+
+    import { debounce } from 'lodash-es';
+
 
     // Composables
     const { settings } = useSettings();
@@ -227,36 +232,46 @@
 
     // Load category and its products
     const loadInitialData = async () => {
-      const segments = route.path.split('/').filter(Boolean);
-      const slug = segments[segments.length - 1];
-      const searchQuery = route.query.search;
+  const segments = route.path.split('/').filter(Boolean);
+  const slug = segments[segments.length - 1];
+  const searchQuery = route.query.search;
 
-      try {
-          if (searchQuery) {
-              await searchProductsForPage(searchQuery);
-          } else if (slug) {
-              const result = await getCategoryBySlug(slug);
-              category.value = result;
-              categoryTrail.value = result?.category_trail || [];
+  products.value = []; // 👈 Clear previous products
+  loading.value = true;
+  loading.page = true;
 
-              await getProductsByCategory({
-                  categorySlug: slug,
-                  perPage: 10,
-                  page: 1,
-                  sortField: 'created_at',
-                  sortDirection: 'desc',
-                  search: '',
-              });
-          }
-      } catch (err) {
-          console.error("Failed to load data:", err);
-      }
-  };
+  try {
+    if (searchQuery) {
+      await searchProductsForPage(searchQuery);
+    } else if (slug) {
+      const result = await getCategoryBySlug(slug);
+      category.value = result;
+      categoryTrail.value = result?.category_trail || [];
 
-   const loadProducts = async (page = 1) => {
+      await getProductsByCategory({
+        categorySlug: slug,
+        perPage: 10,
+        page: 1,
+        sortField: 'created_at',
+        sortDirection: 'desc',
+        search: '',
+      });
+    }
+  } catch (err) {
+    console.error("Failed to load data:", err);
+  } finally {
+    loading.value = false;
+    loading.page = false;
+  }
+};
+
+const loadProducts = async (page = 1) => {
   const querySearch = route.query.search;
   const segments = route.path.split('/').filter(Boolean);
   const slugParam = segments[segments.length - 1];
+
+  products.value = []; // 👈 Clear previous products
+  loading.value = true;
 
   try {
     if (querySearch) {
@@ -282,23 +297,35 @@
     }
   } catch (err) {
     console.error("Failed to load products:", err);
+  } finally {
+    loading.value = false;
   }
 };
-
     // Lifecycle
    onMounted(async () => {
-      categories.value = await getCategories();
-      brands.value = await getBrands();
-      await loadInitialData();
+  categories.value = await getCategories();
+  brands.value = await getBrands();
 
-      console.log(products.value)
-  });
+  // Use nextTick to ensure route.query.search is available
+  await nextTick();
+  await loadInitialData();
+});
 
   watch(
       () => [route.params.slug, route.query.search],
       async () => {
           await loadInitialData();
       }
+  );
+
+  
+  const debouncedLoadInitialData = debounce(loadInitialData, 300);
+
+  watch(
+    () => [route.params.slug, route.query.search],
+    () => {
+      debouncedLoadInitialData();
+    }
   );
 
 
@@ -423,5 +450,32 @@
   font-size: 1.2rem;
   color: #666;
   font-style: italic;
+}
+
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.7); /* light overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* z-index: 9999; */
+}
+
+.spinner-gif {
+  width: 80px; /* adjust size as needed */
+  height: 80px;
+}
+
+.loader-overlay {
+  /* animation: fadeIn 0.3s ease-in-out; */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 </style>
