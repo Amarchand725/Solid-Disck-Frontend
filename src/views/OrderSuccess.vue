@@ -9,20 +9,23 @@
     </div>
   </div>
 </template>
+
 <script setup>
 import { watch } from 'vue';
 import useOrderSuccess from '@/composables/useOrderSuccess';
 
 const { order, loading, error } = useOrderSuccess();
 
-// Watch for when `order` is loaded, then fire gtag
+let hasFired = false;
+
 watch(order, (newOrder) => {
-  if (newOrder && newOrder.order_number) {
+  if (newOrder && !hasFired) {
+    hasFired = true;
     gtag('event', 'conversion', {
-      send_to:  'AW-16807205830/N2BuCL79v_wZEMa3ps4-', // ✅ replace with your real Google Ads conversion ID
-      value: newOrder.total,            // ✅ dynamic order value
+      send_to: 'AW-16807205830/N2BuCL79v_wZEMa3ps4-', // <-- Replace with your actual ID
+      value: newOrder.total ?? 1.0,
       currency: 'USD',
-      transaction_id: newOrder.order_number // or use a dedicated transaction ID if available
+      transaction_id: newOrder.order_number ?? 'unknown'
     });
   }
 });
