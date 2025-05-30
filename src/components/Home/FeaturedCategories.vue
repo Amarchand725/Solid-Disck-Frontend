@@ -9,7 +9,7 @@
             >
                 <router-link 
                     class="popular_cards_main_inner-a" 
-                    title="{{ category.name }}" 
+                    :title="category.name" 
                     :to="`/categories/${category.slug}`"
                 >
                     <div class="card_content">
