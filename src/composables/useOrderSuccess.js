@@ -4,8 +4,8 @@ import axios from '@/plugins/axios';
 
 export default function useOrderSuccess() {
   const route = useRoute();
-  const orderNumber = route.params.order_number;
-
+  const orderNumber = route.params.orderNumber;
+  
   const order = ref(null);
   const loading = ref(true);
   const error = ref(null);
@@ -15,7 +15,7 @@ export default function useOrderSuccess() {
       const response = await axios.get('/orders/order-success-info', {
         params: { order_number: orderNumber }
       });
-      order.value = response.data;
+        order.value = response.data.data;
     } catch (err) {
       error.value = 'Could not load order information.';
     } finally {
