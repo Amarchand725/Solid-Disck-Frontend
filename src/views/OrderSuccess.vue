@@ -23,9 +23,9 @@ watch(order, (newOrder) => {
     hasFired = true;
     gtag('event', 'conversion', {
       send_to: 'AW-16807205830/N2BuCL79v_wZEMa3ps4-', // <-- Replace with your actual ID
-      value: newOrder.total ?? 1.0,
+      value: newOrder?.total ?? 1.0,
       currency: 'USD',
-      transaction_id: newOrder.order_number ?? 'unknown'
+      transaction_id: ""
     });
   }
 });
