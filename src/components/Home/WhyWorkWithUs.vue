@@ -1,7 +1,11 @@
 <template>
     <section class="why_work_with_us">
         <div class="left_banner_container">
-            <router-link to="/">
+            <router-link 
+                v-if="bannerObj.left?.category"
+                :to="`/categories/${bannerObj.left.category.category_url}`"
+                >
+
                 <img 
                     v-if="bannerObj.left" 
                     :alt="bannerObj.left.title" 
@@ -68,7 +72,10 @@
             <router-link class="create_an_account" title="Create An Account" to="/register">Create An Account</router-link>
         </div>
         <div class="right_banner_container">
-            <router-link to="/">
+            <router-link 
+                v-if="bannerObj.right?.category"
+                :to="`/categories/${bannerObj.right.category.category_url}`"
+            >
                 <img 
                     v-if="bannerObj.right" 
                     :alt="bannerObj.right.title" 
