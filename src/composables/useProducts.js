@@ -138,6 +138,17 @@ const searchProductsForPage = async (keyword) => {
   }
 }
 
+const fetchProductsByAttributeValue = async (attributeSlug) => {
+  loading.value = true;
+  try {
+    const response = await axios.get(`/products/attribute/${attributeSlug}`);
+    products.value = response.data.data;
+  } catch (error) {
+    console.error('Failed to fetch products', error);
+  }
+  loading.value = false;  
+};
+
 export function useProducts() {
   return {
     products,
@@ -150,6 +161,7 @@ export function useProducts() {
     getProductsByBrand,
     searchProducts,
     searchResults,
-    searchProductsForPage
+    searchProductsForPage,
+    fetchProductsByAttributeValue
   };
 }

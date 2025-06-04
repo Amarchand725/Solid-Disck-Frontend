@@ -57,7 +57,7 @@
         <button style="border-radius:0 0 0 0; " @click="handleAddToCart" :disabled="loading" class="TabProductCard_add_to_cart_btn___s_fG" title="Add To Cart">
             {{ loading ? 'Adding...' : 'Add to Cart' }}
         </button>
-         <button style="background-color: #f5ad1d !important;" @click="handleBuyItNow" :disabled="loading2" class="TabProductCard_add_to_cart_btn___s_fG" title="Buy It Now">
+        <button style="background-color: #f5ad1d !important;" @click="handleBuyItNow" :disabled="loading2" class="TabProductCard_add_to_cart_btn___s_fG" title="Buy It Now">
             {{ loading2 ? 'Buying...' : 'Buy It Now' }}
         </button>
     </div>
@@ -65,11 +65,12 @@
 <script setup>
 import { useSettings } from '@/composables/useSettings.js'
 import { useCart } from '@/composables/useCart'
+import { useBuyNow } from '@/composables/useBuyNow.js';  // import your composable
 
 const { settings } = useSettings()
 
-const { addToCart, buyItNow, loading , loading2 } = useCart()
-
+const { addToCart, loading , loading2 } = useCart()
+const { buyNow } = useBuyNow();
 
 const props = defineProps({
   product: Object
@@ -80,8 +81,8 @@ const handleAddToCart = async () => {
 }
 
 const handleBuyItNow = async () => {
-  await buyItNow(props.product.slug, 1)
-}
+  await buyNow(props.product.slug, 1);  // pass slug & qty to your buyNow function
+};
 
 const onImageError = (event) => {
     event.target.src = '/placeholders/270x280.svg'

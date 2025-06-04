@@ -8,7 +8,7 @@
         <input
           v-model="trackingInput"
           type="text"
-          placeholder="Enter Order ID"
+          placeholder="Enter Order number e.g ORDABC"
           class="track-input"
         />
         <button @click="trackOrder" class="track-button"> <span v-if="loading">Loading...</span>
@@ -20,7 +20,7 @@
 
       <!-- Order Info Section -->
       <div v-if="order" class="order-details">
-        <h2 class="order-id">Order #{{ order.id }}</h2>
+        <h2 class="order-id">Order #{{ order.order_number }}</h2>
         <p class="order-date"><strong>Placed On:</strong> {{ formattedDate }}</p>
 
 
@@ -76,7 +76,7 @@ const loading = ref(false)
 async function trackOrder() {
   const query = trackingInput.value.trim()
   if (!query) {
-    error.value = 'Please enter an order ID.'
+    error.value = 'Please enter an order number valid.'
     order.value = null
     return
   }
