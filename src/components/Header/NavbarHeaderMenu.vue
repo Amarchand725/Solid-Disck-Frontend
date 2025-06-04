@@ -44,20 +44,24 @@
                     <strong :title="attribute.name">{{ attribute.name }}</strong>
                     <div class="header-menu-items">
                         <ul
-                        class="ant-menu ant-menu-root ant-menu-vertical ant-menu-light css-i6rspj"
-                        role="menu"
-                        tabindex="0"
-                        data-menu-list="true"
+                          class="ant-menu ant-menu-root ant-menu-vertical ant-menu-light css-i6rspj"
+                          role="menu"
+                          tabindex="0"
+                          data-menu-list="true"
                         >
-                        <li
+                          <li
                             class="ant-menu-item ant-menu-item-only-child"
                             v-for="value in visibleValues(attribute)"
                             :key="value.id"
                             :title="value.name"
                             role="menuitem"
                             tabindex="-1"
-                        >
+                          >
+                          <router-link 
+                            :to="`/attributes/${value?.slug_path}`"
+                          >
                             <span class="ant-menu-title-content">{{ value.name }}</span>
+                          </router-link>
                         </li>
                         </ul>
                         <div aria-hidden="true" style="display: none;"></div>
@@ -144,6 +148,7 @@ function toggleExpand(attributeId) {
 }
 
 function visibleValues(attribute) {
+  // console.log(attribute)
   if (isExpanded(attribute.id)) {
     return attribute.attribute_values
   } else {

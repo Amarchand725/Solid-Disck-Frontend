@@ -11,7 +11,7 @@ const getBanners = async () => {
     const res = await axios.get('/banners');
     banners.value = res.data.data;
 
-    console.log(banners)
+    // console.log(banners)
   } catch (err) {
     error.value = err;
   } finally {

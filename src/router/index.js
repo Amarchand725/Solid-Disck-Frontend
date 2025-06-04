@@ -10,6 +10,7 @@ import Cart from '../views/Cart.vue'
 import Checkout from '../views/Checkout.vue'
 // import TrackOrder from '../views/TrackOrder.vue'
 import Shop from '../views/Shop.vue'
+import FilteredShop from '../views/FilteredShop.vue'
 import BrandProducts from '../views/BrandProducts.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
@@ -125,6 +126,12 @@ const routes = [
     name: 'Shop',
     component: Shop,
     meta: { title: 'Shop' }
+  },
+  {
+    path: '/attributes/:slugMatch(.*)',
+    name: 'FilteredShop',
+    component: FilteredShop,
+    meta: { title: 'Filtered Shop' }
   },
   {
     path: '/brands/:slug',
