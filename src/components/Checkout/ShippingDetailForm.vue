@@ -74,7 +74,7 @@
             />
             <p v-if="errors.address" class="error-text">{{ errors.address }}</p>
           </div>
-        </div>
+        </div>  
 
         <!-- Country Select -->
         <div class="ant-col ant-col-xl-8 css-i6rspj">
