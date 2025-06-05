@@ -7,6 +7,7 @@ export function useBuyNow() {
   const loading = ref(false);
   const error = ref(null);
   const buyNowProduct = ref(null);
+   const buyNowTotals = ref(null);
 
   // Send product to backend session for buy now
   async function buyNow(productSlug, quantity = 1) {
@@ -58,11 +59,37 @@ export function useBuyNow() {
     }
   }
 
+  // New: Update shipping and tax for Buy Now product
+  async function updateShippingTax(country, state, shippingRate) {
+    loading.value = true;
+    error.value = null;
+
+    try {
+      const { data } = await axios.post('/buy-now/update-shipping-tax', {
+        country,
+        state,
+        rate: shippingRate,
+      });
+
+      if (data.success) {
+        buyNowTotals.value = data.totals;
+      } else {
+        error.value = data.message || 'Failed to update shipping and tax';
+      }
+    } catch (err) {
+      error.value = err.response?.data?.message || 'Failed to update shipping and tax';
+    } finally {
+      loading.value = false;
+    }
+  }
+
   return {
     buyNow,
+    updateShippingTax,
     fetchBuyNowProduct,
     clearBuyNow,
     buyNowProduct,
+    buyNowTotals,
     loading,
     error,
   };
