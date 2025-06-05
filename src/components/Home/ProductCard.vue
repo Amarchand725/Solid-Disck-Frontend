@@ -65,12 +65,10 @@
 <script setup>
 import { useSettings } from '@/composables/useSettings.js'
 import { useCart } from '@/composables/useCart'
-import { useBuyNow } from '@/composables/useBuyNow.js';  // import your composable
 
 const { settings } = useSettings()
 
-const { addToCart, loading , loading2 } = useCart()
-const { buyNow } = useBuyNow();
+const { addToCart, buyItNow, loading , loading2 } = useCart()
 
 const props = defineProps({
   product: Object
@@ -81,7 +79,7 @@ const handleAddToCart = async () => {
 }
 
 const handleBuyItNow = async () => {
-  await buyNow(props.product.slug, 1);  // pass slug & qty to your buyNow function
+  await buyItNow(props.product.slug, 1);  // pass slug & qty to your buyNow function
 };
 
 const onImageError = (event) => {
