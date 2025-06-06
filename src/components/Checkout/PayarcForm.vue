@@ -32,10 +32,11 @@
         <label class="block font-medium mb-2">Expiry Date</label>
         <input
           v-model="card.expiry"
+          @input="formatExpiry"
           type="text"
           placeholder="MM/YY"
-          :class="['form-control', errors.name ? 'input-error' : '']"
-          value="12/34"
+          maxlength="5"
+          :class="['form-control', errors.expiry ? 'input-error' : '']"
         />
         <p v-if="errors.expiry" class="text-red-500 text-sm mt-1 error-message">{{ errors.expiry }}</p>
       </div>
@@ -104,7 +105,7 @@
 
     const nameRegex = /^[A-Za-z\s]+$/
     const cardNumberRegex = /^\d{16}$/
-    const expiryRegex = /^(0[1-9]|1[0-2])\/?([0-9]{2})$/
+    const expiryRegex = /^(0[1-9]|1[0-2])\/([0-9]{2})$/;
     const cvvRegex = /^\d{3,4}$/
     const zipRegex = /^\d{5}$/
 
@@ -154,27 +155,17 @@
     defineExpose({
         getCardData
     })
-</script>
 
-<!-- <script setup>
-    import { ref } from 'vue'
+    function formatExpiry(event) {
+      let value = event.target.value.replace(/[^\d]/g, '');
 
-    const card = ref({
-        number: '',
-        expiry: '',
-        cvv: '',
-        name: '',
-        zip: ''
-    })
+      if (value.length > 2) {
+        value = value.slice(0, 2) + '/' + value.slice(2, 4);
+      }
 
-    function getCardData() {
-        return card.value
+      card.value.expiry = value.slice(0, 5);
     }
-
-    defineExpose({
-        getCardData
-    })
-</script> -->
+</script>
 
 <style scoped>
     .error-message {

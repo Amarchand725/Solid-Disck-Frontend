@@ -37,6 +37,12 @@ import OrderSummary from '@/components/Cart/OrderSummary.vue'
 
 import { useSettings } from '@/composables/useSettings.js'
 import { useCart } from '@/composables/useCart'
+import { onMounted } from 'vue'
+import { useBuyNow } from '@/composables/useBuyNow'
+const { clearBuyNow } = useBuyNow();
+onMounted(async () => {
+  await clearBuyNow()
+})
 
 const { settings } = useSettings()
 const { fullCart, removeCartItem, clearCart, increaseCartItem, decreaseCartItem } = useCart()
