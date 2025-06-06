@@ -3,6 +3,10 @@
     <div class="head_main">
       <h3>Payment Method</h3>
     </div>
+    <p>
+      <img src="https://img.icons8.com/fluency/48/lock.png" alt="Lock Icon" title="SSL Secure" style="width: 20px; height: 20px; margin-right: 10px;">
+      This page is secured with SSL encryption
+    </p>
 
     <!-- Payment Selection -->
     <div class="payment_method_radio">

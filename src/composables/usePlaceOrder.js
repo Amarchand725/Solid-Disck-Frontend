@@ -10,7 +10,7 @@ export function usePlaceOrder() {
   const router = useRouter()
   const toast = useToast()
 
-  const placeOrder = async ({ shipping, billing, cart, payment  }) => {
+  const placeOrder = async ({ shipping, billing, cart, buyNowProduct, payment  }) => {
     try {
       isPlacing.value = true
       error.value = ''
@@ -25,6 +25,7 @@ export function usePlaceOrder() {
         shipping,
         billing,
         cart,
+        buyNowProduct,
         payment: payment
       }, {
         headers

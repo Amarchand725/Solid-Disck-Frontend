@@ -1,5 +1,6 @@
 import { ref } from 'vue'
 import { fullCart, cartItemCount, setCartData } from './cartState'
+import { buyNowProduct, setBuyNowData } from './sharedState'
 import { useToast } from 'vue-toastification'
 import { useRouter } from 'vue-router'
 import axios from '@/plugins/axios'
@@ -72,7 +73,7 @@ export function useCart() {
       const response = await axios.post('/cart/store', payload)
       setCartData(response.data)
       message.value = response.data.message || 'Item added to cart.'
-      toast.success(message.value)
+      // toast.success(message.value)
       router.push('/checkout')
     } catch (error) {
       // handleError(error, 'Failed to add to cart.')
@@ -102,10 +103,16 @@ export function useCart() {
         rate,
         country,
       })
-      console.log(payload);
       const response = await axios.put('/cart/update-shipping', payload)
-      // console.log(response);
-      setCartData(response.data)
+      // setCartData(response.data)
+      const resData = response.data;
+      if (resData?.buyNow && Object.keys(resData.buyNow).length > 0) {
+        // If buyNow key exists, use it
+        setBuyNowData(response.data);
+      } else{
+        // Otherwise assume it's cart data
+        setCartData(response.data);
+      } 
       message.value = response.data.message || 'Shipping updated.'
       // toast.success(message.value)
     } catch (error) {
@@ -120,7 +127,14 @@ export function useCart() {
     try {
       const payload = withGuestId({ country, state }) // Include guest ID if needed
       const response = await axios.put('/cart/update-tax', payload)
-      setCartData(response.data)
+      const resData = response.data;
+      if (resData?.buyNow && Object.keys(resData.buyNow).length > 0) {
+        // If buyNow key exists, use it
+        setBuyNowData(response.data);
+      } else{
+        // Otherwise assume it's cart data
+        setCartData(response.data);
+      } 
       message.value = response.data.message || 'Tax updated.'
       // toast.success(message.value)
     } catch (error) {

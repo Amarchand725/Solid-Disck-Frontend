@@ -57,7 +57,7 @@
 
     const shippingCountry = ref(null)
     const shippingZip = ref('')
-    const shippingState = ref(null) 
+    const shippingState = ref(null)
 
     const shippingDetails = ref({})
     const billingDetails = ref({})
