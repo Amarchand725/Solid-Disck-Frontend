@@ -119,27 +119,30 @@ defineExpose({
 })
 
 const getPaymentMethodImage = (method) => {
+  const isMobile = window.innerWidth <= 768; // Adjust as needed
+  const widthFactor = isMobile ? 0.6 : 1; // Reduce width on mobile by 40%
+
   switch (method.toLowerCase()) {
     case 'paypal':
       return {
         url: '/assets/image/paypal_logo_icon_170865.png',
-        width: 150,
+        width: 150 * widthFactor,
         title: "PayPal",
-        height: 60,
-      }
+        height: 60 * widthFactor,
+      };
     case 'payarc':
       return {
         url: '/assets/image/payment_icons.avif',
-        width: 130,
+        width: 130 * widthFactor,
         title: "Debit/Credit Card",
-        height: 24,
-      }
+        height: 24 * widthFactor,
+      };
     default:
       return {
         url: '/assets/image/payment_icons.avif',
-        width: 40,
-        height: 24,
-      }
+        width: 40 * widthFactor,
+        height: 24 * widthFactor,
+      };
   }
-}
+};
 </script>

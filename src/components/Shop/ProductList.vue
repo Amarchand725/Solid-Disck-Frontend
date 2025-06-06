@@ -110,7 +110,7 @@
                         <span>{{ loading ? 'Adding...' : 'Add to Cart' }}</span>
                     </button>
                     <button style="background-color: #f5ad1d !important;" @click="handleBuyItNow(product)" :disabled="loading2" title="Buy it now" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined">
-                        <span>{{ loading2 ? 'Buying...' : 'Buy It Now' }}</span>
+                        <span>{{ loadingBuyNow ? 'Buying...' : 'Buy It Now' }}</span>
                     </button>
                 </span>
                 <span v-else>
@@ -124,6 +124,7 @@
 </template>
 <script setup>
 import { buyItNow } from '@/composables/useCart.js' // Adjust path if needed
+ import { useBuyNow } from '@/composables/useBuyNow'
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 
@@ -137,6 +138,7 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['increase', 'decrease', 'add-to-cart', 'buy-it-now'])
+const { buyNow, loadingBuyNow} = useBuyNow()
 
 function increaseQuantity(product) {
   emit('increase', product)
@@ -153,7 +155,7 @@ function handleAddToCart(product) {
 async function handleBuyItNow(product) {
   const quantity = 1
 //   loading2.value = true
-  await buyItNow(product, quantity, router)
+  await buyNow(product.slug, quantity)
 //   loading2.value = false
 }
 
