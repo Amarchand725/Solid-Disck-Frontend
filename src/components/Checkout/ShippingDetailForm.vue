@@ -3,81 +3,8 @@
     <form id="checkoutForm" class="ant-form ant-form-vertical css-i6rspj" @submit.prevent>
       <div class="ant-row shipping_details_row css-i6rspj">
 
-        <!-- Email -->
-        <div class="ant-col ant-col-xl-24 css-i6rspj">
-          <div class="ant-form-item css-i6rspj">
-            <input
-              v-model="shippingForm.email"
-              placeholder="Email address*"
-              id="checkoutForm_email"
-              aria-required="true"
-              class="ant-input css-i6rspj ant-input-outlined"
-              type="text"
-            />
-            <p v-if="errors.email" class="error-text">{{ errors.email }}</p>
-          </div>
-        </div>
-
-        <!-- First Name -->
-        <div class="ant-col ant-col-xl-8 css-i6rspj">
-          <div class="ant-form-item css-i6rspj">
-            <input
-              v-model="shippingForm.first_name"
-              placeholder="First Name*"
-              id="checkoutForm_fname"
-              aria-required="true"
-              class="ant-input css-i6rspj ant-input-outlined"
-              type="text"
-            />
-            <p v-if="errors.first_name" class="error-text">{{ errors.first_name }}</p>
-          </div>
-        </div>
-
-        <!-- Last Name -->
-        <div class="ant-col ant-col-xl-8 css-i6rspj">
-          <div class="ant-form-item css-i6rspj">
-            <input
-              v-model="shippingForm.last_name"
-              placeholder="Last Name*"
-              id="checkoutForm_lname"
-              aria-required="true"
-              class="ant-input css-i6rspj ant-input-outlined"
-              type="text"
-            />
-            <p v-if="errors.last_name" class="error-text">{{ errors.last_name }}</p>
-          </div>
-        </div>
-
-        <!-- Company -->
-        <div class="ant-col ant-col-xl-8 css-i6rspj">
-          <div class="ant-form-item css-i6rspj">
-            <input
-              v-model="shippingForm.company"
-              placeholder="Company"
-              id="checkoutForm_company"
-              class="ant-input css-i6rspj ant-input-outlined"
-              type="text"
-            />
-          </div>
-        </div>
-
-        <!-- Address -->
-        <div class="ant-col ant-col-xl-24 css-i6rspj">
-          <div class="ant-form-item css-i6rspj">
-            <input
-              v-model="shippingForm.address"
-              placeholder="Address: Street no. Block, Nearest Landmark*"
-              id="checkoutForm_address"
-              aria-required="true"
-              class="ant-input css-i6rspj ant-input-outlined"
-              type="text"
-            />
-            <p v-if="errors.address" class="error-text">{{ errors.address }}</p>
-          </div>
-        </div>  
-
         <!-- Country Select -->
-        <div class="ant-col ant-col-xl-8 css-i6rspj">
+        <div class="ant-col ant-col-xl-12 css-i6rspj">
           <div class="ant-form-item css-i6rspj ant-form-item-has-success">
             <select
               v-model="shippingCountry"
@@ -92,9 +19,68 @@
             <p v-if="errors.shippingCountry" class="error-text">{{ errors.shippingCountry }}</p>
           </div>
         </div>
+        <div class="ant-col ant-col-xl-12 css-i6rspj"></div>
+        
+        <!-- First Name -->
+        <div class="ant-col ant-col-xl-12 css-i6rspj">
+          <div class="ant-form-item css-i6rspj">
+            <input
+              v-model="shippingForm.first_name"
+              placeholder="First Name*"
+              id="checkoutForm_fname"
+              aria-required="true"
+              class="ant-input css-i6rspj ant-input-outlined"
+              type="text"
+            />
+            <p v-if="errors.first_name" class="error-text">{{ errors.first_name }}</p>
+          </div>
+        </div>
+
+        <!-- Last Name -->
+        <div class="ant-col ant-col-xl-12 css-i6rspj">
+          <div class="ant-form-item css-i6rspj">
+            <input
+              v-model="shippingForm.last_name"
+              placeholder="Last Name*"
+              id="checkoutForm_lname"
+              aria-required="true"
+              class="ant-input css-i6rspj ant-input-outlined"
+              type="text"
+            />
+            <p v-if="errors.last_name" class="error-text">{{ errors.last_name }}</p>
+          </div>
+        </div>
+
+        <!-- Address -->
+        <div class="ant-col ant-col-xl-12 css-i6rspj">
+          <div class="ant-form-item css-i6rspj">
+            <input
+              v-model="shippingForm.address"
+              placeholder="Street address*"
+              id="checkoutForm_address"
+              aria-required="true"
+              class="ant-input css-i6rspj ant-input-outlined"
+              type="text"
+            />
+            <p v-if="errors.address" class="error-text">{{ errors.address }}</p>
+          </div>
+        </div>  
+
+        <!-- Optional Address2 -->
+        <div class="ant-col ant-col-xl-12 css-i6rspj">
+          <div class="ant-form-item css-i6rspj">
+            <input
+              v-model="shippingForm.address_line_2"
+              placeholder="Street Address 2 (optional)"
+              id="checkoutForm_company"
+              class="ant-input css-i6rspj ant-input-outlined"
+              type="text"
+            />
+          </div>
+        </div>
 
         <!-- State Select -->
-        <div class="ant-col ant-col-xl-8 css-i6rspj">
+        <div class="ant-col ant-col-xl-12 css-i6rspj">
           <div class="ant-form-item css-i6rspj">
             <select
               v-model="shippingState"
@@ -112,7 +98,7 @@
         </div>
 
         <!-- City Select -->
-        <div class="ant-col ant-col-xl-8 css-i6rspj">
+        <div class="ant-col ant-col-xl-12 css-i6rspj">
           <div class="ant-form-item css-i6rspj">
             <select
               v-model="shippingCity"
@@ -140,6 +126,21 @@
               class="ant-input css-i6rspj ant-input-outlined"
               type="text"
             />
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="ant-col ant-col-xl-8 css-i6rspj">
+          <div class="ant-form-item css-i6rspj">
+            <input
+              v-model="shippingForm.email"
+              placeholder="Email address*"
+              id="checkoutForm_email"
+              aria-required="true"
+              class="ant-input css-i6rspj ant-input-outlined"
+              type="text"
+            />
+            <p v-if="errors.email" class="error-text">{{ errors.email }}</p>
           </div>
         </div>
 
@@ -182,8 +183,8 @@ const shippingForm = reactive({
   email: '',
   first_name: '',
   last_name: '',
-  company: '',
   address: '',
+  address_line_2: '',
   shippingCountry: '',
   shippingState: '',
   shippingCity: '',

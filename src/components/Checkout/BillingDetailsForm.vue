@@ -21,31 +21,29 @@
   >
     <form id="checkoutForm" class="ant-form ant-form-vertical css-i6rspj" @submit.prevent>
       <div class="ant-row shipping_details_row css-i6rspj">
-        <div class="ant-col ant-col-xl-24 css-i6rspj">
-          <div class="ant-form-item css-i6rspj">
-            <div class="ant-row ant-form-item-row css-i6rspj">
-              <div class="ant-col ant-form-item-control css-i6rspj">
-                <div class="ant-form-item-control-input">
-                  <div class="ant-form-item-control-input-content">
-                    <input
-                      v-model="billingForm.email"
-                      placeholder="Email address*"
-                      id="checkoutForm_email"
-                      aria-required="true"
-                      :aria-invalid="errors.email ? 'true' : 'false'"
-                      class="ant-input css-i6rspj ant-input-outlined"
-                      type="email"
-                    />
-                    <p v-if="errors.email" class="error-message">{{ errors.email }}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+        
+        <!-- Country -->
+        <div class="ant-col ant-col-xl-12 css-i6rspj">
+          <div class="ant-form-item css-i6rspj ant-form-item-has-success">
+              <select
+                v-model="billCountry"
+                @change="handleCountryChange"
+                class="ant-select ant-select-outlined ant-select-in-form-item ant-select-status-success css-i6rspj ant-select-single ant-select-show-arrow ant-select-show-search"
+                aria-required="true"
+                :aria-invalid="errors.billCountry ? 'true' : 'false'"
+              >
+                <option value="">Select Country</option>
+                <option v-for="country in billCountries" :key="country.id" :value="country.id">
+                  {{ country.name }}
+                </option>
+              </select>
+              <p v-if="errors.billCountry" class="error-message">{{ errors.billCountry }}</p>
           </div>
         </div>
-
+        <div class="ant-col ant-col-xl-12 css-i6rspj"></div>
+        
         <!-- First Name -->
-        <div class="ant-col ant-col-xl-8 css-i6rspj">
+        <div class="ant-col ant-col-xl-12 css-i6rspj">
           <div class="ant-form-item css-i6rspj">
             <input
               v-model="billingForm.first_name"
@@ -60,7 +58,7 @@
         </div>
 
         <!-- Last Name -->
-        <div class="ant-col ant-col-xl-8 css-i6rspj">
+        <div class="ant-col ant-col-xl-12 css-i6rspj">
           <div class="ant-form-item css-i6rspj">
             <input
               v-model="billingForm.last_name"
@@ -74,176 +72,115 @@
           </div>
         </div>
 
-        <div class="ant-col ant-col-xl-8 css-i6rspj">
+        <!-- Address -->
+        <div class="ant-col ant-col-xl-12 css-i6rspj">
           <div class="ant-form-item css-i6rspj">
-            <div class="ant-row ant-form-item-row css-i6rspj">
-              <div class="ant-col ant-form-item-control css-i6rspj">
-                <div class="ant-form-item-control-input">
-                  <div class="ant-form-item-control-input-content">
-                    <input
-                      v-model="billingForm.company"
-                      placeholder="Company"
-                      id="checkoutForm_company"
-                      class="ant-input css-i6rspj ant-input-outlined"
-                      type="text"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+            <input
+              v-model="billingForm.address"
+              placeholder="Street address*"
+              id="checkoutForm_address"
+              aria-required="true"
+              class="ant-input css-i6rspj ant-input-outlined"
+              type="text"
+            />
+            <p v-if="errors.address" class="error-text">{{ errors.address }}</p>
           </div>
-        </div>
+        </div>  
 
-        <div class="ant-col ant-col-xl-24 css-i6rspj">
+        <!-- Optional Address2 -->
+        <div class="ant-col ant-col-xl-12 css-i6rspj">
           <div class="ant-form-item css-i6rspj">
-            <div class="ant-row ant-form-item-row css-i6rspj">
-              <div class="ant-col ant-form-item-control css-i6rspj">
-                <div class="ant-form-item-control-input">
-                  <div class="ant-form-item-control-input-content">
-                    <input
-                      v-model="billingForm.address"
-                      placeholder="Address: Street no. Block, Nearest Landmark*"
-                      id="checkoutForm_address"
-                      aria-required="true"
-                      :aria-invalid="errors.address ? 'true' : 'false'"
-                      class="ant-input css-i6rspj ant-input-outlined"
-                      type="text"
-                    />
-                    <p v-if="errors.address" class="error-message">{{ errors.address }}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Country -->
-        <div class="ant-col ant-col-xl-8 css-i6rspj">
-          <div class="ant-form-item css-i6rspj">
-            <div class="ant-row ant-form-item-row css-i6rspj">
-              <div class="ant-col ant-form-item-control css-i6rspj">
-                <div class="ant-form-item-control-input">
-                  <div class="ant-form-item-control-input-content">
-                    <select
-                      v-model="billCountry"
-                      @change="handleCountryChange"
-                      class="ant-select ant-select-outlined ant-select-in-form-item ant-select-status-success css-i6rspj ant-select-single ant-select-show-arrow ant-select-show-search"
-                      aria-required="true"
-                      :aria-invalid="errors.billCountry ? 'true' : 'false'"
-                    >
-                      <option value="">Select Country</option>
-                      <option v-for="country in billCountries" :key="country.id" :value="country.id">
-                        {{ country.name }}
-                      </option>
-                    </select>
-                    <p v-if="errors.billCountry" class="error-message">{{ errors.billCountry }}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <input
+              v-model="billingForm.address_line_2"
+              placeholder="Street Address 2 (optional)"
+              id="checkoutForm_company"
+              class="ant-input css-i6rspj ant-input-outlined"
+              type="text"
+            />
           </div>
         </div>
 
         <!-- State -->
-        <div class="ant-col ant-col-xl-8 css-i6rspj">
-          <div class="ant-form-item css-i6rspj">
-            <div class="ant-row ant-form-item-row css-i6rspj">
-              <div class="ant-col ant-form-item-control css-i6rspj">
-                <div class="ant-form-item-control-input">
-                  <div class="ant-form-item-control-input-content">
-                    <select
-                      v-model="billState"
-                      @change="handleStateChange"
-                      :disabled="!billCountry"
-                      class="ant-select ant-select-outlined ant-select-in-form-item css-i6rspj ant-select-single ant-select-show-arrow ant-select-show-search"
-                      aria-required="true"
-                      :aria-invalid="errors.billState ? 'true' : 'false'"
-                    >
-                      <option value="">Select State</option>
-                      <option v-for="state in billStates" :key="state.id" :value="state.id">
-                        {{ state.name }}
-                      </option>
-                    </select>
-                    <p v-if="errors.billState" class="error-message">{{ errors.billState }}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <div class="ant-col ant-col-xl-12 css-i6rspj">
+          <div class="ant-form-item css-i6rspj ant-form-item-has-success">
+            <select
+              v-model="billState"
+              @change="handleStateChange"
+              :disabled="!billCountry"
+              class="ant-select ant-select-outlined ant-select-in-form-item css-i6rspj ant-select-single ant-select-show-arrow ant-select-show-search"
+              aria-required="true"
+              :aria-invalid="errors.billState ? 'true' : 'false'"
+            >
+              <option value="">Select State</option>
+              <option v-for="state in billStates" :key="state.id" :value="state.id">
+                {{ state.name }}
+              </option>
+            </select>
+            <p v-if="errors.billState" class="error-message">{{ errors.billState }}</p>
           </div>
         </div>
 
         <!-- City -->
-        <div class="ant-col ant-col-xl-8 css-i6rspj">
-          <div class="ant-form-item css-i6rspj">
-            <div class="ant-row ant-form-item-row css-i6rspj">
-              <div class="ant-col ant-form-item-control css-i6rspj">
-                <div class="ant-form-item-control-input">
-                  <div class="ant-form-item-control-input-content">
-                    <select
-                      v-model="billCity"
-                      :disabled="!billState"
-                      class="ant-select ant-select-outlined ant-select-in-form-item css-i6rspj ant-select-single ant-select-show-arrow ant-select-show-search"
-                      aria-required="true"
-                      :aria-invalid="errors.billCity ? 'true' : 'false'"
-                    >
-                      <option value="">Select City</option>
-                      <option v-for="city in billCities" :key="city.id" :value="city.id">
-                        {{ city.name }}
-                      </option>
-                    </select>
-                    <p v-if="errors.billCity" class="error-message">{{ errors.billCity }}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <div class="ant-col ant-col-xl-12 css-i6rspj">
+          <div class="ant-form-item css-i6rspj ant-form-item-has-success">
+            <select
+              v-model="billCity"
+              :disabled="!billState"
+              class="ant-select ant-select-outlined ant-select-in-form-item css-i6rspj ant-select-single ant-select-show-arrow ant-select-show-search"
+              aria-required="true"
+              :aria-invalid="errors.billCity ? 'true' : 'false'"
+            >
+              <option value="">Select City</option>
+              <option v-for="city in billCities" :key="city.id" :value="city.id">
+                {{ city.name }}
+              </option>
+            </select>
+            <p v-if="errors.billCity" class="error-message">{{ errors.billCity }}</p>
           </div>
         </div>
 
         <!-- Zip -->
         <div class="ant-col ant-col-xl-8 css-i6rspj">
-          <div class="ant-form-item css-i6rspj">
-            <div class="ant-row ant-form-item-row css-i6rspj">
-              <div class="ant-col ant-form-item-control css-i6rspj">
-                <div class="ant-form-item-control-input">
-                  <div class="ant-form-item-control-input-content">
-                    <input
-                      v-model="billingForm.zip"
-                      placeholder="Zip Code*"
-                      id="checkoutForm_zip_code"
-                      aria-required="true"
-                      :aria-invalid="errors.zip ? 'true' : 'false'"
-                      class="ant-input css-i6rspj ant-input-outlined"
-                      type="text"
-                    />
-                    <p v-if="errors.zip" class="error-message">{{ errors.zip }}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div class="ant-form-item css-i6rspj ant-form-item-has-success">
+            <input
+              v-model="billingForm.zip"
+              placeholder="Zip Code*"
+              id="checkoutForm_zip_code"
+              aria-required="true"
+              :aria-invalid="errors.zip ? 'true' : 'false'"
+              class="ant-input css-i6rspj ant-input-outlined"
+              type="text"
+            />
+            <p v-if="errors.zip" class="error-message">{{ errors.zip }}</p>
           </div>
         </div>
-
+        <div class="ant-col ant-col-xl-8 css-i6rspj">
+          <div class="ant-form-item css-i6rspj ant-form-item-has-success">
+              <input
+                v-model="billingForm.email"
+                placeholder="Email address*"
+                id="checkoutForm_email"
+                aria-required="true"
+                :aria-invalid="errors.email ? 'true' : 'false'"
+                class="ant-input css-i6rspj ant-input-outlined"
+                type="email"
+              />
+              <p v-if="errors.email" class="error-message">{{ errors.email }}</p>
+          </div>
+        </div>
         <!-- Phone -->
         <div class="ant-col ant-col-xl-8 css-i6rspj">
-          <div class="ant-form-item css-i6rspj">
-            <div class="ant-row ant-form-item-row css-i6rspj">
-              <div class="ant-col ant-form-item-control css-i6rspj">
-                <div class="ant-form-item-control-input">
-                  <div class="ant-form-item-control-input-content">
-                    <input
-                      v-model="billingForm.phone"
-                      placeholder="Phone Number*"
-                      id="checkoutForm_phone_number"
-                      aria-required="true"
-                      :aria-invalid="errors.phone ? 'true' : 'false'"
-                      class="ant-input css-i6rspj ant-input-outlined"
-                      type="tel"
-                    />
-                    <p v-if="errors.phone" class="error-message">{{ errors.phone }}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div class="ant-form-item css-i6rspj ant-form-item-has-success">
+            <input
+              v-model="billingForm.phone"
+              placeholder="Phone Number*"
+              id="checkoutForm_phone_number"
+              aria-required="true"
+              :aria-invalid="errors.phone ? 'true' : 'false'"
+              class="ant-input css-i6rspj ant-input-outlined"
+              type="tel"
+            />
+            <p v-if="errors.phone" class="error-message">{{ errors.phone }}</p>
           </div>
         </div>
       </div>
@@ -276,6 +213,7 @@ const billingForm = reactive({
   last_name: '',
   company: '',
   address: '',
+  address_line_2: '',
   billCountry: '',
   billState: '',
   billCity: '',
