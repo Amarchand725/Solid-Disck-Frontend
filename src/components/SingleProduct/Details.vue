@@ -144,7 +144,7 @@
                             </button>
                             <br>
                             <button style="background-color: #f5ad1d !important;" @click="handleBuyItNow" :disabled="loading2" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined add_to_cart" title="Buy It Now">
-                                {{ loading2 ? 'Buying...' : 'Buy It Now' }}
+                               {{ loadingBuyNow ? 'Buying...' : 'Buy It Now' }}
                             </button>
                         </span>
                         <div class="norton_image">
@@ -173,6 +173,7 @@
     import { ref } from 'vue';
     import { useCart } from '@/composables/useCart'
     import { useSettings } from '@/composables/useSettings.js'
+    import { useBuyNow } from '@/composables/useBuyNow'
     const { settings } = useSettings()
 
     const props = defineProps({
@@ -182,13 +183,18 @@
     const quantity = ref(1);
 
     const { addToCart, buyItNow ,  loading, loading2 , decreaseCartItem } = useCart()
+    const { buyNow, loadingBuyNow} = useBuyNow()
     const handleAddToCart = async () => {
         await addToCart(props.productDetails.slug, quantity.value)
     }
 
+    // const handleBuyItNow = async () => {
+    //     await buyItNow(props.productDetails.slug, quantity.value)
+    // }
+
     const handleBuyItNow = async () => {
-        await buyItNow(props.productDetails.slug, quantity.value)
-    }
+        await buyNow(props.productDetails.slug, 1);  // pass slug & qty to your buyNow function
+    };
 
     function shortDescription(html, limit = '') {
         const text = (html || '').replace(/<[^>]*>/g, ''); // strip HTML tags safely

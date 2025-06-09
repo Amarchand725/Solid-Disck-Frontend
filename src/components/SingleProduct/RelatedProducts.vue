@@ -119,10 +119,12 @@
     import 'swiper/css/pagination'
     import { useSettings } from '@/composables/useSettings.js'
     import { useCart } from '@/composables/useCart'
+    import { useBuyNow } from '@/composables/useBuyNow'
     import { ref } from 'vue'
     
     const { settings } = useSettings()
     const { addToCart, buyItNow } = useCart()
+    const { buyNow, loadingBuyNow} = useBuyNow()
 
     const loadingMap = ref({})
     const buyingMap = ref({})
@@ -141,14 +143,23 @@
         }
     }
 
+    // const handleBuyItNow = async (product) => {
+    //     buyingMap.value[product.slug] = true
+    //     try {
+    //         await buyItNow(product.slug, 1)
+    //     } finally {
+    //         buyingMap.value[product.slug] = false
+    //     }
+    // }
+
     const handleBuyItNow = async (product) => {
         buyingMap.value[product.slug] = true
-        try {
-            await buyItNow(product.slug, 1)
+         try {
+            await buyNow(product.slug, 1)
         } finally {
             buyingMap.value[product.slug] = false
         }
-    }
+    };
 
     function shortDescription(html, limit = '') {
         const text = (html || '').replace(/<[^>]*>/g, ''); // strip HTML tags safely
