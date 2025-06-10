@@ -88,17 +88,6 @@ const routes = [
     name: 'Checkout',
     component: Checkout,
     meta: { title: 'Checkout' },
-    // beforeEnter: (to, from, next) => {
-    //   const store = useStore();
-    //   const isAuthenticated = store.getters.isLoggedIn || localStorage.getItem('auth_token');
-
-    //   if (!isAuthenticated) {
-    //     localStorage.setItem('redirect_to_checkout', 'true');
-    //     next({ name: 'Login', query: { message: 'Please login or register to continue to checkout.' } });
-    //   } else {
-    //     next();
-    //   }
-    // }
   },
   {
     path: '/order-success/:orderNumber',

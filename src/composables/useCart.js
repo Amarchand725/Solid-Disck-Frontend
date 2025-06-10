@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import { fullCart, cartItemCount, setCartData } from './cartState'
-import { buyNowProduct, setBuyNowData } from './sharedState'
+import { setBuyNowData } from './sharedState'
 import { useToast } from 'vue-toastification'
 import { useRouter } from 'vue-router'
 import axios from '@/plugins/axios'

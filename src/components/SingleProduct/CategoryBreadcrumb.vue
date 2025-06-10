@@ -8,7 +8,7 @@
       >
         {{ cat.name }}
       </router-link>
-      <span v-if="index < categoryTrail.length - 0" class="separator"> &gt; </span>
+      <span v-if="index < categoryTrail.length - 1" class="separator"> &gt; </span>
     </template>
   </span>
 </template>

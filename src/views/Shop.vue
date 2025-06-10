@@ -13,8 +13,9 @@
 
               <CategoryBreadcrumb :categoryTrail="categoryTrail" />
 
-              <span class="path_name">
-                <strong :title="category?.name">{{ category?.name }}</strong>
+              <span class="path_name" v-if="searchedKeyWord.length > 0">
+                <span v-if="searchedKeyWord.length > 0" class="separator"> &gt; </span>
+                <strong :title="searchedKeyWord">{{ searchedKeyWord }}</strong>
               </span>
             </div>
             <h1 :title="category?.name">{{ category?.name }}</h1>
@@ -188,7 +189,7 @@
     // Composables
     const { settings } = useSettings();
     const { getCategoryBySlug } = useCategories();
-    const { products, pagination, loading, getProductsByCategory , searchProductsForPage } = useProducts();
+    const { products, pagination, loading, getProductsByCategory, searchedKeyWord, searchProductsForPage } = useProducts();
     const { addToCart, buyItNow, loading2, loader } = useCart();
 
     const { getCategories } = useCategories();

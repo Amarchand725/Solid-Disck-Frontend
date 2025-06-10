@@ -10,11 +10,11 @@
                 <router-link title="Home" to="/">Home</router-link>
                 <span class="separator">&gt;</span>
               </span>
+              <CategoryBreadcrumb :categoryTrail="categoryData?.category_trail" />
 
-              <CategoryBreadcrumb :categoryTrail="categoryTrail" />
-
-              <span class="path_name">
-                <strong :title="category?.name">{{ category?.name }}</strong>
+              <span class="path_name" v-if="searchedKeyWord.length > 0">
+                <span v-if="searchedKeyWord.length > 0" class="separator"> &gt; </span>
+                <strong :title="searchedKeyWord">{{ searchedKeyWord }}</strong>
               </span>
             </div>
             <h1 :title="category?.name">{{ category?.name }}</h1>
@@ -182,6 +182,8 @@ const { getCategoryBySlug, getCategories } = useCategories();
 const { getBrands } = useBrands();
 const {
   products,
+  categoryData,
+  searchedKeyWord,
   pagination,
   loading,
   getProductsByCategory,

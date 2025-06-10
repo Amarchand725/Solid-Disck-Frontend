@@ -2,6 +2,8 @@ import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import axios from '@/plugins/axios';
 
+const searchedKeyWord = ref([]);
+const categoryData = ref({});
 const products = ref([]);
 const pagination = ref({
   total: 0,
@@ -18,6 +20,7 @@ const getProducts = async () => {
   try {
     const res = await axios.get('/products');
     products.value = res.data.data;
+    searchResults.value = []
   } catch (err) {
     error.value = err;
   } finally {
@@ -32,6 +35,7 @@ const getProductBySlug = async (slug, categoryPath) => {
 
   try {
     const res = await axios.get(`/products/${categoryPath}/${slug}`);
+    searchResults.value = [];
     return res.data.data;
   } catch (err) {
     throw err;
@@ -60,6 +64,7 @@ const getProductsByCategory = async ({
     });
 
     products.value = res.data.data;
+    searchResults.value = [];
     pagination.value = res.data.pagination;
   } catch (err) {
     error.value = err;
@@ -129,6 +134,7 @@ const searchProductsForPage = async (keyword) => {
       params: { keyword }
     })
     products.value = res.data.data;
+    searchedKeyWord.value = res.data.keyword;
     pagination.value = res.data.pagination;
   } catch (err) {
     error.value = err
@@ -141,8 +147,10 @@ const searchProductsForPage = async (keyword) => {
 const fetchProductsByAttributeValue = async (attributeSlug) => {
   loading.value = true;
   try {
-    const response = await axios.get(`/products/attribute/${attributeSlug}`);
-    products.value = response.data.data;
+    const response = await axios.get(`/attribute/products/${attributeSlug}`);
+    products.value = response.data.data.products;
+    categoryData.value = response.data.data.category;
+    searchedKeyWord.value = response.data.data.keyword;
   } catch (error) {
     console.error('Failed to fetch products', error);
   }
@@ -151,6 +159,8 @@ const fetchProductsByAttributeValue = async (attributeSlug) => {
 
 export function useProducts() {
   return {
+    searchedKeyWord,
+    categoryData,
     products,
     pagination,
     loading,

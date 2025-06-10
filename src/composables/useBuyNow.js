@@ -38,11 +38,25 @@ export function useBuyNow() {
       const payload = withGuestId({ slug: productSlug, quantity })
       const response = await axios.post('/buy-now', payload)
       setBuyNowData(response.data.buyNow || null);
+      localStorage.setItem('checkout_source', 'buy_now');
       router.push('/checkout')
     } catch (err) {
       error.value = err.response?.data?.message || 'Failed to process Buy Now';
     } finally {
       loadingBuyNow.value = false;
+    }
+  }
+
+  async function restoreBuyNow() {
+    try {
+      const guestId = localStorage.getItem('guest_id'); // or pass with header if needed
+      const response = await axios.get('/buy-now-data', {
+        params: { guest_id: guestId }
+      });
+      setBuyNowData(response.data.buyNow || null);
+    } catch (err) {
+      error.value = 'Failed to restore Buy Now product';
+      setBuyNowData(null);
     }
   }
 
@@ -54,6 +68,7 @@ export function useBuyNow() {
     try {
       const response = await axios.post('/buy-now-clear');
       setBuyNowData(response.data.buyNow || null);
+      localStorage.removeItem('checkout_source');
     } catch (err) {
       error.value = err.response?.data?.message || 'Failed to clear Buy Now session';
     } finally {
@@ -63,6 +78,7 @@ export function useBuyNow() {
 
   return {
     buyNow,
+    restoreBuyNow,
     clearBuyNow,
     buyNowProduct,
     loadingBuyNow,

@@ -98,7 +98,7 @@
     </div>
 </template>
 <script setup>
-    import { ref, computed } from 'vue'
+    import { ref, computed, onMounted } from 'vue'
     import { useSettings } from '@/composables/useSettings.js'
     import { useCart } from '@/composables/useCart'
     import { useBuyNow } from '@/composables/useBuyNow'
@@ -114,10 +114,19 @@
     const { settings } = useSettings()
     const { cartItemCount, fullCart, loading } = useCart()
 
-    const { buyNowProduct } = useBuyNow();
+    const { buyNowProduct, restoreBuyNow, clearBuyNow } = useBuyNow();
 
     const hasBuyNowProduct = computed(() => {
         return buyNowProduct.value && Object.keys(buyNowProduct.value).length > 0;
+    });
+
+    onMounted(async () => {
+        const source = localStorage.getItem('checkout_source');
+        if (source === 'buy_now') {
+            await restoreBuyNow(); // ✅ This is now from the composable
+        } else {
+            await clearBuyNow();   // ✅ Also composable call
+        }
     });
 
     const paymentRef = ref()

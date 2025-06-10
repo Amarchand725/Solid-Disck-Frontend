@@ -14,6 +14,7 @@
                 <CategoryBreadcrumb 
                     :categoryTrail="categoryTrail"
                 />
+                <span class="separator"> &gt; </span>
                 <strong title="productDetails.title">{{ productDetails?.slug }}</strong>
             </div>
             <div class="ant-row css-i6rspj">
