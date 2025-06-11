@@ -22,15 +22,22 @@
                 <div class="ant-col ant-col-xs-24 ant-col-sm-24 ant-col-md-24 ant-col-lg-11 ant-col-xl-12 css-i6rspj">
                     <div class="product_image_main">
                         <div class="product_image_inner">
-                            <img 
-                                :alt="productDetails?.title" 
-                                :title="productDetails?.title" 
-                                fetchpriority="high" decoding="async" data-nimg="fill" class="prodcut_image"
-                                sizes="(max-width: 1600) 100%, (max-width: 767) 70%" 
-                                :src="productDetails?.thumbnail || '/placeholders/270x280.svg'"
-                                @error="onThumbnailError" 
-                                style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;"
-                            >
+                            
+                            <picture>
+                                <source
+                                    :srcset="productDetails.thumbnail || '/placeholders/270x280.svg'"
+                                    type="image/webp"
+                                />
+                                <img 
+                                    :alt="productDetails?.title" 
+                                    :title="productDetails?.title" 
+                                    fetchpriority="high" decoding="async" data-nimg="fill" class="prodcut_image"
+                                    sizes="(max-width: 1600) 100%, (max-width: 767) 70%" 
+                                    :src="productDetails?.thumbnail || '/placeholders/270x280.svg'"
+                                    @error="onThumbnailError" 
+                                    style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;"
+                                >
+                            </picture>
                             <div class="product_magnifier" style="background-position: -78.6458px 42.3438px; 
                                 background-image: url(&quot;https://alpha-project-new.s3.us-east-2.amazonaws.com/production/uploads/1153005/WUH722222ALE6L1.webp&quot;); 
                                 background-size: 1200px 1200px; background-repeat: no-repeat; display: none; top: -46.9375px; left: 1.45833px; width: 100px; height: 100px;"
@@ -47,14 +54,20 @@
                                 class="bottom_imagesinner"
                                 v-for="productImage in productDetails.images" :key="productImage.id"
                             >
-                                <img 
-                                    :alt="productDetails?.title" 
-                                    title="productDetails?.title"
-                                    fetchpriority="high" decoding="async" data-nimg="fill" class="" sizes="(max-width: 1600) 100%, (max-width: 767) 70%" 
-                                    :src="productImage?.image || '/placeholders/80x80.svg'"
-                                    @error="onImageError"
-                                    style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;"
-                                >
+                                <picture>
+                                    <source
+                                        :srcset="productImage.image || '/placeholders/270x280.svg'"
+                                        type="image/webp"
+                                    />
+                                    <img 
+                                        :alt="productDetails?.title" 
+                                        title="productDetails?.title"
+                                        fetchpriority="high" decoding="async" data-nimg="fill" class="" sizes="(max-width: 1600) 100%, (max-width: 767) 70%" 
+                                        :src="productImage?.image || '/placeholders/80x80.svg'"
+                                        @error="onImageError"
+                                        style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;"
+                                    >
+                                </picture>
                             </div>
                         </template>
                     </div>

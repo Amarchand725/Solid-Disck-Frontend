@@ -17,7 +17,7 @@
                                 >
                                 <span class="ant-menu-title-content">
                                     <span title="group.name" style="display: flex; align-items: center;">
-                                    <span>{{ group.name }}&nbsp;</span>
+                                    <span>{{ group.name.toUpperCase() }}&nbsp;</span>
                                     <img
                                         src="/assets/image/dropdown-down.webp"
                                         alt="Dropdown Down"

@@ -3,14 +3,32 @@
         class="TabProductCard_image_main__n81WY"
         :to="`/products/${product.category_url}/${product.slug}`"
     >
-        <img 
+        <!-- <img 
             :alt="product.title"
             :title="product.title"
             fetchpriority="high" width="270" height="280" decoding="async" data-nimg="1" 
             :src="product.thumbnail || '/placeholders/270x280.svg'"
             @error="onImageError"
             style="color: transparent; max-width: 100%; height: auto;"
-        />
+        /> -->
+        <picture>
+            <source
+                :srcset="product.thumbnail || '/placeholders/270x280.svg'"
+                type="image/webp"
+            />
+            <img 
+                :alt="product.title"
+                :title="product.title"
+                fetchpriority="high"
+                width="270"
+                height="280"
+                decoding="async"
+                data-nimg="1"
+                :src="product.thumbnail || '/placeholders/270x280.svg'"
+                @error="onImageError"
+                style="color: transparent; max-width: 100%; height: auto;"
+            />
+        </picture>
 
     </router-link>
     <span class="TabProductCard_category__yj7NY" v-if="product.category">

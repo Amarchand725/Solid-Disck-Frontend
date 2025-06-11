@@ -8,19 +8,25 @@
     >
      <SwiperSlide v-for="(slider, index) in sliders" :key="index">
         <router-link to="/">
-          <img
-            :src="slider.image || '/placeholders/1600x400.svg'"
-            :srcset="generateSrcset(slider.image)"
-            :sizes="'(max-width: 600px) 400px, (max-width: 900px) 600px, (max-width: 1100px) 800px, (max-width: 1300px) 1000px, (max-width: 1500px) 1200px, 1600px'"
-            :alt="slider.title || 'Slider'"
-            :title="slider.title || 'Slider'"
-            width="1600"
-            height="400"
-            decoding="async"
-            :loading="index === 0 ? 'eager' : 'lazy'"
-            @error="onImageError"
-            class="banner-image"
-          />
+          <picture>
+            <source
+                :srcset="slider.image || '/placeholders/270x280.svg'"
+                type="image/webp"
+            />
+            <img
+              :src="slider.image || '/placeholders/1600x400.svg'"
+              :srcset="generateSrcset(slider.image)"
+              :sizes="'(max-width: 600px) 400px, (max-width: 900px) 600px, (max-width: 1100px) 800px, (max-width: 1300px) 1000px, (max-width: 1500px) 1200px, 1600px'"
+              :alt="slider.title || 'Slider'"
+              :title="slider.title || 'Slider'"
+              width="1600"
+              height="400"
+              decoding="async"
+              :loading="index === 0 ? 'eager' : 'lazy'"
+              @error="onImageError"
+              class="banner-image"
+            />
+        </picture>
         </router-link>
       </SwiperSlide>
 
@@ -50,7 +56,7 @@ const onImageError = (event) => {
 }
 
 function generateSrcset(imageUrl) {
-  if (!imageUrl) return '/placeholders/1600x400.svg'
+  if (!imageUrl) return '/placeholders/1500x400.svg'
 
   const extMatch = imageUrl.match(/\.(webp|jpg|jpeg|png)$/i)
   const ext = extMatch ? extMatch[0] : '.webp'

@@ -74,7 +74,6 @@
 <script setup>
 import { onMounted } from 'vue'
 import { useProducts } from '@/composables/useBestSellingProduct.js'
-import router from '@/router'
 
 const { products, loading, error, getProducts } = useProducts()
 

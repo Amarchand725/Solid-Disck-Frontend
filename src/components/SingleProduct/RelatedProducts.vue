@@ -26,14 +26,21 @@
                             :to="`/products/${product.category_url}/${product.slug}`"
                             class="img_main"
                             >
-                            <img
-                                :alt="product?.title"
-                                :title="product?.title"
-                                fetchpriority="high" width="188" height="188" decoding="async"
-                                :src="product?.thumbnail || '/placeholders/270x280.svg'"
-                                @error="onImageError"
-                                style="color: transparent;"
-                            />
+                            
+                            <picture>
+                                <source
+                                    :srcset="product.thumbnail || '/placeholders/270x280.svg'"
+                                    type="image/webp"
+                                />
+                                <img
+                                    :alt="product?.title"
+                                    :title="product?.title"
+                                    fetchpriority="high" width="188" height="188" decoding="async"
+                                    :src="product?.thumbnail || '/placeholders/270x280.svg'"
+                                    @error="onImageError"
+                                    style="color: transparent;"
+                                />
+                            </picture>
                             </router-link>
                             <router-link :to="`/products/${product.category_url}/${product.slug}`">
                             <h3 :title="shortDescription(product?.short_description, 80)">

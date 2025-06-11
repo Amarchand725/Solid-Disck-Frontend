@@ -6,15 +6,20 @@
                 :to="`/categories/${bannerObj.left.category.category_url}`"
                 >
 
-                <img 
-                    v-if="bannerObj.left" 
-                    :alt="bannerObj.left.title" 
-                    :title="bannerObj.left.title" 
-                    loading="lazy" width="200" height="200" decoding="async" data-nimg="1" 
-                    :src="bannerObj.left.banner || '/placeholders/200x200.svg'" 
-                    @error="onImageError"
-                    style="color: transparent;"
-                >
+                <picture v-if="bannerObj.left" >
+                    <source
+                        :srcset="bannerObj.left.banner || '/placeholders/270x280.svg'"
+                        type="image/webp"
+                    />
+                    <img
+                        :alt="bannerObj.left.title" 
+                        :title="bannerObj.left.title" 
+                        loading="lazy" width="200" height="200" decoding="async" data-nimg="1" 
+                        :src="bannerObj.left.banner || '/placeholders/200x200.svg'" 
+                        @error="onImageError"
+                        style="color: transparent;"
+                    >
+                </picture>
             </router-link>
         </div>
         <div class="why_work_with_us_content">
@@ -76,15 +81,20 @@
                 v-if="bannerObj.right?.category"
                 :to="`/categories/${bannerObj.right.category.category_url}`"
             >
-                <img 
-                    v-if="bannerObj.right" 
-                    :alt="bannerObj.right.title" 
-                    :title="bannerObj.right.title" 
-                    loading="lazy" width="200" height="200" decoding="async" data-nimg="1" 
-                    :src="bannerObj.right.banner || '/placeholders/200x200.svg'" 
-                    @error="onImageError"
-                    style="color: transparent;"
-                >
+                <picture v-if="bannerObj.right" >
+                    <source
+                        :srcset="bannerObj.right.banner || '/placeholders/270x280.svg'"
+                        type="image/webp"
+                    />
+                    <img 
+                        :alt="bannerObj.right.title" 
+                        :title="bannerObj.right.title" 
+                        loading="lazy" width="200" height="200" decoding="async" data-nimg="1" 
+                        :src="bannerObj.right.banner || '/placeholders/200x200.svg'" 
+                        @error="onImageError"
+                        style="color: transparent;"
+                    >
+                </picture>
             </router-link>
         </div>
     </section>
