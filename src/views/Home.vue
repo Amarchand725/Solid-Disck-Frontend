@@ -2,10 +2,10 @@
     <div>
         <main>
             <!-- Banner Section -->
-            <Slider />
+            <Slider v-if="!loadingSlider && sliders.length" :sliders="sliders" />
             
             <!-- Central Content -->
-             <CentralContent />
+            <CentralContent />
 
             <!-- Why work with us section  -->
             <WhyWorkWithUs />
@@ -23,7 +23,10 @@
             <FeaturedManufacturer />
 
             <!-- Best Selling Product -->
-            <BestSellingProduct />
+            <BestSellingProduct v-if="!loading && products" :products="products" />
+
+            <!-- Secure Payment Sticker -->
+            <SecurePaymentSticker />
 
             <!-- Blogs Section -->
             <BlogsComponent />
@@ -41,8 +44,17 @@
     import FeaturedManufacturer from '@/components/Home/FeaturedManufacturer.vue';
     import BestSellingProduct from '@/components/Home/BestSellingProduct.vue';
     import BlogsComponent from '@/components/Home/BlogsComponent.vue';
-</script>
+    import SecurePaymentSticker from '../components/Home/SecurePaymentSticker.vue';
 
-<style scoped>
-/* Inline or import styles */
-</style>
+    import { onMounted } from 'vue'
+    import { useProducts } from '@/composables/useBestSellingProduct.js'
+    import { useSliders } from '@/composables/useSliders.js'
+
+    const { products, loading, error, getProducts } = useProducts()
+    const { sliders, loadingSlider, getSliders } = useSliders()
+
+    onMounted(() => {
+        getProducts(),
+        getSliders()
+    })
+</script>

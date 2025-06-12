@@ -59,14 +59,26 @@
                                         :srcset="productImage.image || '/placeholders/270x280.svg'"
                                         type="image/webp"
                                     />
-                                    <img 
+                                    <!-- <img 
+                                        loading="lazy"
                                         :alt="productDetails?.title" 
                                         title="productDetails?.title"
                                         fetchpriority="high" decoding="async" data-nimg="fill" class="" sizes="(max-width: 1600) 100%, (max-width: 767) 70%" 
                                         :src="productImage?.image || '/placeholders/80x80.svg'"
                                         @error="onImageError"
                                         style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;"
-                                    >
+                                    > -->
+                                    <img
+                                        :src="productImage?.image || '/placeholders/80x80.svg'"
+                                        :alt="productDetails?.title"
+                                        title="productDetails?.title"
+                                        loading="lazy"
+                                        decoding="async"
+                                        width="300"
+                                        height="300"
+                                        class="object-cover rounded w-full h-auto"
+                                        @error="onImageError"
+                                    />
                                 </picture>
                             </div>
                         </template>

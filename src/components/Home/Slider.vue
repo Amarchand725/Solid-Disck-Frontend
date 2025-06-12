@@ -35,8 +35,6 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
-import { useSliders } from '@/composables/useSliders.js'
 
 // Swiper
 import { Swiper, SwiperSlide } from 'swiper/vue'
@@ -45,10 +43,11 @@ import { Autoplay } from 'swiper/modules'
 // Swiper CSS
 import 'swiper/css'
 
-const { sliders, getSliders } = useSliders()
-
-onMounted(() => {
-  getSliders()
+const props = defineProps({
+  sliders: {
+      type: Array,
+      default: () => []
+  }
 })
 
 const onImageError = (event) => {

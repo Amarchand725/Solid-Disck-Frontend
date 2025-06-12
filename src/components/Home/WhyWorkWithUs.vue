@@ -61,18 +61,6 @@
                         <span>Shop By Server</span>
                     </router-link>
                 </div>
-                <!-- <div class="work_with_us_card right" title="Compatible Upgrades for Your PC">
-                    <a href="/group-products">
-                        <div class="inner">
-                            <img alt="why-work-with-us-image" title="why-work-with-us-image" loading="lazy" width="50" height="50" decoding="async" data-nimg="1" 
-                                srcset="/assets/image/group-product-icon.webp"
-                                src="/assets/image/group-product-icon.webp" 
-                                style="color: transparent; filter: brightness(0) invert(1);"
-                            >
-                        </div>
-                        <span>Group Products</span>
-                    </a>
-                </div> -->
             </div>
             <router-link class="create_an_account" title="Create An Account" to="/register">Create An Account</router-link>
         </div>

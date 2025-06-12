@@ -1,29 +1,49 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { nextTick } from 'vue';
-import { useStore } from 'vuex';  // Use Vuex to access the global state
 import { initAllPlugins } from '@/initPlugins';
-import Home from '../views/Home.vue'
-// import Wishlist from '../views/Wishlist.vue'
-import CompareProduct from '../views/CompareProduct.vue'
-import Configurator from '../views/Configurator.vue'
-import Cart from '../views/Cart.vue'
-import Checkout from '../views/Checkout.vue'
+import store from '@/vuexstore/store';
+
+// import Home from '../views/Home.vue'
+// import CompareProduct from '../views/CompareProduct.vue'
+// import Configurator from '../views/Configurator.vue'
+// import Cart from '../views/Cart.vue'
+// import Checkout from '../views/Checkout.vue'
+// import Shop from '../views/Shop.vue'
+// import FilteredShop from '../views/FilteredShop.vue'
+// import BrandProducts from '../views/BrandProducts.vue'
+// import Login from '../views/Login.vue'
+// import Register from '../views/Register.vue'
+// import SingleProduct from '../views/SingleProduct.vue'
+// import PolicyPage from '../views/PolicyPage.vue'
+// import RequestQuote from '../views/RequestQuote.vue'
+// import faq from '../views/faq.vue'
+// import Blogs from '../views/Blogs.vue'
+// import BlogDetails from '../views/BlogDetails.vue'
+// import ContactUs from '../views/ContactUs.vue'
+// import MyAccount from '../views/MyAccount.vue'
+// import OrderSuccess from '../views/OrderSuccess.vue'
 // import TrackOrder from '../views/TrackOrder.vue'
-import Shop from '../views/Shop.vue'
-import FilteredShop from '../views/FilteredShop.vue'
-import BrandProducts from '../views/BrandProducts.vue'
-import Login from '../views/Login.vue'
-import Register from '../views/Register.vue'
-import SingleProduct from '../views/SingleProduct.vue'
-import PolicyPage from '../views/PolicyPage.vue'
-import RequestQuote from '../views/RequestQuote.vue'
-import faq from '../views/faq.vue'
-import Blogs from '../views/Blogs.vue'
-import BlogDetails from '../views/BlogDetails.vue'
-import ContactUs from '../views/ContactUs.vue'
-import MyAccount from '../views/MyAccount.vue'
-import OrderSuccess from '../views/OrderSuccess.vue'
-import TrackOrder from '../views/TrackOrder.vue'
+
+const Home = () => import('@/views/Home.vue')
+const CompareProduct = () => import('@/views/CompareProduct.vue')
+const Configurator = () => import('@/views/Configurator.vue')
+const Cart = () => import('@/views/Cart.vue')
+const Checkout = () => import('@/views/Checkout.vue')
+const Shop = () => import('@/views/Shop.vue')
+const FilteredShop = () => import('@/views/FilteredShop.vue')
+const BrandProducts = () => import('@/views/BrandProducts.vue')
+const Login = () => import('@/views/Login.vue')
+const Register = () => import('@/views/Register.vue')
+const SingleProduct = () => import('@/views/SingleProduct.vue')
+const PolicyPage = () => import('@/views/PolicyPage.vue')
+const RequestQuote = () => import('@/views/RequestQuote.vue')
+const Faq = () => import('@/views/faq.vue')
+const Blogs = () => import('@/views/Blogs.vue')
+const BlogDetails = () => import('@/views/BlogDetails.vue')
+const ContactUs = () => import('@/views/ContactUs.vue')
+const MyAccount = () => import('@/views/MyAccount.vue')
+const OrderSuccess = () => import('@/views/OrderSuccess.vue')
+const TrackOrder = () => import('@/views/TrackOrder.vue')
 
 const routes = [
   {
@@ -31,7 +51,6 @@ const routes = [
     name: 'Login',
     component: Login,
     beforeEnter: (to, from, next) => {
-      const store = useStore();
       const isAuthenticated = localStorage.getItem('auth_token') || store.state.auth.token;
 
       if (isAuthenticated) {
@@ -41,11 +60,18 @@ const routes = [
       }
     }
   },
+
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+    meta: { title: 'Login' }
+  },
   {
     path: '/my-account',
     name: 'MyAccount',
     component: MyAccount,
-    meta: { title: 'MyAccount' }
+    meta: { title: 'MyAccount', requiresAuth: true }
   },
   {
     path: '/track-order',
@@ -59,12 +85,6 @@ const routes = [
     component: Home,
     meta: { title: 'Home' }
   },
-  // {
-  //   path: '/wishlist',
-  //   name: 'Wishlist',
-  //   component: Wishlist,
-  //   meta: { title: 'Wishlist' }
-  // },
   {
     path: '/products/compare',
     name: 'CompareProduct',
@@ -95,23 +115,14 @@ const routes = [
     component: OrderSuccess,
     props: true,  // important to enable passing params as props
   },
-
-  // {
-  //   path: '/track-order',
-  //   name: 'TrackOrder',
-  //   component: TrackOrder,
-  //   meta: { title: 'Track Your Order' }
-  // },
   {
-    path: '/products:slug?',
-    // path: '/products/:categoryPath(.*)/:slug',
+    path: '/products/:slug?',
     name: 'Search',
     component: Shop,
     meta: { title: 'Shop' }
   },
   {
     path: '/categories/:categoryPath(.*)',
-    // path: '/products/:categoryPath(.*)/:slug',
     name: 'Shop',
     component: Shop,
     meta: { title: 'Shop' }
@@ -133,12 +144,6 @@ const routes = [
     name: 'SingleProduct',
     component: SingleProduct,
     meta: { title: 'Single Product' }
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: Login,
-    meta: { title: 'Login' }
   },  
   {
     path: '/register',
@@ -160,8 +165,8 @@ const routes = [
   },
   {
     path: '/faq',
-    name: 'faq',
-    component: faq,
+    name: 'Faq',
+    component: Faq,
     meta: { title: 'FAQ' }
   },
   {
@@ -194,7 +199,6 @@ const router = createRouter({
 
 // Add a navigation guard to protect certain routes
 router.beforeEach((to, from, next) => {
-  const store = useStore();  // Get access to the Vuex store
   const isLoggedIn = store.getters.isLoggedIn;  // Check if the user is logged in
 
   // If the route requires login but the user is not logged in
