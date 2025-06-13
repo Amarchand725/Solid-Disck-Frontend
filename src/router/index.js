@@ -3,27 +3,6 @@ import { nextTick } from 'vue';
 import { initAllPlugins } from '@/initPlugins';
 import store from '@/vuexstore/store';
 
-// import Home from '../views/Home.vue'
-// import CompareProduct from '../views/CompareProduct.vue'
-// import Configurator from '../views/Configurator.vue'
-// import Cart from '../views/Cart.vue'
-// import Checkout from '../views/Checkout.vue'
-// import Shop from '../views/Shop.vue'
-// import FilteredShop from '../views/FilteredShop.vue'
-// import BrandProducts from '../views/BrandProducts.vue'
-// import Login from '../views/Login.vue'
-// import Register from '../views/Register.vue'
-// import SingleProduct from '../views/SingleProduct.vue'
-// import PolicyPage from '../views/PolicyPage.vue'
-// import RequestQuote from '../views/RequestQuote.vue'
-// import faq from '../views/faq.vue'
-// import Blogs from '../views/Blogs.vue'
-// import BlogDetails from '../views/BlogDetails.vue'
-// import ContactUs from '../views/ContactUs.vue'
-// import MyAccount from '../views/MyAccount.vue'
-// import OrderSuccess from '../views/OrderSuccess.vue'
-// import TrackOrder from '../views/TrackOrder.vue'
-
 const Home = () => import('@/views/Home.vue')
 const CompareProduct = () => import('@/views/CompareProduct.vue')
 const Configurator = () => import('@/views/Configurator.vue')

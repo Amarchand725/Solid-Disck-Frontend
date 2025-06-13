@@ -2,17 +2,26 @@
   <div class="track-order-container">
     <div class="track-order-card">
       <h1 class="track-order-title">Track Your Order</h1>
-
       <!-- Input Section -->
       <div class="input-group">
         <input
-          v-model="trackingInput"
-          type="text"
-          placeholder="Enter Order number e.g ORDABC"
+          v-model="emailInput"
+          type="email"
+          placeholder="Enter shipping email"
           class="track-input"
         />
-        <button @click="trackOrder" class="track-button"> <span v-if="loading">Loading...</span>
-  <span v-else>Track</span></button>
+
+        <input
+          v-model="trackingInput"
+          type="text"
+          placeholder="Track order e.g ORDABC"
+          class="track-input"
+        />
+        
+        <button @click="trackOrder" class="track-button">
+          <span v-if="loading">Loading...</span>
+          <span v-else>Track</span>
+        </button>
       </div>
 
       <!-- Error Message -->
@@ -20,40 +29,26 @@
 
       <!-- Order Info Section -->
       <div v-if="order" class="order-details">
-        <h2 class="order-id">Order #{{ order.order_number }}</h2>
-        <p class="order-date"><strong>Placed On:</strong> {{ formattedDate }}</p>
-
+        <h2 class="order-id">Order #{{ order?.order_number }}</h2>
+        <p class="order-date">
+          <strong>Placed On:</strong> {{ formattedDate }} <br />
+          <strong>Tracking ID {{ order?.shipping_method }}#:</strong> {{ order?.tracking_number }}
+        </p>
 
         <!-- Status Timeline -->
-       <div class="status-progress">
-            <h3>Order Status</h3>
-            <div class="progress-wrapper">
-                <div
-                    v-for="(status, index) in allStatuses"
-                    :key="index"
-                    class="progress-step"
-                    :class="{ active: index <= currentStatusIndex }"
-                >
-                    <div class="step-circle">{{ index + 1 }}</div>
-                    <div class="step-label">{{ status.label }}</div>
-                </div>
-                </div>
-        </div>
-
-        <!-- Items -->
-        <div class="items-section">
-          <h3>Items</h3>
-          <ul>
-            <li v-for="item in order.items" :key="item.id">
-              <span>{{ item.product.title }} (x{{ item.quantity }})</span>
-              <span class="item-price">${{ item.sub_total }}</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Total -->
-        <div class="total-price">
-          Total: ${{ order.total }}
+        <div class="status-progress">
+          <h3>Order Status</h3>
+          <div class="progress-wrapper">
+            <div
+                v-for="(status, index) in allStatuses"
+                :key="index"
+                class="progress-step"
+                :class="{ active: index <= currentStatusIndex }"
+            >
+                <div class="step-circle">{{ index + 1 }}</div>
+                <div class="step-label">{{ status.label }}</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -65,18 +60,17 @@ import { ref, computed } from 'vue'
 import axios from '@/plugins/axios';
 
 const trackingInput = ref('')
+const emailInput = ref('')
 const order = ref(null)
 const error = ref('')
 const loading = ref(false)
 
-
 // Dummy data
-
-
 async function trackOrder() {
   const query = trackingInput.value.trim()
-  if (!query) {
-    error.value = 'Please enter an order number valid.'
+  const email = emailInput.value.trim()
+  if (!query || !email) {
+    error.value = 'Please enter both order number and shipping email.'
     order.value = null
     return
   }
@@ -86,11 +80,13 @@ async function trackOrder() {
   order.value = null
 
   try {
-    const response = await axios.get('/orders/track-order', { params: { query } })
+    const response = await axios.get('/orders/track-order', {
+      params: { query, email },
+    })
     order.value = response.data
   } catch (e) {
     if (e.response && e.response.status === 404) {
-      error.value = 'Order not found. Please check your ID.'
+      error.value = 'Order not found. Please check your order number and shipping email.'
     } else {
       error.value = 'An error occurred. Please try again later.'
     }
@@ -104,7 +100,9 @@ const allStatuses = [
   { label: 'Confirmed' },
   { label: 'Shipped' },
   { label: 'Out for Delivery' },
-  { label: 'Delivered' }
+  { label: 'Delivered' },
+  // { label: 'Cancelled' },
+  // { label: 'Returned' }
 ]
 
 const currentStatusIndex = computed(() => {
