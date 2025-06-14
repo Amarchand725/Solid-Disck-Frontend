@@ -35,18 +35,37 @@
           <strong>Tracking ID {{ order?.shipping_method }}#:</strong> {{ order?.tracking_number }}
         </p>
 
-        <!-- Status Timeline -->
-        <div class="status-progress">
-          <h3>Order Status</h3>
-          <div class="progress-wrapper">
+        <div class="track-order-horizontal">
+          <div class="progress-track">
             <div
-                v-for="(status, index) in allStatuses"
-                :key="index"
-                class="progress-step"
-                :class="{ active: index <= currentStatusIndex }"
+              v-for="(status, index) in allStatuses"
+              :key="status.key"
+              class="progress-step"
             >
-                <div class="step-circle">{{ index + 1 }}</div>
-                <div class="step-label">{{ status.label }}</div>
+              <div
+                class="circle"
+                :class="[
+                  'circle',
+                  {
+                    fullyDelivered: currentStatusIndex === allStatuses.length - 1, // All circles should turn orange
+                    completed: index < currentStatusIndex && currentStatusIndex !== allStatuses.length - 1,
+                    active: index === currentStatusIndex && status.key !== 'delivered',
+                    delivered: index === currentStatusIndex && status.key === 'delivered'
+                  }
+                ]"
+              >
+                <span v-if="currentStatusIndex === allStatuses.length - 1 || index < currentStatusIndex">✔</span>
+                <span v-else-if="status.key === 'out_for_delivered'">🚚</span>
+                <span v-else-if="status.key === 'delivered'">📦</span>
+              </div>
+
+              <div
+                v-if="index < allStatuses.length - 1"
+                class="line"
+                :class="getLineClass(index)"
+              ></div>
+
+              <div class="label">{{ status.label }}</div>
             </div>
           </div>
         </div>
@@ -96,20 +115,36 @@ async function trackOrder() {
 }
 
 const allStatuses = [
-  { label: 'Pending' },
-  { label: 'Confirmed' },
-  { label: 'Shipped' },
-  { label: 'Out for Delivery' },
-  { label: 'Delivered' },
-  // { label: 'Cancelled' },
-  // { label: 'Returned' }
+  { key: 'pending', label: 'Pending', class: 'secondary' },
+  { key: 'confirmed', label: 'Confirmed', class: 'primary' },
+  { key: 'shipped', label: 'Shipped', class: 'info' },
+  { key: 'out_for_delivered', label: 'Out for delivery', class: 'info' },
+  { key: 'delivered', label: 'Delivered', class: 'success' },
+  // { key: 'cancelled', label: 'Cancelled', class: 'danger' },
+  // { key: 'returned', label: 'Returned', class: 'warning' }
 ]
 
 const currentStatusIndex = computed(() => {
   if (!order.value) return -1
   return allStatuses.findIndex(
-    s => s.label.toLowerCase() === order.value.order_status.toLowerCase()
-    )
+    s => s.key === order.value.order_status.toLowerCase()
+  )
+})
+
+function getLineClass(index) {
+  if (currentStatusIndex.value === allStatuses.length - 1) {
+    // Fully delivered: highlight all lines orange
+    return 'orange'
+  } else if (index < currentStatusIndex.value) {
+    // Only completed steps get highlighted
+    return 'blue'
+  } else {
+    return ''
+  }
+}
+
+const outForDeliveryIndex = computed(() => {
+  return allStatuses.findIndex(s => s.key === 'out_for_delivered')
 })
 
 const formattedDate = computed(() => {
@@ -120,17 +155,6 @@ const formattedDate = computed(() => {
     day: 'numeric',
   })
 })
-
-
-function capitalize(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
-}
-
-const totalAmount = computed(() =>
-  order.value
-    ? order.value.items.reduce((sum, item) => sum + item.price * item.quantity, 0)
-    : 0
-)
 </script>
 <style scoped>
 .track-order-container {
@@ -266,7 +290,7 @@ const totalAmount = computed(() =>
 }
 
 .progress-step.active .step-circle {
-  background-color: #2563eb;
+  background-color: #001e4c;
   transform: scale(1.1);
 }
 
@@ -314,6 +338,92 @@ const totalAmount = computed(() =>
   font-weight: 600;
   font-size: 1.1rem;
   color: #1f2937;
+}
+.track-order-horizontal {
+  overflow-x: hidden; /* remove scroll */
+  padding: 2rem 1rem;
+  background: #f5f7fa;
+}
+
+.progress-track {
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.progress-step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100px; /* Adjust depending on spacing */
+  text-align: center;
+  z-index: 2;
+}
+
+.circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 3px solid #cbd5e1;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  position: relative;
+  z-index: 2;
+}
+
+.circle.completed {
+  background-color: #001e4c;
+  border-color: #001e4c;
+  color: white;
+}
+
+.circle.active {
+  border-color: #001e4c;
+  color: #001e4c;
+}
+
+.circle.delivered {
+  background-color: #faad14;
+  border-color: #faad14;
+  color: white;
+}
+
+.label {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #374151;
+}
+
+/* Progress Line */
+.line {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  width: calc(100% - 40px);
+  height: 4px;
+  background-color: #e5e7eb;
+  z-index: 1;
+  transform: translateX(20px);
+  border-radius: 2px;
+}
+
+.line.blue {
+  background-color: #001e4c; /* your primary step color */
+}
+
+.line.orange {
+  background-color: #faad14; /* completed (delivered) color */
+}
+
+.circle.fullyDelivered {
+  background-color: #faad14 !important;
+  border-color: #faad14 !important;
+  color: white !important;
 }
 
 /* Responsive Styles */
@@ -425,5 +535,4 @@ const totalAmount = computed(() =>
     color: #374151;
   }
 }
-
-</style>
+</style> 

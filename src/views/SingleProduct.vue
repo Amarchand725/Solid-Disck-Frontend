@@ -77,12 +77,14 @@
         try {
             loading.value = true;
             const data = await getProductBySlug(slug, categoryPath);
+
             productDetails.value = data.details;
             relatedProducts.value = data.related_products;
             categoryTrail.value = data.details.category_trail;
             categoryUrl.value = data.details.category_url;
         } catch (err) {
-            console.error('Failed to load product:', err);
+            console.error('Failed to load product:', err?.message || err);
+            productDetails.value = null;
         } finally {
             loading.value = false;
         }

@@ -1,5 +1,4 @@
 import { ref } from 'vue';
-import { useRoute } from 'vue-router';
 import axios from '@/plugins/axios';
 
 const searchedKeyWord = ref([]);
@@ -35,8 +34,15 @@ const getProductBySlug = async (slug, categoryPath) => {
 
   try {
     const res = await axios.get(`/products/${categoryPath}/${slug}`);
+    const data = res?.data?.data;
+
+    if (!data) {
+      console.warn(`Product not found for slug: "${slug}", category: "${categoryPath}"`);
+      throw new Error('Product not found');
+    }
+
     searchResults.value = [];
-    return res.data.data;
+    return data;
   } catch (err) {
     throw err;
   }
@@ -134,6 +140,7 @@ const searchProductsForPage = async (keyword) => {
       params: { keyword }
     })
     products.value = res.data.data;
+    console.log(res.data)
     searchedKeyWord.value = res.data.keyword;
     pagination.value = res.data.pagination;
   } catch (err) {

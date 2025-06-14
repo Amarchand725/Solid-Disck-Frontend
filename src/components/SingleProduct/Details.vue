@@ -164,7 +164,7 @@
                             </div>
                         </div>
                         <span v-if="productDetails?.unit_price > 0">
-                            <button style="button:hover:background: inherit !important;margin-bottom:10px;" @click="handleAddToCart" :disabled="loading" title="Add To Cart" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined add_to_cart">
+                            <button style="margin-bottom:10px;" @click="handleAddToCart" :disabled="loading" title="Add To Cart" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined add_to_cart">
                                 <span>{{ loading ? 'Adding...' : 'Add to Cart' }}</span>
                             </button>
                             <br>
@@ -195,7 +195,7 @@
     </div>
 </template>
 <script setup>
-    import { ref } from 'vue';
+    import { ref, onMounted, watch } from 'vue';
     import { useCart } from '@/composables/useCart'
     import { useSettings } from '@/composables/useSettings.js'
     import { useBuyNow } from '@/composables/useBuyNow'
@@ -239,6 +239,74 @@
     const onThumbnailError = (event) => {
         event.target.src = '/placeholders/270x280.svg'
     }
+
+    // function setMeta(name, content, isProperty = false) {
+    //     let tag = document.querySelector(`${isProperty ? 'meta[property="' + name + '"]' : 'meta[name="' + name + '"]'}`)
+    //     if (!tag) {
+    //         tag = document.createElement('meta')
+    //         tag.setAttribute(isProperty ? 'property' : 'name', name)
+    //         document.head.appendChild(tag)
+    //     }
+    //     tag.setAttribute('content', content)
+    // }
+
+    // function updateHeadAndZendesk() {
+    //     const product = props.productDetails
+    //     if (!product) return
+
+    //     const title = product.meta_title || product.title
+    //     const description = product.meta_description || product.title
+    //     const image = product.meta_image 
+    //         ? `${product.meta_image}` 
+    //         : `${product.thumbnail}`
+    //     const url = window.location.href
+
+    //     // Set Meta Tags
+    //     document.title = title
+    //     setMeta('description', description)
+    //     setMeta('keywords', product.title)
+
+    //     setMeta('og:title', title, true)
+    //     setMeta('og:description', description, true)
+    //     setMeta('og:image', image, true)
+    //     setMeta('og:url', url, true)
+
+    //     setMeta('twitter:title', title)
+    //     setMeta('twitter:description', description)
+    //     setMeta('twitter:card', 'summary_large_image')
+    //     setMeta('twitter:image', image)
+    //     setMeta('twitter:url', url)
+
+    //     // Zendesk Integration
+    //     if (typeof zE !== 'undefined') {
+    //         zE('webWidget', 'updateSettings', {
+    //         webWidget: {
+    //             contactForm: {
+    //             fields: [
+    //                 {
+    //                 id: 'product_url',
+    //                 prefill: { '*': url }
+    //                 }
+    //             ]
+    //             }
+    //         }
+    //         })
+    //     }
+
+    //     if (typeof Zendesk !== 'undefined') {
+    //         Zendesk.set('webWidget', 'helpCenter:setSuggestions', {
+    //         url
+    //         })
+    //     }
+    // }
+
+    // onMounted(() => {
+    //     updateHeadAndZendesk()
+    // })
+
+    // watch(() => props.productDetails, () => {
+    //     updateHeadAndZendesk()
+    // })
 </script>
 <style>
 .add_to_cart:hover {

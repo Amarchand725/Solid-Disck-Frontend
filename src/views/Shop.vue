@@ -13,8 +13,8 @@
 
               <CategoryBreadcrumb :categoryTrail="categoryTrail" />
 
-              <span class="path_name" v-if="searchedKeyWord.length > 0">
-                <span v-if="searchedKeyWord.length > 0" class="separator"> &gt; </span>
+              <span class="path_name" v-if="searchedKeyWord.length">
+                <span v-if="searchedKeyWord.length > 0 && categoryTrail.length > 0" class="separator"> &gt; </span>
                 <strong :title="searchedKeyWord">{{ searchedKeyWord }}</strong>
               </span>
             </div>
@@ -122,18 +122,30 @@
                   <img src="/assets/image/Spinner-2.gif" alt="Loading..." class="spinner-gif" />
                 </div>
                 <div v-else>
-                  <div class="product_view_comp_main" v-for="product in products" :key="product.id">
-                    <ProductList
-                      :product="product"
-                      :settings="settings"
-                      :loading="loader"
-                      :loading2="loading2"
-                      :quantities="quantities"
-                      @increase="increaseQuantity"
-                      @decrease="decreaseQuantity"
-                      @add-to-cart="handleAddToCart"
-                      @buy-it-now="handleBuyItNow"
-                    />
+                  <div v-if="products.length > 0">
+                    <div class="product_view_comp_main" v-for="product in products" :key="product.id">
+                      <ProductList
+                        :product="product"
+                        :settings="settings"
+                        :loading="loader"
+                        :loading2="loading2"
+                        :quantities="quantities"
+                        @increase="increaseQuantity"
+                        @decrease="decreaseQuantity"
+                        @add-to-cart="handleAddToCart"
+                        @buy-it-now="handleBuyItNow"
+                      />
+                    </div>
+                  </div>
+                  <div v-else class="no-products">
+                    <h3>Product not found</h3>
+                    <!-- <div class="placeholder-wrapper">
+                      <div
+                        v-for="n in 5"
+                        :key="n"
+                        class="placeholder-card"
+                      ></div>
+                    </div> -->
                   </div>
                 </div>
               </div>
@@ -233,9 +245,9 @@
 
     // Load category and its products
     const loadInitialData = async () => {
-  const segments = route.path.split('/').filter(Boolean);
-  const slug = segments[segments.length - 1];
-  const searchQuery = route.query.search;
+    const segments = route.path.split('/').filter(Boolean);
+    const slug = segments[segments.length - 1];
+    const searchQuery = route.query.search;
 
   products.value = []; // 👈 Clear previous products
   loading.value = true;
@@ -473,6 +485,36 @@ const loadProducts = async (page = 1) => {
 
 .loader-overlay {
   /* animation: fadeIn 0.3s ease-in-out; */
+}
+
+.no-products {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.placeholder-wrapper {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.placeholder-card {
+  width: 200px;
+  height: 250px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 10px;
+}
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 @keyframes fadeIn {
