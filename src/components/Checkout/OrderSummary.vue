@@ -31,7 +31,7 @@
             <div class="sub_total_main">
                 <div class="sub_total">
                     <span>Subtotal:</span>
-                    <p>{{ settings?.currency ?? '' }}{{ buyNowProduct?.unit_price }}</p>
+                    <p>{{ settings?.currency ?? '' }}{{ buyNowProduct?.subtotal }}</p>
                 </div>
                 <div class="sub_total"><span>Shipping:</span>
                     <p>{{ settings?.currency ?? '' }}{{ buyNowProduct?.shipping_cost }}</p>

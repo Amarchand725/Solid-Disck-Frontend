@@ -12,7 +12,7 @@
               </span>
               <CategoryBreadcrumb :categoryTrail="categoryData?.category_trail" />
 
-              <span class="path_name" v-if="searchedKeyWord.length > 0">
+              <span class="path_name" v-if="searchedKeyWord.length">
                 <span v-if="searchedKeyWord.length > 0" class="separator"> &gt; </span>
                 <strong :title="searchedKeyWord">{{ searchedKeyWord }}</strong>
               </span>
@@ -117,8 +117,8 @@
                     <ProductList
                       :product="product"
                       :settings="settings"
-                      :loading="loader"
-                      :loading2="loading2"
+                      :loading="loading"
+                      :loading2="loadingBuyNow"
                       :quantities="quantities"
                       @increase="increaseQuantity"
                       @decrease="decreaseQuantity"
@@ -173,6 +173,8 @@ import { useCategories } from '@/composables/useCategories';
 import { useProducts } from '@/composables/useProducts';
 import { useSettings } from '@/composables/useSettings.js';
 import { useCart } from '@/composables/useCart';
+import { useBuyNow } from '@/composables/useBuyNow'
+const { buyNow, loadingBuyNow} = useBuyNow()
 
 import { debounce } from 'lodash-es';
 
@@ -185,12 +187,11 @@ const {
   categoryData,
   searchedKeyWord,
   pagination,
-  loading,
   getProductsByCategory,
   searchProductsForPage,
   fetchProductsByAttributeValue
 } = useProducts();
-const { addToCart, buyItNow, loading2, loader } = useCart();
+const { addToCart, buyItNow, loading } = useCart();
 
 const categories = ref([]);
 const brands = ref([]);
@@ -219,7 +220,8 @@ const handleAddToCart = async (product) => {
   await addToCart(product.slug, quantity);
 };
 const handleBuyItNow = async (product) => {
-  await buyItNow(product.slug, 1);
+  const quantity = quantities.value[product.slug] || 1;
+  await buyNow(product.slug, quantity);
 };
 
 function parseSlugMatch(slugMatch) {

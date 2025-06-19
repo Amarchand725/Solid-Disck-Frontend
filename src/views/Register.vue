@@ -14,7 +14,7 @@
                 </div>
                 <div class="signup_main_inner">
                     <div class="signup_form">
-                        <h1>Create Your Account</h1>
+                        <h2>Create Your Account</h2>
                         <div class="signup_form_inner">
                             <form @submit.prevent="handleSubmit">
                                 <div class="ant-row css-i6rspj">

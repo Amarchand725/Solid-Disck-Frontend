@@ -23,6 +23,8 @@ const ContactUs = () => import('@/views/ContactUs.vue')
 const MyAccount = () => import('@/views/MyAccount.vue')
 const OrderSuccess = () => import('@/views/OrderSuccess.vue')
 const TrackOrder = () => import('@/views/TrackOrder.vue')
+const SiteMap = () => import('@/views/SiteMap.vue')
+const NotFound = () => import('@/views/NotFound.vue')
 
 const routes = [
   {
@@ -122,7 +124,7 @@ const routes = [
     path: '/products/:categoryPath(.*)/:slug',
     name: 'SingleProduct',
     component: SingleProduct,
-    meta: { title: 'Single Product' }
+    meta: { title: 'Product Details' }
   },  
   {
     path: '/register',
@@ -166,6 +168,17 @@ const routes = [
     component: ContactUs,
     meta: { title: 'ContactUs' }
   },
+  {
+    path: '/site-map',
+    name: 'SiteMap',
+    component: SiteMap,
+    meta: { title: 'Buy Essential Computer Parts for maximum performance' }
+  },
+  { 
+    path: '/:pathMatch(.*)*', 
+    name: 'NotFound', 
+    component: NotFound 
+  }
 ]
 
 const router = createRouter({
@@ -176,21 +189,30 @@ const router = createRouter({
   }
 });
 
-// Add a navigation guard to protect certain routes
-router.beforeEach((to, from, next) => {
-  const isLoggedIn = store.getters.isLoggedIn;  // Check if the user is logged in
+const visitedUrls = new Set();
 
-  // If the route requires login but the user is not logged in
-  if (to.meta.requiresAuth && !isLoggedIn) {
-    // Redirect the user to the login page
-    next({ name: 'login' });  // Assuming you have a route named 'login'
-  } else {
-    // Otherwise, allow access to the route
-    next();
+router.afterEach((to) => {
+   const fullUrl = window.location.origin + to.fullPath;
+   visitedUrls.add(fullUrl);
+
+  const defaultTitle = 'Solid Disk Direct';
+  const routeTitle = to.meta?.title;
+  const title = `${routeTitle} | ${defaultTitle}`;
+  // console.log('Page Title: '+title)
+  // console.log('Links: '+visitedUrls)
+  if (title) {
+    document.title = `${title}`;
+
+    if (window.zE) {
+      window.zE('webWidget', 'updateSettings', {
+        webWidget: {
+          pageTitle: title,
+          pageTitle: Array.from(visitedUrls).join('\n')
+        },
+      });
+    }
   }
-});
 
-router.afterEach((to, from) => {
   nextTick(() => {
     initAllPlugins();
   });

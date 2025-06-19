@@ -144,7 +144,6 @@ export function useCart() {
     }
   }
 
-
   const increaseCartItem = async (item_id) => {
     loading.value = true    
     try {
@@ -199,6 +198,7 @@ export function useCart() {
         data: withGuestId()
       }
       const response = await axios.delete('/cart/clear', config)
+      setCartData(response.data)
       message.value = response.data.message || 'Cart cleared.'
       toast.success(message.value)
     } catch (error) {

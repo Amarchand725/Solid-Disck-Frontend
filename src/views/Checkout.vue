@@ -14,7 +14,7 @@
             <div class="ant-row css-i6rspj">
                 <div class="ant-col ant-col-xs-24 ant-col-sm-24 ant-col-md-24 ant-col-lg-14 ant-col-xl-16 css-i6rspj">
                     <div class="head_main">
-                        <h1>Shipping Details</h1>
+                        <h2>Shipping Details</h2>
                     </div>
                     <ShippingDetailForm
                         :country="shippingCountry"
@@ -25,7 +25,7 @@
                         v-model:formData="shippingDetails"
                     />
                     <div class="head_main two">
-                        <h1>Billing Details</h1>
+                        <h2>Billing Details</h2>
                     </div>
                     <BillingDetailsForm 
                         v-model:formData="billingDetails" 

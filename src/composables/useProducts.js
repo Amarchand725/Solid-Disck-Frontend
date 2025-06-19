@@ -10,7 +10,7 @@ const pagination = ref({
   per_page: 10,
   last_page: 1,
 });
-const loading = ref(false);
+const loading = ref(true);
 const error = ref(null);
 const searchResults = ref([]); 
 
@@ -19,7 +19,8 @@ const getProducts = async () => {
   try {
     const res = await axios.get('/products');
     products.value = res.data.data;
-    searchResults.value = []
+    searchResults.value = [];
+    searchedKeyWord.value = [];
   } catch (err) {
     error.value = err;
   } finally {
@@ -34,17 +35,16 @@ const getProductBySlug = async (slug, categoryPath) => {
 
   try {
     const res = await axios.get(`/products/${categoryPath}/${slug}`);
-    const data = res?.data?.data;
-
+    const data = res?.data.data;
     if (!data) {
       console.warn(`Product not found for slug: "${slug}", category: "${categoryPath}"`);
-      throw new Error('Product not found');
     }
 
     searchResults.value = [];
+    searchedKeyWord.value = [];
     return data;
   } catch (err) {
-    throw err;
+    console.error("API error:", error);
   }
 };
 
@@ -70,7 +70,9 @@ const getProductsByCategory = async ({
     });
 
     products.value = res.data.data;
+    // console.log(products.value)
     searchResults.value = [];
+    searchedKeyWord.value = [];
     pagination.value = res.data.pagination;
   } catch (err) {
     error.value = err;
@@ -100,6 +102,8 @@ const getProductsByBrand = async ({
     });
     
     products.value = res.data.data;
+    searchResults.value = [];
+    searchedKeyWord.value = [];
     pagination.value = res.data.pagination;
   } catch (err) {
     error.value = err;
@@ -140,7 +144,7 @@ const searchProductsForPage = async (keyword) => {
       params: { keyword }
     })
     products.value = res.data.data;
-    console.log(res.data)
+    // console.log(res.data)
     searchedKeyWord.value = res.data.keyword;
     pagination.value = res.data.pagination;
   } catch (err) {
@@ -157,7 +161,7 @@ const fetchProductsByAttributeValue = async (attributeSlug) => {
     const response = await axios.get(`/attribute/products/${attributeSlug}`);
     products.value = response.data.data.products;
     categoryData.value = response.data.data.category;
-    searchedKeyWord.value = response.data.data.keyword;
+    searchedKeyWord.value = response.data.data.keyword || [];
   } catch (error) {
     console.error('Failed to fetch products', error);
   }

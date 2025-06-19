@@ -39,7 +39,11 @@ export function usePlaceOrder() {
         } else if (response.data.order_number) {
           // Payarc or other payment gateway: order is placed, show success page
           setCartData(response.data);
-          toast.success(response.data.message || 'You have placed your order successfully!');
+          // if(response.data.payment_method=='payarc'){
+          // }else{
+          //   toast.success(response.data.message || 'You have placed your order successfully!');
+          // }
+
           router.push({ name: 'OrderSuccess', params: { orderNumber: response.data.order_number } });
         } else {
           // Unexpected: success but no redirect or order number

@@ -21,7 +21,7 @@ const getGroups = async () => {
 
 export function useGroups() {
   return {
-    groups,
+    groups,   
     loading,
     error,
     getGroups,

@@ -80,7 +80,7 @@
                     </div>
                 </div>
             </div>
-            <div class="navbar-main-menu-rows" style="">
+            <div class="navbar-main-menu-rows" v-if="route.path !== '/site-map'">
                 <TopNavBar :settings="settings" />
                 <NavbarHeaderMenu />
             </div>
@@ -96,9 +96,12 @@ import Search from '@/components/Header/Search.vue'
 
 //
 import { useStore } from 'vuex';
+import { useRoute } from 'vue-router'
 import { computed } from 'vue';
 import { useSettings } from '@/composables/useSettings.js'
 import { useCart } from '@/composables/useCart'
+
+const route = useRoute()
 
 const { settings } = useSettings()
 const { cartItemCount, fullCart, removeCartItem } = useCart()

@@ -110,7 +110,7 @@
                         <span>{{ loading ? 'Adding...' : 'Add to Cart' }}</span>
                     </button>
                     <button style="background-color: #f5ad1d !important;" @click="handleBuyItNow(product)" :disabled="loading2" title="Buy it now" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined">
-                        <span>{{ loadingBuyNow ? 'Buying...' : 'Buy It Now' }}</span>
+                        <span>{{ loading2 ? 'Buying...' : 'Buy It Now' }}</span>
                     </button>
                 </span>
                 <span v-else>
@@ -138,7 +138,6 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['increase', 'decrease', 'add-to-cart', 'buy-it-now'])
-const { buyNow, loadingBuyNow} = useBuyNow()
 
 function increaseQuantity(product) {
   emit('increase', product)
@@ -153,9 +152,10 @@ function handleAddToCart(product) {
 }
 
 async function handleBuyItNow(product) {
-  const quantity = 1
+//   const quantity = 1
 //   loading2.value = true
-  await buyNow(product.slug, quantity)
+//   await buyNow(product.slug, quantity)
+    emit('buy-it-now', product)
 //   loading2.value = false
 }
 

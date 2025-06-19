@@ -2,181 +2,168 @@
   <div>
     <main>
       <section class="products_category_page">
-        <!-- Top Row -->
-        <div class="ant-row top_row css-i6rspj">
-          <div class="ant-col ant-col-xs-24 css-i6rspj">
-            <div class="breadcrumb_wrapper">
-              <span class="path_name">
-                <router-link title="Home" to="/">Home</router-link>
-                <span class="separator">&gt;</span>
-              </span>
+          <!-- Top Row -->
+          <div class="ant-row top_row css-i6rspj">
+            <div class="ant-col ant-col-xs-24 css-i6rspj">
+              <div class="breadcrumb_wrapper">
+                <span class="path_name">
+                  <router-link title="Home" to="/">Home</router-link>
+                  <span class="separator">&gt;</span>
+                </span>
 
-              <CategoryBreadcrumb :categoryTrail="categoryTrail" />
+                <CategoryBreadcrumb :categoryTrail="categoryTrail" />
 
-              <span class="path_name" v-if="searchedKeyWord.length">
-                <span v-if="searchedKeyWord.length > 0 && categoryTrail.length > 0" class="separator"> &gt; </span>
-                <strong :title="searchedKeyWord">{{ searchedKeyWord }}</strong>
-              </span>
-            </div>
-            <h1 :title="category?.name">{{ category?.name }}</h1>
-            <div class="header_description" v-html="category?.description"></div>
-          </div>
-        </div>
-
-        <!-- Second Row -->
-        <div class="ant-row second_row css-i6rspj">
-          <!-- Sidebar -->
-          <div class="ant-col left_bar ant-col-xs-5 css-i6rspj">
-            <div style="margin-bottom: 16px;">
-              <h2 title="Customize Your Results">Customize Your Results</h2>
-            </div>
-
-            <div style="margin-bottom: 15px;">
-              <div class="flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-4 mb-6">
-                <button 
-                  @click="resetFilters" 
-                  class="filter-input mt-3 md:mt-0 md:ml-4 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-md shadow-sm transition"
-                >
-                  Reset Filters
-                </button>
+                <span class="path_name" v-if="searchedKeyWord.length">
+                  <span v-if="searchedKeyWord.length > 0 && categoryTrail.length > 0" class="separator"> &gt; </span>
+                  <strong :title="searchedKeyWord">{{ searchedKeyWord }}</strong>
+                </span>
               </div>
-
-              <!-- Filters -->
-              <div class="ant-collapse ant-collapse-icon-position-start side_bar_tabs css-i6rspj">
-                <!-- Brand Filter -->
-                <div title="Manufacturer" class="ant-collapse-item ant-collapse-item-active">
-                  <div class="ant-collapse-header" role="button" aria-expanded="true" aria-disabled="false" tabindex="0">
-                    <div class="ant-collapse-expand-icon">
-                      <span role="img" aria-label="caret-right" class="anticon anticon-caret-right ant-collapse-arrow">
-                        <svg viewBox="0 0 1024 1024" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="transform: rotate(90deg);">
-                          <path d="M715.8 493.5L335 165.1c-14.2-12.2-35-1.2-35 18.5v656.8c0 19.7 20.8 30.7 35 18.5l380.8-328.4c10.9-9.4 10.9-27.6 0-37z" />
-                        </svg>
-                      </span>
-                    </div>
-                    <span class="ant-collapse-header-text">Manufacturer</span>
-                  </div>
-                  <div class="ant-collapse-content ant-collapse-content-active">
-                    <div class="ant-collapse-content-box">
-                      <div class="flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-4 mb-6">
-                        <select 
-                          v-model="selectedBrand" 
-                          @change="loadProducts"
-                          class="filter-input w-full mt-3 px-4 py-2 border border-gray-300 rounded-md"
-                        >
-                          <option :value="null">All Brands</option>
-                          <option v-for="brand in brands" :key="brand.id" :value="brand.slug">
-                            {{ brand.name }}
-                          </option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Category Filter -->
-                <div title="Category" class="ant-collapse-item ant-collapse-item-active">
-                  <div class="ant-collapse-header" role="button" aria-expanded="true" aria-disabled="false" tabindex="0">
-                    <div class="ant-collapse-expand-icon">
-                      <span role="img" aria-label="caret-right" class="anticon anticon-caret-right ant-collapse-arrow">
-                        <svg viewBox="0 0 1024 1024" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="transform: rotate(90deg);">
-                          <path d="M715.8 493.5L335 165.1c-14.2-12.2-35-1.2-35 18.5v656.8c0 19.7 20.8 30.7 35 18.5l380.8-328.4c10.9-9.4 10.9-27.6 0-37z" />
-                        </svg>
-                      </span>
-                    </div>
-                    <span class="ant-collapse-header-text">Category</span>
-                  </div>
-                  <div class="ant-collapse-content ant-collapse-content-active">
-                    <div class="ant-collapse-content-box">
-                      <div class="flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-4 mb-6">
-                        <select 
-                          v-model="selectedCategory" 
-                          @change="loadProducts"
-                          class="filter-input w-full mt-3 px-4 py-2 border border-gray-300 rounded-md"
-                        >
-                          <option :value="null">All Categories</option>
-                          <option v-for="cat in categories" :key="cat.id" :value="cat.slug">
-                            {{ cat.name }}
-                          </option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div> <!-- End Collapse -->
+              <h1 :title="category?.name">{{ category?.name }}</h1>
+              <div class="header_description" v-html="category?.description"></div>
             </div>
           </div>
 
-          <!-- Product List -->
-          <div class="ant-col ant-col-xs-19 css-i6rspj">
-            <div class="col_right">
-              <div class="product_list_wrapper">
-                <!-- <div v-if="loading" class="product_view_comp_main">
-                  <div class="ant-row css-i6rspj">
-                    Loading...
-                  </div>
+          <!-- Second Row -->
+          <div class="ant-row second_row css-i6rspj">
+            <!-- Sidebar -->
+            <div class="ant-col left_bar ant-col-xs-5 css-i6rspj">
+              <div style="margin-bottom: 16px;">
+                <h2 title="Customize Your Results">Customize Your Results</h2>
+              </div>
+
+              <div style="margin-bottom: 15px;">
+                <div class="flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-4 mb-6">
+                  <button 
+                    @click="resetFilters" 
+                    class="filter-input mt-3 md:mt-0 md:ml-4 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-md shadow-sm transition"
+                  >
+                    Reset Filters
+                  </button>
                 </div>
-                <div v-else-if="products.length === 0" class="no-products">
-                  No products found.
-                </div> -->
-                <div v-if="loading" class="loader-overlay">
-                  <img src="/assets/image/Spinner-2.gif" alt="Loading..." class="spinner-gif" />
-                </div>
-                <div v-else>
-                  <div v-if="products.length > 0">
-                    <div class="product_view_comp_main" v-for="product in products" :key="product.id">
-                      <ProductList
-                        :product="product"
-                        :settings="settings"
-                        :loading="loader"
-                        :loading2="loading2"
-                        :quantities="quantities"
-                        @increase="increaseQuantity"
-                        @decrease="decreaseQuantity"
-                        @add-to-cart="handleAddToCart"
-                        @buy-it-now="handleBuyItNow"
-                      />
+
+                <!-- Filters -->
+                <div class="ant-collapse ant-collapse-icon-position-start side_bar_tabs css-i6rspj">
+                  <!-- Brand Filter -->
+                  <div title="Manufacturer" class="ant-collapse-item ant-collapse-item-active">
+                    <div class="ant-collapse-header" role="button" aria-expanded="true" aria-disabled="false" tabindex="0">
+                      <div class="ant-collapse-expand-icon">
+                        <span role="img" aria-label="caret-right" class="anticon anticon-caret-right ant-collapse-arrow">
+                          <svg viewBox="0 0 1024 1024" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="transform: rotate(90deg);">
+                            <path d="M715.8 493.5L335 165.1c-14.2-12.2-35-1.2-35 18.5v656.8c0 19.7 20.8 30.7 35 18.5l380.8-328.4c10.9-9.4 10.9-27.6 0-37z" />
+                          </svg>
+                        </span>
+                      </div>
+                      <span class="ant-collapse-header-text">Manufacturer</span>
+                    </div>
+                    <div class="ant-collapse-content ant-collapse-content-active">
+                      <div class="ant-collapse-content-box">
+                        <div class="flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-4 mb-6">
+                          <select 
+                            v-model="selectedBrand" 
+                            @change="loadProducts"
+                            class="filter-input w-full mt-3 px-4 py-2 border border-gray-300 rounded-md"
+                          >
+                            <option :value="null">All Brands</option>
+                            <option v-for="brand in brands" :key="brand.id" :value="brand.slug">
+                              {{ brand.name }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div v-else class="no-products">
-                    <h3>Product not found</h3>
-                    <!-- <div class="placeholder-wrapper">
-                      <div
-                        v-for="n in 5"
-                        :key="n"
-                        class="placeholder-card"
-                      ></div>
-                    </div> -->
+
+                  <!-- Category Filter -->
+                  <div title="Category" class="ant-collapse-item ant-collapse-item-active">
+                    <div class="ant-collapse-header" role="button" aria-expanded="true" aria-disabled="false" tabindex="0">
+                      <div class="ant-collapse-expand-icon">
+                        <span role="img" aria-label="caret-right" class="anticon anticon-caret-right ant-collapse-arrow">
+                          <svg viewBox="0 0 1024 1024" width="1em" height="1em" fill="currentColor" aria-hidden="true" style="transform: rotate(90deg);">
+                            <path d="M715.8 493.5L335 165.1c-14.2-12.2-35-1.2-35 18.5v656.8c0 19.7 20.8 30.7 35 18.5l380.8-328.4c10.9-9.4 10.9-27.6 0-37z" />
+                          </svg>
+                        </span>
+                      </div>
+                      <span class="ant-collapse-header-text">Category</span>
+                    </div>
+                    <div class="ant-collapse-content ant-collapse-content-active">
+                      <div class="ant-collapse-content-box">
+                        <div class="flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-4 mb-6">
+                          <select 
+                            v-model="selectedCategory" 
+                            @change="loadProducts"
+                            class="filter-input w-full mt-3 px-4 py-2 border border-gray-300 rounded-md"
+                          >
+                            <option :value="null">All Categories</option>
+                            <option v-for="cat in categories" :key="cat.id" :value="cat.slug">
+                              {{ cat.name }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div> <!-- End Collapse -->
+              </div>
+            </div>
+
+            <!-- Product List -->
+            <div v-if="loading" class="loader-overlay">
+              <img src="/assets/image/Spinner-2.gif" alt="Loading..." class="spinner-gif" />
+            </div>
+            <div v-else-if="!loading && products.length > 0" class="ant-col ant-col-xs-19 css-i6rspj">
+              <div class="col_right">
+                <div class="product_list_wrapper">
+                  <div class="product_view_comp_main" v-for="product in products" :key="product.id">
+                    <ProductList
+                      :product="product"
+                      :settings="settings"
+                      :loading="loader"
+                      :loading2="loading2"
+                      :quantities="quantities"
+                      @increase="increaseQuantity"
+                      @decrease="decreaseQuantity"
+                      @add-to-cart="handleAddToCart"
+                      @buy-it-now="handleBuyItNow"
+                    />
+                  </div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="bottom_navigation" v-if="pagination && pagination.total > 0">
+                  <p>
+                    Showing <b>{{ showingStart }} - {{ showingEnd }}</b> Results
+                  </p>
+                  <div class="bottom_pagination">
+                    <ul class="ant-pagination css-i6rspj">
+                      <li
+                        v-for="page in visiblePages"
+                        :key="page"
+                        :title="page"
+                        :class="[
+                          'ant-pagination-item',
+                          `ant-pagination-item-${page}`,
+                          page === pagination.current_page ? 'ant-pagination-item-active' : ''
+                        ]"
+                        tabindex="0"
+                        @click="goToPage(page)"
+                      >
+                        <a rel="index follow">{{ page }}</a>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
-
-              <!-- Pagination -->
-              <div class="bottom_navigation" v-if="pagination && pagination.total > 0">
-                <p>
-                  Showing <b>{{ showingStart }} - {{ showingEnd }}</b> Results
-                </p>
-                <div class="bottom_pagination">
-                  <ul class="ant-pagination css-i6rspj">
-                    <li
-                      v-for="page in visiblePages"
-                      :key="page"
-                      :title="page"
-                      :class="[
-                        'ant-pagination-item',
-                        `ant-pagination-item-${page}`,
-                        page === pagination.current_page ? 'ant-pagination-item-active' : ''
-                      ]"
-                      tabindex="0"
-                      @click="goToPage(page)"
-                    >
-                      <a rel="index follow">{{ page }}</a>
-                    </li>
-                  </ul>
+            </div> 
+            <!-- End Product List -->
+            <div v-else-if="!loading && products.length === 0" class="no-products ant-col ant-col-xs-11 css-i6rspj">
+              <div class="col_right">
+                <div class="product_list_wrapper">
+                  <h3>Product not found</h3>
                 </div>
               </div>
             </div>
-          </div> <!-- End Product List -->
-        </div>
+            <div class="ant-col ant-col-xs-8 css-i6rspj"></div>
+          </div>
       </section>
     </main>
   </div>
@@ -194,6 +181,8 @@
     import { useProducts } from '@/composables/useProducts';
     import { useSettings } from '@/composables/useSettings.js'
     import { useCart } from '@/composables/useCart'
+    import { useBuyNow } from '@/composables/useBuyNow'
+    const { buyNow, loadingBuyNow} = useBuyNow()
 
     import { debounce } from 'lodash-es';
 
@@ -240,7 +229,10 @@
     };
 
     const handleBuyItNow = async (product) => {
-        await buyItNow(product.slug, 1);
+        const quantity = quantities.value[product.slug] || 1; 
+        console.log('Product Qty: '+quantity);
+        await buyNow(product.slug, quantity)
+        // await buyItNow(product.slug, quantity);
     };
 
     // Load category and its products
@@ -315,14 +307,14 @@ const loadProducts = async (page = 1) => {
   }
 };
     // Lifecycle
-   onMounted(async () => {
-  categories.value = await getCategories();
-  brands.value = await getBrands();
+  onMounted(async () => {
+    categories.value = await getCategories();
+    brands.value = await getBrands();
 
-  // Use nextTick to ensure route.query.search is available
-  await nextTick();
-  await loadInitialData();
-});
+    // Use nextTick to ensure route.query.search is available
+    await nextTick();
+    await loadInitialData();
+  });
 
   watch(
       () => [route.params.slug, route.query.search],
@@ -332,14 +324,14 @@ const loadProducts = async (page = 1) => {
   );
 
   
-  const debouncedLoadInitialData = debounce(loadInitialData, 300);
+  // const debouncedLoadInitialData = debounce(loadInitialData, 300);
 
-  watch(
-    () => [route.params.slug, route.query.search],
-    () => {
-      debouncedLoadInitialData();
-    }
-  );
+  // watch(
+  //   () => [route.params.slug, route.query.search],
+  //   () => {
+  //     debouncedLoadInitialData();
+  //   }
+  // );
 
 
     const resetFilters = () => {

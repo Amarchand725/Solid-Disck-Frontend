@@ -25,7 +25,7 @@
         <!-- Country -->
         <div class="ant-col ant-col-xl-12 css-i6rspj">
           <div class="ant-form-item css-i6rspj ant-form-item-has-success">
-              <select
+              <!-- <select
                 v-model="billCountry"
                 @change="handleCountryChange"
                 class="ant-select ant-select-outlined ant-select-in-form-item ant-select-status-success css-i6rspj ant-select-single ant-select-show-arrow ant-select-show-search"
@@ -36,7 +36,23 @@
                 <option v-for="country in billCountries" :key="country.id" :value="country.id">
                   {{ country.name }}
                 </option>
-              </select>
+              </select> -->
+              <select
+                v-model="billCountry"
+                @change="handleCountryChange"
+                style="width: 100%; height: 40px; padding: 0 12px; line-height: 40px;"
+                class="custom-select"
+                aria-required="true"
+                :aria-invalid="errors.billCountry ? 'true' : 'false'"
+              >
+                <option value="">Select Country</option>
+                <option
+                  v-for="country in billCountries" :key="country.id" :value="country.id"
+                  style="padding: 6px 10px;"
+                >
+                  {{ country.name }}
+                </option>
+            </select>
               <p v-if="errors.billCountry" class="error-message">{{ errors.billCountry }}</p>
           </div>
         </div>
@@ -103,7 +119,7 @@
         <!-- State -->
         <div class="ant-col ant-col-xl-12 css-i6rspj">
           <div class="ant-form-item css-i6rspj ant-form-item-has-success">
-            <select
+            <!-- <select
               v-model="billState"
               @change="handleStateChange"
               :disabled="!billCountry"
@@ -115,6 +131,24 @@
               <option v-for="state in billStates" :key="state.id" :value="state.id">
                 {{ state.name }}
               </option>
+            </select> -->
+
+            <select
+                v-model="billState"
+                @change="handleStateChange"
+                :disabled="!billCountry"
+                style="width: 100%; height: 40px; padding: 0 12px; line-height: 40px;"
+                class="custom-select"
+                aria-required="true"
+                :aria-invalid="errors.billState ? 'true' : 'false'"
+              >
+                <option value="">Select State</option>
+                <option
+                  v-for="state in billStates" :key="state.id" :value="state.id"
+                  style="padding: 6px 10px;"
+                >
+                  {{ state.name }}
+                </option>
             </select>
             <p v-if="errors.billState" class="error-message">{{ errors.billState }}</p>
           </div>
@@ -123,7 +157,7 @@
         <!-- City -->
         <div class="ant-col ant-col-xl-12 css-i6rspj">
           <div class="ant-form-item css-i6rspj ant-form-item-has-success">
-            <select
+            <!-- <select
               v-model="billCity"
               :disabled="!billState"
               class="ant-select ant-select-outlined ant-select-in-form-item css-i6rspj ant-select-single ant-select-show-arrow ant-select-show-search"
@@ -134,6 +168,22 @@
               <option v-for="city in billCities" :key="city.id" :value="city.id">
                 {{ city.name }}
               </option>
+            </select> -->
+            <select
+                v-model="billCity"
+                :disabled="!billState"
+                style="width: 100%; height: 40px; padding: 0 12px; line-height: 40px;"
+                class="custom-select"
+                aria-required="true"
+                :aria-invalid="errors.billCity ? 'true' : 'false'"
+              >
+                <option value="">Select State</option>
+                <option
+                  v-for="city in billCities" :key="city.id" :value="city.id"
+                  style="padding: 6px 10px;"
+                >
+                  {{ city.name }}
+                </option>
             </select>
             <p v-if="errors.billCity" class="error-message">{{ errors.billCity }}</p>
           </div>

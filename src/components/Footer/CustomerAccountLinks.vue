@@ -11,7 +11,7 @@
             <router-link class="tags" title="About Us" to="/policies/about-us">About Us</router-link>
             <router-link class="tags" title="Contact Us" to="/contact-us">Contact Us</router-link>
             <router-link class="tags" title="Blogs" to="/blogs">Blogs</router-link>
-            <!-- <a class="tags" title="Sitemap" href="#">Sitemap</a> -->
+            <router-link class="tags" title="Sitemap" to="/site-map">Sitemap</router-link>
         </div>
         <div class="seals">
             <img 

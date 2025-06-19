@@ -38,11 +38,11 @@
                                     style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;"
                                 >
                             </picture>
-                            <div class="product_magnifier" style="background-position: -78.6458px 42.3438px; 
+                            <!-- <div class="product_magnifier" style="background-position: -78.6458px 42.3438px; 
                                 background-image: url(&quot;https://alpha-project-new.s3.us-east-2.amazonaws.com/production/uploads/1153005/WUH722222ALE6L1.webp&quot;); 
                                 background-size: 1200px 1200px; background-repeat: no-repeat; display: none; top: -46.9375px; left: 1.45833px; width: 100px; height: 100px;"
                             >
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <p style="border-bottom: 1px solid rgb(204, 204, 204); color: rgb(0, 0, 0); padding: 1rem 0.5rem; font-size: 14px;">
@@ -71,7 +71,7 @@
                                     <img
                                         :src="productImage?.image || '/placeholders/80x80.svg'"
                                         :alt="productDetails?.title"
-                                        title="productDetails?.title"
+                                        :title="productDetails?.title"
                                         loading="lazy"
                                         decoding="async"
                                         width="300"
@@ -218,7 +218,7 @@
     // }
 
     const handleBuyItNow = async () => {
-        await buyNow(props.productDetails.slug, 1);  // pass slug & qty to your buyNow function
+        await buyNow(props.productDetails.slug, quantity.value);  // pass slug & qty to your buyNow function
     };
 
     function shortDescription(html, limit = '') {

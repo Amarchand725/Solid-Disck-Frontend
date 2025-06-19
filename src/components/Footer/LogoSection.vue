@@ -50,6 +50,9 @@
             <a target="_blank" class="footer_icon" v-if="settings && settings.twitter_link" :href="settings?.twitter_link">
                 <img src="/assets/image/Twitter-Footer-Icon.webp" aria-label="Visit our Twitter Page" loading="lazy" title="Visit our Twitter Page" alt="Twitter Footer Icon">
             </a>
+            <a target="_blank" class="footer_icon" v-if="settings && settings.linked_in_link" :href="settings?.linked_in_link">
+                <img src="/assets/image/linkedin-Footer-Icon.png" style="width: 52px;" aria-label="Visit our Linkedin Page" loading="lazy" title="Visit our Linkedin Page" alt="LinkedIn Footer Icon">
+            </a>
             <a target="_blank" class="footer_icon" v-if="settings && settings.pinterest_link" :href="settings?.pinterest_link">
                 <img src="/assets/image/Pinterest-Footer-Icon.webp" aria-label="Visit our Pinterest Page" loading="lazy" title="Visit our Pinterest Page" alt="Pinterest Footer Icon">
             </a>

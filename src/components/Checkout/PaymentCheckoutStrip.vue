@@ -3,6 +3,7 @@
         <div class="head_main">
             <h3>Payment Method</h3>
             <img 
+                alt="payment-method"
                 loading="lazy" width="150" height="20" decoding="async" data-nimg="1" 
                 srcset="/assets/image/payment_icons.avif" 
                 src="/assets/image/payment_icons.avif" 
@@ -38,8 +39,6 @@
             <button @click="handlePlaceOrder" :disabled="loading" type="button" id="pay-button" class="w-full h-[50px] black-btn flex justify-center items-center bank_of_america_btn_main">
                 {{ loading ? 'Placing Order...' : 'Place Order' }}
             </button>
-            <!-- <p v-if="error" class="error">{{ error }}</p> -->
-            <!-- <img id="loadingIcon" height="30px" width="30px" src="/loading.gif" style="margin-left: 10px; display: none;" alt="Loading"> -->
         </div>
     </div>
 </template>

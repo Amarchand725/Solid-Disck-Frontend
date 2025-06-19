@@ -58,7 +58,7 @@
                                         <div role="tabpanel" tabindex="0" aria-hidden="false" class="ant-tabs-tabpane ant-tabs-tabpane-active" id="rc-tabs-2-panel-1" aria-labelledby="rc-tabs-2-tab-1">
                                             <div class="dashboard_wrapper">
                                                 <div>
-                                                    <h1>Personal Information</h1>
+                                                    <h2>Personal Information</h2>
                                                 </div>
                                                 <div class="ant-row top_wrapper css-i6rspj">
                                                     <div class="ant-col ant-col-md-24 ant-col-xl-12 css-i6rspj">
@@ -435,7 +435,7 @@
                                             <div class="order_wrapper">
                                                 <div class="modal" style="display: none;">
                                                     <div class="modal-content"><span class="close">×</span>
-                                                        <h1>Products</h1>
+                                                        <h2ss>Products</h2ss>
                                                         <table class="table">
                                                             <thead>
                                                                 <tr>
@@ -490,7 +490,7 @@
                                             <div class="order_wrapper">
                                                 <div class="modal" style="display: none;">
                                                     <div class="modal-content"><span class="close">×</span>
-                                                        <h1>Products</h1>
+                                                        <h2>Products</h2>
                                                         <table class="table">
                                                             <thead>
                                                                 <tr>
@@ -544,7 +544,7 @@
                                             <div class="order_wrapper">
                                                 <div class="modal" style="display: none;">
                                                     <div class="modal-content"><span class="close">×</span>
-                                                        <h1>Products</h1>
+                                                        <h2>Products</h2>
                                                         <table class="table">
                                                             <thead>
                                                                 <tr>
@@ -598,7 +598,7 @@
                                             <div class="order_wrapper">
                                                 <div class="modal" style="display: none;">
                                                     <div class="modal-content"><span class="close">×</span>
-                                                        <h1>Products</h1>
+                                                        <h2>Products</h2>
                                                         <table class="table">
                                                             <thead>
                                                                 <tr>

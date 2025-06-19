@@ -25,9 +25,9 @@ const getSettings = async () => {
     }
 
     // ✅ Set title if available
-    if (settings.value?.name) {
-      document.title = settings.value.name;
-    }
+    // if (settings.value?.name) {
+    //   document.title = settings.value.name;
+    // }
 
   } catch (error) {
     console.error('Error fetching settings:', error);

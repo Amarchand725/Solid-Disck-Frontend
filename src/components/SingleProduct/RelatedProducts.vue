@@ -32,13 +32,13 @@
                                     :srcset="product.thumbnail || '/placeholders/270x280.svg'"
                                     type="image/webp"
                                 />
-                                <img
+                                <img 
                                     :alt="product?.title"
                                     :title="product?.title"
                                     fetchpriority="high" width="188" height="188" decoding="async"
                                     :src="product?.thumbnail || '/placeholders/270x280.svg'"
                                     @error="onImageError"
-                                    style="color: transparent;"
+                                    style="color: transparent;max-width: 100%;"
                                 />
                             </picture>
                             </router-link>

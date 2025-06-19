@@ -21,7 +21,7 @@
                 </span>
                 <div class="contact_form_main">
                     <div class="contact_form">
-                        <h1>Get in Touch</h1>
+                        <h2>Get in Touch</h2>
                         <div class="contact_form_inner">
                             <form @submit.prevent="handleSubmit" id="control-hooks" autocomplete="off" class="ant-form ant-form-vertical css-i6rspj req_for_quote_form_fields">
                                 <div class="ant-form-item css-i6rspj">

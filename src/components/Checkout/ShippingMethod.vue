@@ -1,6 +1,6 @@
 <template>
     <div class="head_main two">
-        <h1>Shipping Method</h1>
+        <h2>Shipping Method</h2>
     </div>
     <div class="bill_to_diff">
         <p class="bill_to_diff_para">Choose Your Preferred Delivery Method</p>
@@ -67,7 +67,7 @@
     </div>
 </template>
 <script setup>
-import { toRefs, ref } from 'vue'
+import { toRefs, ref, watch } from 'vue'
 import { useShippingRates } from '@/composables/useShippingRates.js'
 import { useCart } from '@/composables/useCart'
 const { updateShipping } = useCart()
@@ -98,6 +98,17 @@ const selectRate = (rate, index) => {
     //   updateShipping(rate)
     updateShipping(rate, country.value)
 }
+
+watch(shippingRates, (rates) => {
+  if (rates?.length && selectedRate.value === null) {
+    const defaultIndex = rates.findIndex(
+      (rate) => rate.serviceName === 'FedEx Ground®'
+    )
+    if (defaultIndex !== -1) {
+      selectRate(rates[defaultIndex], defaultIndex)
+    }
+  }
+})
 </script>
 <style scoped>
 tr:hover {

@@ -6,16 +6,33 @@
         <!-- Country Select -->
         <div class="ant-col ant-col-xl-12 css-i6rspj">
           <div class="ant-form-item css-i6rspj ant-form-item-has-success">
-            <select
+            <!-- <select
               v-model="shippingCountry"
               @change="handleShippingCountryChange"
               class="ant-select ant-select-outlined ant-select-in-form-item ant-select-status-success css-i6rspj ant-select-single ant-select-show-arrow ant-select-show-search"
             >
-              <option value="">Select Country</option>
+              <option value=""> Select Country</option>
               <option v-for="country in shippingCountries" :key="country.id" :value="country.id">
                 {{ country.name }}
               </option>
+            </select> -->
+            <select
+                v-model="shippingCountry"
+                @change="handleShippingCountryChange"
+                style="width: 100%; height: 40px; padding: 0 12px; line-height: 40px;"
+                class="custom-select"
+              >
+                <option value="">Select Country</option>
+                <option
+                  v-for="country in shippingCountries"
+                  :key="country.id"
+                  :value="country.id"
+                  style="padding: 6px 10px;"
+                >
+                  {{ country.name }}
+                </option>
             </select>
+
             <p v-if="errors.shippingCountry" class="error-text">{{ errors.shippingCountry }}</p>
           </div>
         </div>
@@ -82,7 +99,7 @@
         <!-- State Select -->
         <div class="ant-col ant-col-xl-12 css-i6rspj">
           <div class="ant-form-item css-i6rspj">
-            <select
+            <!-- <select
               v-model="shippingState"
               @change="handleShippingStateChange"
               :disabled="!shippingCountry"
@@ -92,6 +109,21 @@
               <option v-for="state in shippingStates" :key="state.id" :value="state.id">
                 {{ state.name }}
               </option>
+            </select> -->
+            <select
+                v-model="shippingState"
+                @change="handleShippingStateChange"
+                :disabled="!shippingCountry"
+                style="width: 100%; height: 40px; padding: 0 12px; line-height: 40px;"
+                class="custom-select"
+              >
+                <option value="">Select State</option>
+                <option
+                  v-for="state in shippingStates" :key="state.id" :value="state.id"
+                  style="padding: 6px 10px;"
+                >
+                  {{ state.name }}
+                </option>
             </select>
             <p v-if="errors.shippingState" class="error-text">{{ errors.shippingState }}</p>
           </div>
@@ -100,7 +132,7 @@
         <!-- City Select -->
         <div class="ant-col ant-col-xl-12 css-i6rspj">
           <div class="ant-form-item css-i6rspj">
-            <select
+            <!-- <select
               v-model="shippingCity"
               :disabled="!shippingState"
               class="ant-select ant-select-outlined ant-select-in-form-item css-i6rspj ant-select-single ant-select-show-arrow ant-select-show-search"
@@ -109,6 +141,20 @@
               <option v-for="city in shippingCities" :key="city.id" :value="city.id">
                 {{ city.name }}
               </option>
+            </select> -->
+            <select
+                v-model="shippingCity"
+                :disabled="!shippingState"
+                style="width: 100%; height: 40px; padding: 0 12px; line-height: 40px;"
+                class="custom-select"
+              >
+                <option value="">Select State</option>
+                <option
+                  v-for="city in shippingCities" :key="city.id" :value="city.id"
+                  style="padding: 6px 10px;"
+                >
+                  {{ city.name }}
+                </option>
             </select>
             <p v-if="errors.shippingCity" class="error-text">{{ errors.shippingCity }}</p>
           </div>
@@ -184,7 +230,6 @@ const shippingForm = reactive({
   first_name: '',
   last_name: '',
   address: '',
-  address_line_2: '',
   shippingCountry: '',
   shippingState: '',
   shippingCity: '',

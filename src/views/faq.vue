@@ -72,7 +72,7 @@
     </div>
 </template>
 <script>
-     $(document).ready(function () {
+    $(document).ready(function () {
       $('.faq-item').click(function () {
         // Close all answers
         $('.faq-answer').slideUp();
