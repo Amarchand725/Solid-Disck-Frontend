@@ -107,10 +107,13 @@
             </div>
 
             <!-- Product List -->
-            <div v-if="loading" class="loader-overlay">
+            <!-- <div v-if="loading" class="loader-overlay">
+              <img src="/assets/image/Spinner-2.gif" alt="Loading..." class="spinner-gif" />
+            </div> -->
+            <div v-if="loading && products.length === 0" class="loader-overlay">
               <img src="/assets/image/Spinner-2.gif" alt="Loading..." class="spinner-gif" />
             </div>
-            <div v-else-if="!loading && products.length > 0" class="ant-col ant-col-xs-19 css-i6rspj">
+            <div class="ant-col ant-col-xs-19 css-i6rspj">
               <div class="col_right">
                 <div class="product_list_wrapper">
                   <div class="product_view_comp_main" v-for="product in products" :key="product.id">
@@ -126,10 +129,23 @@
                       @buy-it-now="handleBuyItNow"
                     />
                   </div>
+
+                  <!-- Load More Button -->
+                  <div class="load-more-container" v-if="hasMorePages">
+                    <button @click="loadMoreProducts" :disabled="isLoadingMore" class="load-more-button">
+                      <span v-if="!isLoadingMore">Load More Products</span>
+                      <span v-else>Loading...</span>
+                    </button>
+                  </div>
+
+                  <!-- End Message -->
+                  <div v-else class="end-message">
+                    You’ve reached the end.
+                  </div>
                 </div>
 
                 <!-- Pagination -->
-                <div class="bottom_navigation" v-if="pagination && pagination.total > 0">
+                <!-- <div class="bottom_navigation" v-if="pagination && pagination.total > 0">
                   <p>
                     Showing <b>{{ showingStart }} - {{ showingEnd }}</b> Results
                   </p>
@@ -151,17 +167,17 @@
                       </li>
                     </ul>
                   </div>
-                </div>
+                </div> -->
               </div>
             </div> 
             <!-- End Product List -->
-            <div v-else-if="!loading && products.length === 0" class="no-products ant-col ant-col-xs-11 css-i6rspj">
+            <!-- <div v-if="!loading && products.length === 0" class="no-products ant-col ant-col-xs-11 css-i6rspj">
               <div class="col_right">
                 <div class="product_list_wrapper">
                   <h3>Product not found</h3>
                 </div>
               </div>
-            </div>
+            </div> -->
             <div class="ant-col ant-col-xs-8 css-i6rspj"></div>
           </div>
       </section>
@@ -186,6 +202,10 @@
 
     import { debounce } from 'lodash-es';
 
+    const isLoadingMore = ref(false);
+    const hasMorePages = computed(() => {
+      return pagination.value && pagination.value.current_page < pagination.value.last_page;
+    });
 
     // Composables
     const { settings } = useSettings();
@@ -230,83 +250,187 @@
 
     const handleBuyItNow = async (product) => {
         const quantity = quantities.value[product.slug] || 1; 
-        console.log('Product Qty: '+quantity);
         await buyNow(product.slug, quantity)
-        // await buyItNow(product.slug, quantity);
     };
 
     // Load category and its products
+    // const loadInitialData = async () => {
+    //   const segments = route.path.split('/').filter(Boolean);
+    //   const slug = segments[segments.length - 1];
+    //   const searchQuery = route.query.search;
+
+    //   // products.value = []; // 👈 Clear previous products
+    //   loading.value = true;
+    //   loading.page = true;
+
+    //   try {
+    //     if (searchQuery) {
+    //       await searchProductsForPage(searchQuery);
+    //     } else if (slug) {
+    //       const result = await getCategoryBySlug(slug);
+    //       category.value = result;
+    //       categoryTrail.value = result?.category_trail || [];
+
+    //       await getProductsByCategory({
+    //         categorySlug: slug,
+    //         perPage: 10,
+    //         page: 1,
+    //         sortField: 'created_at',
+    //         sortDirection: 'desc',
+    //         search: '',
+    //       });
+    //     }
+    //   } catch (err) {
+    //     console.error("Failed to load data:", err);
+    //   } finally {
+    //     loading.value = false;
+    //     loading.page = false;
+    //   }
+    // };
+
     const loadInitialData = async () => {
-    const segments = route.path.split('/').filter(Boolean);
-    const slug = segments[segments.length - 1];
-    const searchQuery = route.query.search;
+      const segments = route.path.split('/').filter(Boolean);
+      const slug = segments[segments.length - 1];
+      const searchQuery = route.query.search;
 
-  products.value = []; // 👈 Clear previous products
-  loading.value = true;
-  loading.page = true;
+      // Clear previous products only on initial load
+      products.value = [];
+      pagination.value = { current_page: 1, last_page: 1 }; // reset pagination if needed
+      loading.value = true;
+      loading.page = true;
 
-  try {
-    if (searchQuery) {
-      await searchProductsForPage(searchQuery);
-    } else if (slug) {
-      const result = await getCategoryBySlug(slug);
-      category.value = result;
-      categoryTrail.value = result?.category_trail || [];
+      try {
+        if (searchQuery) {
+          await searchProductsForPage(searchQuery, false); // false means replace, not append
+        } else if (slug) {
+          const result = await getCategoryBySlug(slug);
+          category.value = result;
+          categoryTrail.value = result?.category_trail || [];
 
-      await getProductsByCategory({
-        categorySlug: slug,
-        perPage: 10,
-        page: 1,
-        sortField: 'created_at',
-        sortDirection: 'desc',
-        search: '',
-      });
+          await getProductsByCategory({
+            categorySlug: slug,
+            perPage: 10,
+            page: 1,
+            sortField: 'created_at',
+            sortDirection: 'desc',
+            search: '',
+          }, false); // false = replace existing products
+        }
+      } catch (err) {
+        console.error("Failed to load data:", err);
+      } finally {
+        loading.value = false;
+        loading.page = false;
+      }
+    };
+
+
+  // const loadProducts = async (page = 1) => {
+  //   const querySearch = route.query.search;
+  //   const segments = route.path.split('/').filter(Boolean);
+  //   const slugParam = segments[segments.length - 1];
+
+  //   products.value = []; // 👈 Clear previous products
+  //   loading.value = true;
+
+  //   try {
+  //     if (querySearch) {
+  //       await searchProductsForPage({
+  //         search: querySearch,
+  //         brand: selectedBrand.value,
+  //         subCategory: selectedCategory.value,
+  //         perPage: 10,
+  //         page,
+  //         sortField: 'created_at',
+  //         sortDirection: 'desc',
+  //       });
+  //     } else {
+  //       await getProductsByCategory({
+  //         categorySlug: slugParam,
+  //         brand: selectedBrand.value,
+  //         subCategory: selectedCategory.value,
+  //         perPage: 10,
+  //         page,
+  //         sortField: 'created_at',
+  //         sortDirection: 'desc',
+  //       });
+  //     }
+  //   } catch (err) {
+  //     console.error("Failed to load products:", err);
+  //   } finally {
+  //     loading.value = false;
+  //   }
+  // };
+
+  const loadMoreProducts = async () => {
+    if (isLoadingMore.value || !hasMorePages.value) return;
+
+    isLoadingMore.value = true;
+
+    try {
+      const nextPage = pagination.value.current_page + 1;
+      const querySearch = route.query.search;
+      const segments = route.path.split('/').filter(Boolean);
+      const slugParam = segments[segments.length - 1];
+
+      let response;
+
+      // if (querySearch) {
+      //   response = await searchProductsForPage({
+      //     search: querySearch,
+      //     brand: selectedBrand.value,
+      //     subCategory: selectedCategory.value,
+      //     perPage: 10,
+      //     page: nextPage,
+      //     sortField: 'created_at',
+      //     sortDirection: 'desc',
+      //   });
+      // } else {
+      //   response = await getProductsByCategory({
+      //     categorySlug: slugParam,
+      //     brand: selectedBrand.value,
+      //     subCategory: selectedCategory.value,
+      //     perPage: 10,
+      //     page: nextPage,
+      //     sortField: 'created_at',
+      //     sortDirection: 'desc',
+      //   });
+      // }
+
+      if (querySearch) {
+        response = await searchProductsForPage({
+          search: querySearch,
+          brand: selectedBrand.value,
+          subCategory: selectedCategory.value,
+          perPage: 10,
+          page: nextPage,
+          sortField: 'created_at',
+          sortDirection: 'desc',
+        }, true); // 👈 append = true
+      } else {
+        response = await getProductsByCategory({
+          categorySlug: slugParam,
+          brand: selectedBrand.value,
+          subCategory: selectedCategory.value,
+          perPage: 10,
+          page: nextPage,
+          sortField: 'created_at',
+          sortDirection: 'desc',
+        }, true); // 👈 append = true
+      }
+
+      if (response?.data?.length) {
+        products.value.push(...response.data);
+        pagination.value = response.meta;
+      }
+    } catch (err) {
+      console.error('Failed to load more:', err);
+    } finally {
+      isLoadingMore.value = false;
     }
-  } catch (err) {
-    console.error("Failed to load data:", err);
-  } finally {
-    loading.value = false;
-    loading.page = false;
-  }
-};
+  };
 
-const loadProducts = async (page = 1) => {
-  const querySearch = route.query.search;
-  const segments = route.path.split('/').filter(Boolean);
-  const slugParam = segments[segments.length - 1];
-
-  products.value = []; // 👈 Clear previous products
-  loading.value = true;
-
-  try {
-    if (querySearch) {
-      await searchProductsForPage({
-        search: querySearch,
-        brand: selectedBrand.value,
-        subCategory: selectedCategory.value,
-        perPage: 10,
-        page,
-        sortField: 'created_at',
-        sortDirection: 'desc',
-      });
-    } else {
-      await getProductsByCategory({
-        categorySlug: slugParam,
-        brand: selectedBrand.value,
-        subCategory: selectedCategory.value,
-        perPage: 10,
-        page,
-        sortField: 'created_at',
-        sortDirection: 'desc',
-      });
-    }
-  } catch (err) {
-    console.error("Failed to load products:", err);
-  } finally {
-    loading.value = false;
-  }
-};
-    // Lifecycle
+  // Lifecycle
   onMounted(async () => {
     categories.value = await getCategories();
     brands.value = await getBrands();
@@ -317,84 +441,98 @@ const loadProducts = async (page = 1) => {
   });
 
   watch(
-      () => [route.params.slug, route.query.search],
-      async () => {
-          await loadInitialData();
-      }
+    () => [route.params.slug, route.query.search],
+    async () => {
+        await loadInitialData();
+    }
   );
 
-  
-  // const debouncedLoadInitialData = debounce(loadInitialData, 300);
+  const resetFilters = () => {
+    selectedCategory.value = null;
+    selectedBrand.value = null;
+    loadProducts();
+  };
 
-  // watch(
-  //   () => [route.params.slug, route.query.search],
-  //   () => {
-  //     debouncedLoadInitialData();
-  //   }
-  // );
+  // const goToPage = async (page) => {
+    //   const segments = route.path.split('/').filter(Boolean);
+    //   const slugParam = segments[segments.length - 1];
+    //   const querySearch = route.query.search;
 
+    //   try {
+    //     await getProductsByCategory({
+    //       categorySlug: querySearch ? null : slugParam,
+    //       search: querySearch || '',
+    //       brand: selectedBrand.value,
+    //       subCategory: selectedCategory.value,
+    //       page,
+    //       perPage: pagination.value.per_page,
+    //       sortField: 'created_at',
+    //       sortDirection: 'desc',
+    //     });
+    //   } catch (err) {
+    //     console.error("Failed to paginate products:", err);
+    //   }
+    // };
 
-    const resetFilters = () => {
-        selectedCategory.value = null;
-        selectedBrand.value = null;
-        loadProducts();
-    };
+    // const showingStart = computed(() => {
+    //     const { current_page, per_page, total } = pagination.value;
+    //     return Math.min((current_page - 1) * per_page + 1, total);
+    // });
 
-    // Watch for route slug changes
-    // watch(() => [route.params.slug], loadCategory);
+    // const showingEnd = computed(() => {
+    //     const { current_page, per_page, total } = pagination.value;
+    //     return Math.min(current_page * per_page, total);
+    // });
 
-    const goToPage = async (page) => {
-      const segments = route.path.split('/').filter(Boolean);
-      const slugParam = segments[segments.length - 1];
-      const querySearch = route.query.search;
+    // const visiblePages = computed(() => {
+    //     const pages = [];
+    //     const { current_page, last_page } = pagination.value;
+    //     const maxButtons = 5;
 
-      try {
-        await getProductsByCategory({
-          categorySlug: querySearch ? null : slugParam,
-          search: querySearch || '',
-          brand: selectedBrand.value,
-          subCategory: selectedCategory.value,
-          page,
-          perPage: pagination.value.per_page,
-          sortField: 'created_at',
-          sortDirection: 'desc',
-        });
-      } catch (err) {
-        console.error("Failed to paginate products:", err);
-      }
-    };
+    //     let start = Math.max(current_page - Math.floor(maxButtons / 2), 1);
+    //     let end = start + maxButtons - 1;
 
-    const showingStart = computed(() => {
-        const { current_page, per_page, total } = pagination.value;
-        return Math.min((current_page - 1) * per_page + 1, total);
-    });
+    //     if (end > last_page) {
+    //         end = last_page;
+    //         start = Math.max(end - maxButtons + 1, 1);
+    //     }
 
-    const showingEnd = computed(() => {
-        const { current_page, per_page, total } = pagination.value;
-        return Math.min(current_page * per_page, total);
-    });
+    //     for (let i = start; i <= end; i++) {
+    //         pages.push(i);
+    //     }
 
-    const visiblePages = computed(() => {
-        const pages = [];
-        const { current_page, last_page } = pagination.value;
-        const maxButtons = 5;
-
-        let start = Math.max(current_page - Math.floor(maxButtons / 2), 1);
-        let end = start + maxButtons - 1;
-
-        if (end > last_page) {
-            end = last_page;
-            start = Math.max(end - maxButtons + 1, 1);
-        }
-
-        for (let i = start; i <= end; i++) {
-            pages.push(i);
-        }
-
-        return pages;
-    });
+    //     return pages;
+    // });
 </script>
 <style scoped>
+    .load-more-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .load-more-button {
+      background-color: #1890ff;
+      color: white;
+      padding: 10px 24px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .load-more-button:hover {
+      background-color: #40a9ff;
+    }
+    .load-more-button[disabled] {
+      background-color: #d9d9d9;
+      cursor: not-allowed;
+    }
+    .end-message {
+      text-align: center;
+      color: #888;
+      margin-top: 20px;
+      font-style: italic;
+    }
     .bottom_navigation {
     display: flex;
     justify-content: space-between;

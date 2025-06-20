@@ -50,13 +50,15 @@ const getProductBySlug = async (slug, categoryPath) => {
 
 // ✅ NEW: Get products by category slug or ID, with optional filters
 const getProductsByCategory = async ({
-  categorySlug,
-  perPage = 10,
-  page = 1,
-  sortField = 'created_at',
-  sortDirection = 'desc',
-  search = ''
-}) => {
+    categorySlug,
+    perPage = 10,
+    page = 1,
+    sortField = 'created_at',
+    sortDirection = 'desc',
+    search = ''
+  },
+  append = false 
+) => {
   loading.value = true;
   try {
     const res = await axios.get(`/categories/${categorySlug}/products`, {
@@ -69,8 +71,13 @@ const getProductsByCategory = async ({
       }
     });
 
-    products.value = res.data.data;
-    // console.log(products.value)
+    // products.value = res.data.data;
+    if (append) {
+      products.value.push(...res.data.data);
+    } else {
+      products.value = res.data.data;
+    }
+
     searchResults.value = [];
     searchedKeyWord.value = [];
     pagination.value = res.data.pagination;
@@ -132,8 +139,30 @@ const searchProducts = async (keyword) => {
   }
 }
 
-const searchProductsForPage = async (keyword) => {
-  if (!keyword) {
+// const searchProductsForPage = async (keyword) => {
+//   if (!keyword) {
+//     searchResults.value = []
+//     return
+//   }
+
+//   loading.value = true
+//   try {
+//     const res = await axios.get('/products/search2', {
+//       params: { keyword }
+//     })
+//     products.value = res.data.data;
+//     searchedKeyWord.value = res.data.keyword;
+//     pagination.value = res.data.pagination;
+//   } catch (err) {
+//     error.value = err
+//     searchResults.value = []
+//   } finally {
+//     loading.value = false
+//   }
+// }
+
+const searchProductsForPage = async ({ search, perPage = 10, page = 1, sortField, sortDirection }) => {
+  if (!search) {
     searchResults.value = []
     return
   }
@@ -141,32 +170,66 @@ const searchProductsForPage = async (keyword) => {
   loading.value = true
   try {
     const res = await axios.get('/products/search2', {
-      params: { keyword }
-    })
+      params: {
+        search,
+        perPage,
+        page,
+        sortField,
+        sortDirection
+      }
+    });
     products.value = res.data.data;
-    // console.log(res.data)
     searchedKeyWord.value = res.data.keyword;
     pagination.value = res.data.pagination;
   } catch (err) {
     error.value = err
     searchResults.value = []
+    console.error('Search API Error:', err.response?.data || err.message);
   } finally {
-    loading.value = false
+    loading.value = false;
   }
-}
+};
 
-const fetchProductsByAttributeValue = async (attributeSlug) => {
-  loading.value = true;
+const fetchProductsByAttributeValue = async (attributeSlug, page = 1, filters = {}) => {
   try {
-    const response = await axios.get(`/attribute/products/${attributeSlug}`);
-    products.value = response.data.data.products;
+    const response = await axios.get('/attribute/products/' + attributeSlug, {
+      params: {
+        page,
+        perPage: filters.perPage || 10,
+        brand: filters.brand || null,
+        category: filters.category || null,
+        sortField: 'created_at',
+        sortDirection: 'desc'
+      }
+    });
+
+    // products.value = response.data.data.products;
+    if (page === 1) {
+      products.value = response.data.data.products;
+    } else {
+      products.value.push(...response.data.data.products);
+    }
     categoryData.value = response.data.data.category;
     searchedKeyWord.value = response.data.data.keyword || [];
+    pagination.value = response.data.pagination;
   } catch (error) {
-    console.error('Failed to fetch products', error);
+    console.error('Failed to fetch products by attribute value:', error);
+    throw error;
   }
-  loading.value = false;  
 };
+
+// const fetchProductsByAttributeValue = async (attributeSlug) => {
+//   loading.value = true;
+//   try {
+//     const response = await axios.get(`/attribute/products/${attributeSlug}`);
+    // products.value = response.data.data.products;
+    // categoryData.value = response.data.data.category;
+    // searchedKeyWord.value = response.data.data.keyword || [];
+//   } catch (error) {
+//     console.error('Failed to fetch products', error);
+//   }
+//   loading.value = false;  
+// };
 
 export function useProducts() {
   return {

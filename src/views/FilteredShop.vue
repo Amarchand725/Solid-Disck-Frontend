@@ -126,11 +126,21 @@
                       @buy-it-now="handleBuyItNow"
                     />
                   </div>
+                  <div class="load-more-container" v-if="hasMorePages">
+                    <button @click="loadMoreProducts" :disabled="isLoadingMore" class="load-more-button">
+                      <span v-if="!isLoadingMore">Load More Products</span>
+                      <span v-else>Loading...</span>
+                    </button>
+                  </div>
+                  <div v-else class="end-message">
+                    You’ve reached the end.
+                  </div>
+
                 <!-- </div> -->
               </div>
 
               <!-- Pagination -->
-              <div class="bottom_navigation" v-if="pagination && pagination.total > 0">
+              <!-- <div class="bottom_navigation" v-if="pagination && pagination.total > 0">
                 <p>
                   Showing <b>{{ showingStart }} - {{ showingEnd }}</b> Results
                 </p>
@@ -152,7 +162,7 @@
                     </li>
                   </ul>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div> <!-- End Product List -->
         </div>
@@ -177,6 +187,12 @@ import { useBuyNow } from '@/composables/useBuyNow'
 const { buyNow, loadingBuyNow} = useBuyNow()
 
 import { debounce } from 'lodash-es';
+
+const isLoadingMore = ref(false);
+
+const hasMorePages = computed(() => {
+  return pagination.value && pagination.value.current_page < pagination.value.last_page;
+});
 
 // Composables
 const { settings } = useSettings();
@@ -234,6 +250,42 @@ function parseSlugMatch(slugMatch) {
   if (segments.length >= 3) parsed.attribute = segments[2];
   return parsed;
 }
+
+const loadMoreProducts = async () => {
+  if (isLoadingMore.value || !hasMorePages.value) return;
+
+  isLoadingMore.value = true;
+
+  try {
+    const nextPage = pagination.value.current_page + 1;
+
+    if (route.params.slugMatch) {
+      const filters = parseSlugMatch(route.params.slugMatch);
+      const res = await fetchProductsByAttributeValue(
+        filters.attribute,
+        nextPage,
+        {
+          brand: selectedBrand.value,
+          category: selectedCategory.value,
+          perPage: pagination.value.per_page || 10
+        }
+      );
+
+      if (res?.data?.length) {
+        products.value.push(...res.data);
+        pagination.value = res.meta;
+      }
+    } else {
+      await loadInitialData(nextPage); // fallback
+    }
+  } catch (err) {
+    console.error("Failed to load more filtered products:", err);
+  } finally {
+    isLoadingMore.value = false;
+  }
+};
+
+
 
 // Load initial data based on route and filters
 const loadInitialData = async (page = 1) => {
@@ -319,6 +371,25 @@ const loadProducts = async (page = 1) => {
 };
 
 // New: Load filtered products using slugMatch param & filters
+// const loadFilteredProducts = async (page = 1) => {
+//   const slugMatch = route.params.slugMatch;
+//   if (!slugMatch) return;
+
+//   const filters = parseSlugMatch(slugMatch);
+//   const attributeVal = filters.attribute;
+//   if (selectedBrand.value) filters.brand = selectedBrand.value;
+//   if (selectedCategory.value) filters.category = selectedCategory.value;
+
+//   loading.value = true;
+//   try {
+//     await fetchProductsByAttributeValue(attributeVal);
+//   } catch (err) {
+//     console.error("Failed to load filtered products:", err);
+//   } finally {
+//     loading.value = false;
+//   }
+// };
+
 const loadFilteredProducts = async (page = 1) => {
   const slugMatch = route.params.slugMatch;
   if (!slugMatch) return;
@@ -330,13 +401,27 @@ const loadFilteredProducts = async (page = 1) => {
 
   loading.value = true;
   try {
-    await fetchProductsByAttributeValue(attributeVal);
+    const res = await fetchProductsByAttributeValue(attributeVal, page, {
+      brand: filters.brand,
+      category: filters.category,
+      perPage: pagination.value.per_page || 10,
+    });
+
+    if (res?.data?.length) {
+      if (page === 1) {
+        products.value = res.data;
+      } else {
+        products.value.push(...res.data);
+      }
+      pagination.value = res.meta;
+    }
   } catch (err) {
     console.error("Failed to load filtered products:", err);
   } finally {
     loading.value = false;
   }
 };
+
 
 onMounted(async () => {
   categories.value = await getCategories();
@@ -347,10 +432,8 @@ onMounted(async () => {
 
 const debouncedLoadInitialData = debounce(loadInitialData, 300);
 watch(
-  () => [route.params.slug, route.query.search, route.params.slugMatch, selectedBrand.value, selectedCategory.value],
-  () => {
-    debouncedLoadInitialData();
-  }
+  () => [route.fullPath, selectedBrand.value, selectedCategory.value],
+  () => debouncedLoadInitialData()
 );
 
 const resetFilters = () => {
@@ -402,6 +485,34 @@ const visiblePages = computed(() => {
 </script>
 
 <style scoped>
+    .load-more-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .load-more-button {
+      background-color: #1890ff;
+      color: white;
+      padding: 10px 24px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .load-more-button:hover {
+      background-color: #40a9ff;
+    }
+    .load-more-button[disabled] {
+      background-color: #d9d9d9;
+      cursor: not-allowed;
+    }
+    .end-message {
+      text-align: center;
+      color: #888;
+      margin-top: 20px;
+      font-style: italic;
+    }
     .bottom_navigation {
     display: flex;
     justify-content: space-between;
@@ -484,6 +595,36 @@ const visiblePages = computed(() => {
 
 .loader-overlay {
   /* animation: fadeIn 0.3s ease-in-out; */
+}
+
+.no-products {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.placeholder-wrapper {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.placeholder-card {
+  width: 200px;
+  height: 250px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 10px;
+}
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 @keyframes fadeIn {
