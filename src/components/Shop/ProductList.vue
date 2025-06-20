@@ -106,7 +106,7 @@
                     </div>
                 </div>
                 <span v-if="product?.unit_price > 0">
-                    <button @click="handleAddToCart(product)" :disabled="loadingAddToCartId === product.id" title="Add To Cart" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined">
+                    <button @click="handleAddToCart(product)" :disabled="loadingAddToCartId === product.id" title="Add To Cart" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined outlined">
                         <span>{{ loadingAddToCartId === product.id ? 'Adding...' : 'Add to Cart' }}</span>
                     </button>
                     <button
@@ -115,13 +115,13 @@
                         :disabled="loadingId === product.id"
                         title="Buy it now"
                         type="button"
-                        class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined"
+                        class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined outlined"
                         >
                         <span>{{ loadingId === product.id ? 'Buying...' : 'Buy It Now' }}</span>
                     </button>
                 </span>
                 <span v-else>
-                    <button @click="togglePhoneNumber" title="Call For Price" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined">
+                    <button @click="togglePhoneNumber" title="Call For Price" type="button" class="outlined ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined">
                         <span>{{ showNumber ? phone : 'Call For Price' }}</span>
                     </button>
                 </span>
@@ -129,6 +129,21 @@
         </div>
     </div>
 </template>
+<style>
+.outlined {
+    transition: transform 0.3s ease;
+}
+
+.outlined:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+/* Prevent Ant Design's hover background override */
+.outlined:hover {
+    background-color: #001e4c !important;
+}
+</style>
 <script setup>
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'

@@ -164,11 +164,11 @@
                             </div>
                         </div>
                         <span v-if="productDetails?.unit_price > 0">
-                            <button style="margin-bottom:10px;" @click="handleAddToCart" :disabled="loading" title="Add To Cart" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined add_to_cart">
+                            <button style="margin-bottom:10px;" @click="handleAddToCart" :disabled="loading" title="Add To Cart" type="button" class="outlined ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined add_to_cart">
                                 <span>{{ loading ? 'Adding...' : 'Add to Cart' }}</span>
                             </button>
                             <br>
-                            <button style="background-color: #f5ad1d !important;" @click="handleBuyItNow" :disabled="loading2" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined add_to_cart" title="Buy It Now">
+                            <button style="background-color: #f5ad1d !important;" @click="handleBuyItNow" :disabled="loading2" class="outlined ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined add_to_cart" title="Buy It Now">
                                {{ loadingBuyNow ? 'Buying...' : 'Buy It Now' }}
                             </button>
                         </span>
@@ -194,6 +194,21 @@
         </div>
     </div>
 </template>
+<style>
+.outlined {
+    transition: transform 0.3s ease;
+}
+
+.outlined:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+/* Prevent Ant Design's hover background override */
+.outlined:hover {
+    background-color: #001e4c !important;
+}
+</style>
 <script setup>
     import { ref, onMounted, watch } from 'vue';
     import { useCart } from '@/composables/useCart'

@@ -56,6 +56,15 @@ import 'bootstrap';
 //   initAllPlugins();
 // });
 
+router.beforeEach((to, from, next) => {
+  const dropdown = document.querySelector('#header-menu-dropdown');
+  if (dropdown) {
+    dropdown.style.display = 'none';
+  }
+  next();
+});
+
+
 const app = createApp(App)
       app.use(createPinia())
       app.use(store)
@@ -66,3 +75,4 @@ const app = createApp(App)
 
 // 🔒 Call the function after mount
 // blockDevTools();
+

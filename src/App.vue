@@ -29,7 +29,7 @@ onMounted(async () => {
 </template>
 <style>
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 :root {
       --primary-color: #001e4c !important;
