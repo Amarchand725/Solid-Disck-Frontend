@@ -107,13 +107,10 @@
             </div>
 
             <!-- Product List -->
-            <!-- <div v-if="loading" class="loader-overlay">
-              <img src="/assets/image/Spinner-2.gif" alt="Loading..." class="spinner-gif" />
-            </div> -->
             <div v-if="loading && products.length === 0" class="loader-overlay">
               <img src="/assets/image/Spinner-2.gif" alt="Loading..." class="spinner-gif" />
             </div>
-            <div class="ant-col ant-col-xs-19 css-i6rspj">
+            <div v-else class="ant-col ant-col-xs-19 css-i6rspj">
               <div class="col_right">
                 <div class="product_list_wrapper">
                   <div class="product_view_comp_main" v-for="product in products" :key="product.id">
@@ -171,13 +168,13 @@
               </div>
             </div> 
             <!-- End Product List -->
-            <!-- <div v-if="!loading && products.length === 0" class="no-products ant-col ant-col-xs-11 css-i6rspj">
+            <div v-if="!loading && products.length === 0" class="no-products ant-col ant-col-xs-11 css-i6rspj">
               <div class="col_right">
                 <div class="product_list_wrapper">
                   <h3>Product not found</h3>
                 </div>
               </div>
-            </div> -->
+            </div>
             <div class="ant-col ant-col-xs-8 css-i6rspj"></div>
           </div>
       </section>
@@ -253,41 +250,6 @@
         await buyNow(product.slug, quantity)
     };
 
-    // Load category and its products
-    // const loadInitialData = async () => {
-    //   const segments = route.path.split('/').filter(Boolean);
-    //   const slug = segments[segments.length - 1];
-    //   const searchQuery = route.query.search;
-
-    //   // products.value = []; // 👈 Clear previous products
-    //   loading.value = true;
-    //   loading.page = true;
-
-    //   try {
-    //     if (searchQuery) {
-    //       await searchProductsForPage(searchQuery);
-    //     } else if (slug) {
-    //       const result = await getCategoryBySlug(slug);
-    //       category.value = result;
-    //       categoryTrail.value = result?.category_trail || [];
-
-    //       await getProductsByCategory({
-    //         categorySlug: slug,
-    //         perPage: 10,
-    //         page: 1,
-    //         sortField: 'created_at',
-    //         sortDirection: 'desc',
-    //         search: '',
-    //       });
-    //     }
-    //   } catch (err) {
-    //     console.error("Failed to load data:", err);
-    //   } finally {
-    //     loading.value = false;
-    //     loading.page = false;
-    //   }
-    // };
-
     const loadInitialData = async () => {
       const segments = route.path.split('/').filter(Boolean);
       const slug = segments[segments.length - 1];
@@ -324,44 +286,6 @@
       }
     };
 
-
-  // const loadProducts = async (page = 1) => {
-  //   const querySearch = route.query.search;
-  //   const segments = route.path.split('/').filter(Boolean);
-  //   const slugParam = segments[segments.length - 1];
-
-  //   products.value = []; // 👈 Clear previous products
-  //   loading.value = true;
-
-  //   try {
-  //     if (querySearch) {
-  //       await searchProductsForPage({
-  //         search: querySearch,
-  //         brand: selectedBrand.value,
-  //         subCategory: selectedCategory.value,
-  //         perPage: 10,
-  //         page,
-  //         sortField: 'created_at',
-  //         sortDirection: 'desc',
-  //       });
-  //     } else {
-  //       await getProductsByCategory({
-  //         categorySlug: slugParam,
-  //         brand: selectedBrand.value,
-  //         subCategory: selectedCategory.value,
-  //         perPage: 10,
-  //         page,
-  //         sortField: 'created_at',
-  //         sortDirection: 'desc',
-  //       });
-  //     }
-  //   } catch (err) {
-  //     console.error("Failed to load products:", err);
-  //   } finally {
-  //     loading.value = false;
-  //   }
-  // };
-
   const loadMoreProducts = async () => {
     if (isLoadingMore.value || !hasMorePages.value) return;
 
@@ -374,28 +298,6 @@
       const slugParam = segments[segments.length - 1];
 
       let response;
-
-      // if (querySearch) {
-      //   response = await searchProductsForPage({
-      //     search: querySearch,
-      //     brand: selectedBrand.value,
-      //     subCategory: selectedCategory.value,
-      //     perPage: 10,
-      //     page: nextPage,
-      //     sortField: 'created_at',
-      //     sortDirection: 'desc',
-      //   });
-      // } else {
-      //   response = await getProductsByCategory({
-      //     categorySlug: slugParam,
-      //     brand: selectedBrand.value,
-      //     subCategory: selectedCategory.value,
-      //     perPage: 10,
-      //     page: nextPage,
-      //     sortField: 'created_at',
-      //     sortDirection: 'desc',
-      //   });
-      // }
 
       if (querySearch) {
         response = await searchProductsForPage({
@@ -452,57 +354,6 @@
     selectedBrand.value = null;
     loadProducts();
   };
-
-  // const goToPage = async (page) => {
-    //   const segments = route.path.split('/').filter(Boolean);
-    //   const slugParam = segments[segments.length - 1];
-    //   const querySearch = route.query.search;
-
-    //   try {
-    //     await getProductsByCategory({
-    //       categorySlug: querySearch ? null : slugParam,
-    //       search: querySearch || '',
-    //       brand: selectedBrand.value,
-    //       subCategory: selectedCategory.value,
-    //       page,
-    //       perPage: pagination.value.per_page,
-    //       sortField: 'created_at',
-    //       sortDirection: 'desc',
-    //     });
-    //   } catch (err) {
-    //     console.error("Failed to paginate products:", err);
-    //   }
-    // };
-
-    // const showingStart = computed(() => {
-    //     const { current_page, per_page, total } = pagination.value;
-    //     return Math.min((current_page - 1) * per_page + 1, total);
-    // });
-
-    // const showingEnd = computed(() => {
-    //     const { current_page, per_page, total } = pagination.value;
-    //     return Math.min(current_page * per_page, total);
-    // });
-
-    // const visiblePages = computed(() => {
-    //     const pages = [];
-    //     const { current_page, last_page } = pagination.value;
-    //     const maxButtons = 5;
-
-    //     let start = Math.max(current_page - Math.floor(maxButtons / 2), 1);
-    //     let end = start + maxButtons - 1;
-
-    //     if (end > last_page) {
-    //         end = last_page;
-    //         start = Math.max(end - maxButtons + 1, 1);
-    //     }
-
-    //     for (let i = start; i <= end; i++) {
-    //         pages.push(i);
-    //     }
-
-    //     return pages;
-    // });
 </script>
 <style scoped>
     .load-more-container {

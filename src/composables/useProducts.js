@@ -139,28 +139,6 @@ const searchProducts = async (keyword) => {
   }
 }
 
-// const searchProductsForPage = async (keyword) => {
-//   if (!keyword) {
-//     searchResults.value = []
-//     return
-//   }
-
-//   loading.value = true
-//   try {
-//     const res = await axios.get('/products/search2', {
-//       params: { keyword }
-//     })
-//     products.value = res.data.data;
-//     searchedKeyWord.value = res.data.keyword;
-//     pagination.value = res.data.pagination;
-//   } catch (err) {
-//     error.value = err
-//     searchResults.value = []
-//   } finally {
-//     loading.value = false
-//   }
-// }
-
 const searchProductsForPage = async ({ search, perPage = 10, page = 1, sortField, sortDirection }) => {
   if (!search) {
     searchResults.value = []
@@ -203,7 +181,7 @@ const fetchProductsByAttributeValue = async (attributeSlug, page = 1, filters = 
       }
     });
 
-    // products.value = response.data.data.products;
+    // Assign data to state
     if (page === 1) {
       products.value = response.data.data.products;
     } else {
@@ -211,25 +189,12 @@ const fetchProductsByAttributeValue = async (attributeSlug, page = 1, filters = 
     }
     categoryData.value = response.data.data.category;
     searchedKeyWord.value = response.data.data.keyword || [];
-    pagination.value = response.data.pagination;
+    pagination.value = response.data.data.pagination;
   } catch (error) {
     console.error('Failed to fetch products by attribute value:', error);
     throw error;
   }
 };
-
-// const fetchProductsByAttributeValue = async (attributeSlug) => {
-//   loading.value = true;
-//   try {
-//     const response = await axios.get(`/attribute/products/${attributeSlug}`);
-    // products.value = response.data.data.products;
-    // categoryData.value = response.data.data.category;
-    // searchedKeyWord.value = response.data.data.keyword || [];
-//   } catch (error) {
-//     console.error('Failed to fetch products', error);
-//   }
-//   loading.value = false;  
-// };
 
 export function useProducts() {
   return {

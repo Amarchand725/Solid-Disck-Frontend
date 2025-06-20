@@ -109,10 +109,10 @@
           <div class="ant-col ant-col-xs-19 css-i6rspj">
             <div class="col_right">
               <div class="product_list_wrapper">
-                <!-- <div v-if="loading" class="loader-overlay">
+                <div v-if="loading" class="loader-overlay">
                   <img src="/assets/image/Spinner-2.gif" alt="Loading..." class="spinner-gif" />
                 </div>
-                <div v-else> -->
+                <div v-else>
                   <div class="product_view_comp_main" v-for="product in products" :key="product.id">
                     <ProductList
                       :product="product"
@@ -132,11 +132,14 @@
                       <span v-else>Loading...</span>
                     </button>
                   </div>
-                  <div v-else class="end-message">
-                    You’ve reached the end.
+                </div>
+                <div v-if="!loading && products.length === 0" class="no-products ant-col ant-col-xs-11 css-i6rspj">
+                  <div class="col_right">
+                    <div class="product_list_wrapper">
+                      <h3>Product not found</h3>
+                    </div>
                   </div>
-
-                <!-- </div> -->
+                </div>
               </div>
 
               <!-- Pagination -->
@@ -199,6 +202,7 @@ const { settings } = useSettings();
 const { getCategoryBySlug, getCategories } = useCategories();
 const { getBrands } = useBrands();
 const {
+  loading,
   products,
   categoryData,
   searchedKeyWord,
@@ -207,7 +211,7 @@ const {
   searchProductsForPage,
   fetchProductsByAttributeValue
 } = useProducts();
-const { addToCart, buyItNow, loading } = useCart();
+const { addToCart, buyItNow} = useCart();
 
 const categories = ref([]);
 const brands = ref([]);
@@ -284,8 +288,6 @@ const loadMoreProducts = async () => {
     isLoadingMore.value = false;
   }
 };
-
-
 
 // Load initial data based on route and filters
 const loadInitialData = async (page = 1) => {
@@ -370,26 +372,6 @@ const loadProducts = async (page = 1) => {
   }
 };
 
-// New: Load filtered products using slugMatch param & filters
-// const loadFilteredProducts = async (page = 1) => {
-//   const slugMatch = route.params.slugMatch;
-//   if (!slugMatch) return;
-
-//   const filters = parseSlugMatch(slugMatch);
-//   const attributeVal = filters.attribute;
-//   if (selectedBrand.value) filters.brand = selectedBrand.value;
-//   if (selectedCategory.value) filters.category = selectedCategory.value;
-
-//   loading.value = true;
-//   try {
-//     await fetchProductsByAttributeValue(attributeVal);
-//   } catch (err) {
-//     console.error("Failed to load filtered products:", err);
-//   } finally {
-//     loading.value = false;
-//   }
-// };
-
 const loadFilteredProducts = async (page = 1) => {
   const slugMatch = route.params.slugMatch;
   if (!slugMatch) return;
@@ -441,47 +423,6 @@ const resetFilters = () => {
   selectedBrand.value = null;
   loadInitialData();
 };
-
-const goToPage = async (page) => {
-  if (route.params.slugMatch) {
-    await loadFilteredProducts(page);
-  } else {
-    await loadInitialData(page);
-  }
-};
-
-// Pagination computed properties
-const showingStart = computed(() => {
-  const { current_page, per_page, total } = pagination.value || {};
-  if (!pagination.value) return 0;
-  return Math.min((current_page - 1) * per_page + 1, total);
-});
-const showingEnd = computed(() => {
-  const { current_page, per_page, total } = pagination.value || {};
-  if (!pagination.value) return 0;
-  return Math.min(current_page * per_page, total);
-});
-const visiblePages = computed(() => {
-  const pages = [];
-  if (!pagination.value) return pages;
-
-  const { current_page, last_page } = pagination.value;
-  const maxButtons = 5;
-
-  let start = Math.max(current_page - Math.floor(maxButtons / 2), 1);
-  let end = start + maxButtons - 1;
-
-  if (end > last_page) {
-    end = last_page;
-    start = Math.max(end - maxButtons + 1, 1);
-  }
-
-  for (let i = start; i <= end; i++) {
-    pages.push(i);
-  }
-
-  return pages;
-});
 </script>
 
 <style scoped>
