@@ -1,7 +1,7 @@
 import { ref, watch } from 'vue'
 import axios from '@/plugins/axios'
 
-export function useShippingRates(countryRef, zipCodeRef) {
+export function useShippingRates(countryRef, zipCodeRef, weightRef) {
   const shippingRates = ref([])
   const loading = ref(false)
   const error = ref(null)
@@ -16,6 +16,7 @@ export function useShippingRates(countryRef, zipCodeRef) {
       const response = await axios.post('/shipping/rates', {
         country: countryRef.value,
         zip_code: zipCodeRef.value,
+        weight: weightRef.value
       })
 
         //   shippingRates.value = response.data?.data?.output?.rateReplyDetails || []
@@ -43,8 +44,13 @@ export function useShippingRates(countryRef, zipCodeRef) {
   }
 
   // ✅ Watch refs and call fetchRates when both are filled
-  watch([countryRef, zipCodeRef], ([country, zip]) => {
-    if (country && zip) {
+  // watch([countryRef, zipCodeRef], ([country, zip]) => {
+  //   if (country && zip) {
+  //     fetchRates()
+  //   }
+  // })
+  watch([countryRef, zipCodeRef, weightRef], ([country, zip, weight]) => {
+    if (country && zip && weight > 0) {
       fetchRates()
     }
   })

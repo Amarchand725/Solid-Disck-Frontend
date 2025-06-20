@@ -148,7 +148,7 @@
                 style="width: 100%; height: 40px; padding: 0 12px; line-height: 40px;"
                 class="custom-select"
               >
-                <option value="">Select State</option>
+                <option value="">Select City</option>
                 <option
                   v-for="city in shippingCities" :key="city.id" :value="city.id"
                   style="padding: 6px 10px;"
@@ -210,6 +210,7 @@
 <script setup>
 import { reactive, ref, watch, onMounted, defineProps, defineEmits } from 'vue'
 import { useLocations } from '@/composables/useLocations.js'
+import { debounce } from 'lodash' 
 
 const {
   countries: shippingCountries,
@@ -293,10 +294,20 @@ const props = defineProps({
 
 const emit = defineEmits(['update:country', 'update:zip', 'update:formData', 'update:state'])
 
-const handleZipChange = (event) => {
-  shippingForm.zip = event.target.value
-  emit('update:zip', event.target.value)
-}
+// const handleZipChange = (event) => {
+//   shippingForm.zip = event.target.value
+//   emit('update:zip', event.target.value)
+// }
+
+watch(
+  () => shippingForm.zip,
+  debounce((newZip) => {
+    if (newZip && newZip.length >= 5) {
+      emit('update:zip', newZip) // Only emit when valid
+    }
+  }, 300)
+)
+
 
 watch(shippingForm, () => { 
   emit('update:formData', { ...shippingForm }) // important: spread the object

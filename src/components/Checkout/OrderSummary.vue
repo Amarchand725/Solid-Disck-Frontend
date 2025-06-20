@@ -77,7 +77,7 @@
                         <h2>Cart is empty</h2>
                     </div>
                 </div>
-            </div>
+            </div>  
             <div class="sub_total_main">
                 <div class="sub_total">
                     <span>Subtotal:</span>

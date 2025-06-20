@@ -109,10 +109,10 @@
           <div class="ant-col ant-col-xs-19 css-i6rspj">
             <div class="col_right">
               <div class="product_list_wrapper">
-                <div v-if="loading" class="loader-overlay">
+                <!-- <div v-if="loading" class="loader-overlay">
                   <img src="/assets/image/Spinner-2.gif" alt="Loading..." class="spinner-gif" />
                 </div>
-                <div v-else>
+                <div v-else> -->
                   <div class="product_view_comp_main" v-for="product in products" :key="product.id">
                     <ProductList
                       :product="product"
@@ -126,7 +126,7 @@
                       @buy-it-now="handleBuyItNow"
                     />
                   </div>
-                </div>
+                <!-- </div> -->
               </div>
 
               <!-- Pagination -->
@@ -215,10 +215,10 @@ const decreaseQuantity = (product) => {
     quantities.value[key]--;
   }
 };
-const handleAddToCart = async (product) => {
-  const quantity = quantities.value[product.slug] || 1;
-  await addToCart(product.slug, quantity);
-};
+  const handleAddToCart = async (product) => {
+    const quantity = quantities.value[product.slug] || 1;
+    await addToCart(product.slug, quantity);
+  };
 const handleBuyItNow = async (product) => {
   const quantity = quantities.value[product.slug] || 1;
   await buyNow(product.slug, quantity);

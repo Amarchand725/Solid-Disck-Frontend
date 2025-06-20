@@ -7,7 +7,7 @@
         <router-link class="tags" title="Shipping" to="/policies/shipping">Shipping</router-link>
         <router-link class="tags" title="Tax Exempt" to="/policies/tax-exempt">Tax Exempt</router-link>
         <router-link class="tags" title="Payment Methods" to="/policies/payment-method">Payment Methods</router-link>
-        <!-- <router-link class="tags" title="FAQs" to="/faq">FAQs</router-link> -->
+        <router-link class="tags" title="FAQs" to="/faq">FAQs</router-link>
         <router-link class="tags" title="Terms &amp; Conditions" to="/policies/terms-and-condition">Terms &amp; Conditions</router-link>
         <router-link class="tags" title="Request For Quote" to="/quote-request">Request For Quote</router-link>
     </div>

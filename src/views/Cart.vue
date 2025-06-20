@@ -39,9 +39,11 @@ import { useSettings } from '@/composables/useSettings.js'
 import { useCart } from '@/composables/useCart'
 import { onMounted } from 'vue'
 import { useBuyNow } from '@/composables/useBuyNow'
+const { clearCartChargesAndRecalculate } = useCart()
 const { clearBuyNow } = useBuyNow();
 onMounted(async () => {
   await clearBuyNow()
+  await clearCartChargesAndRecalculate()
 })
 
 const { settings } = useSettings()

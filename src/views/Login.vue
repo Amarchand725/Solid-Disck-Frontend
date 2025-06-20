@@ -21,7 +21,7 @@
                                 <p class="error_messages">{{ errors.login_email }}</p>
                                 <div class="forget_pass">
                                     <label>Password*</label>
-                                    <router-link to="#">Forgot Password?</router-link>
+                                    <!-- <router-link to="/forgot-password">Forgot Password?</router-link> -->
                                 </div>
                                 <div class="pass_main">
                                     <input v-model="login_password" :type="passwordVisible ? 'text' : 'password'" placeholder="Enter password" id="customer_password" class="ant-input css-i6rspj ant-input-outlined" name="customer_password">

@@ -25,6 +25,8 @@ const OrderSuccess = () => import('@/views/OrderSuccess.vue')
 const TrackOrder = () => import('@/views/TrackOrder.vue')
 const SiteMap = () => import('@/views/SiteMap.vue')
 const NotFound = () => import('@/views/NotFound.vue')
+const ForgotPassword = () => import('@/views/ForgotPassword.vue')
+const ResetPassword = () => import('@/views/ResetPassword.vue')
 
 const routes = [
   {
@@ -178,7 +180,19 @@ const routes = [
     path: '/:pathMatch(.*)*', 
     name: 'NotFound', 
     component: NotFound 
-  }
+  },
+  {
+  path: '/forgot-password',
+    name: 'ForgotPassword',
+    component: ForgotPassword,
+    meta: { title: 'Forgot Password' }
+  },
+  {
+    path: '/reset-password',
+    name: 'ResetPassword',
+    component: ResetPassword,
+    meta: { title: 'Reset Password' }
+  },
 ]
 
 const router = createRouter({

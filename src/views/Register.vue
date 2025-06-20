@@ -90,7 +90,7 @@
                                             type="checkbox"
                                         />
                                         <span class="ant-checkbox-inner"></span>
-                                        I have read and agree to {{ settings?.website_url }}
+                                        I have read and agree to <router-link :to="settings?.website_url">{{ settings?.name }}</router-link>
                                         <router-link to="/policies/terms-and-condition">Terms and Conditions</router-link>
                                     </label>
                                 </div>

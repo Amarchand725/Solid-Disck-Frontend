@@ -50,10 +50,10 @@
     import ShippingDetailForm from '@/components/Checkout/ShippingDetailForm.vue';    
     import BillingDetailsForm from '@/components/Checkout/BillingDetailsForm.vue';
 
-    import { ref, watch} from 'vue'
+    import { ref, watch, onMounted } from 'vue'
     import { useShippingRates } from '@/composables/useShippingRates.js'
     import { useCart } from '@/composables/useCart.js'
-    const { updateTax } = useCart()
+    const { updateTax, clearCartChargesAndRecalculate } = useCart()
 
     const shippingCountry = ref(null)
     const shippingZip = ref('')
@@ -61,6 +61,10 @@
 
     const shippingDetails = ref({})
     const billingDetails = ref({})
+
+    onMounted(() => {
+        clearCartChargesAndRecalculate()
+    })
 
     // ✅ Pass refs to the composable
     const {

@@ -106,11 +106,18 @@
                     </div>
                 </div>
                 <span v-if="product?.unit_price > 0">
-                    <button @click="handleAddToCart(product)" :disabled="loading" title="Add To Cart" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined">
-                        <span>{{ loading ? 'Adding...' : 'Add to Cart' }}</span>
+                    <button @click="handleAddToCart(product)" :disabled="loadingAddToCartId === product.id" title="Add To Cart" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined">
+                        <span>{{ loadingAddToCartId === product.id ? 'Adding...' : 'Add to Cart' }}</span>
                     </button>
-                    <button style="background-color: #f5ad1d !important;" @click="handleBuyItNow(product)" :disabled="loading2" title="Buy it now" type="button" class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined">
-                        <span>{{ loading2 ? 'Buying...' : 'Buy It Now' }}</span>
+                    <button
+                        style="background-color: #f5ad1d !important;"
+                        @click="handleBuyItNow(product)"
+                        :disabled="loadingId === product.id"
+                        title="Buy it now"
+                        type="button"
+                        class="ant-btn css-i6rspj ant-btn-default ant-btn-color-default ant-btn-variant-outlined"
+                        >
+                        <span>{{ loadingId === product.id ? 'Buying...' : 'Buy It Now' }}</span>
                     </button>
                 </span>
                 <span v-else>
@@ -123,11 +130,11 @@
     </div>
 </template>
 <script setup>
-import { buyItNow } from '@/composables/useCart.js' // Adjust path if needed
- import { useBuyNow } from '@/composables/useBuyNow'
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 
+const loadingId = ref(null)
+const loadingAddToCartId = ref(null)
 const router = useRouter()
 const props = defineProps({
   product: Object,
@@ -147,16 +154,21 @@ function decreaseQuantity(product) {
   emit('decrease', product)
 }
 
-function handleAddToCart(product) {
-  emit('add-to-cart', product)
+async function handleAddToCart(product) {
+    loadingAddToCartId.value = product.id
+    emit('add-to-cart', product)
+    setTimeout(() => {
+        loadingAddToCartId.value = null
+    }, 2000)
 }
 
 async function handleBuyItNow(product) {
-//   const quantity = 1
-//   loading2.value = true
-//   await buyNow(product.slug, quantity)
+    loadingId.value = product.id
     emit('buy-it-now', product)
-//   loading2.value = false
+
+    setTimeout(() => {
+        loadingId.value = null
+    }, 2000)
 }
 
 function onImageError(e) {

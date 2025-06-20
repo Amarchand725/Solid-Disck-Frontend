@@ -55,9 +55,9 @@ export function useCart() {
     try {
         const payload = withGuestId({ slug: productSlug, quantity })
         const response = await axios.post('/cart/store', payload)
-      setCartData(response.data)
-      message.value = response.data.message || 'Item added to cart.'
-      toast.success(message.value)
+        setCartData(response.data)
+        message.value = response.data.message || 'Item added to cart.'
+        toast.success(message.value)
     } catch (error) {
       handleError(error, 'Failed to add to cart.')
     } finally {
@@ -208,6 +208,26 @@ export function useCart() {
     }
   }
 
+  const clearCartChargesAndRecalculate = async () => {
+    loading.value = true;
+    try {
+      const payload = withGuestId();
+      const response = await axios.put('/cart/clear-charges', payload);
+      
+      if (response.data?.isBuyNow) {
+        setBuyNowData(response.data);
+      } else {
+        setCartData(response.data);
+      }
+
+      // toast.success(response.data.message || 'Charges cleared.');
+    } catch (error) {
+      handleError(error, 'Failed to clear cart charges.');
+    } finally {
+      loading.value = false;
+    }
+  };
+
   return {
     loading,
     loading2,
@@ -220,6 +240,7 @@ export function useCart() {
     decreaseCartItem,
     removeCartItem,
     clearCart,
+    clearCartChargesAndRecalculate,
     fullCart,
     cartItemCount,
     getCart,
