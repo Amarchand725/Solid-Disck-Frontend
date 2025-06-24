@@ -8,3 +8,5 @@ Disallow: /cart/
 Disallow: /checkout/
 Disallow: /account/
 Disallow: /login/
+
+Sitemap: https://soliddiskdirect.com/sitemap

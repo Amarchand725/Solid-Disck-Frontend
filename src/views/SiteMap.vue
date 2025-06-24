@@ -3,7 +3,7 @@
         <main>
             <div class="pt-0 pb-0">
                 <div class="sitemap-main-wrapper container-x mx-auto">
-                    <span class="fs-3 sitemap_main_heading">Category Sitemap</span>
+                    <span class="fs-3 sitemap_main_heading">Our Sitemap</span>
                     <div v-if="loading" class="loader-wrapper">
                         <img src="/assets/image/Spinner-2.gif" alt="Loading..." class="loader-img" />
                     </div>

@@ -27,6 +27,8 @@ const SiteMap = () => import('@/views/SiteMap.vue')
 const NotFound = () => import('@/views/NotFound.vue')
 const ForgotPassword = () => import('@/views/ForgotPassword.vue')
 const ResetPassword = () => import('@/views/ResetPassword.vue')
+const SiteMapXml = () => import('@/views/SiteMapXml.vue')
+const SitemapViewer = () => import('@/views/SitemapViewer.vue')
 
 const routes = [
   {
@@ -193,6 +195,18 @@ const routes = [
     component: ResetPassword,
     meta: { title: 'Reset Password' }
   },
+  {
+    path: '/sitemap',
+    name: 'SiteMapXml',
+    component: SiteMapXml,
+    meta: { title: 'Sitemap XML' }
+  },
+  {
+    path: '/:sitemapName(sitemap-.*).xml',
+    name: 'SitemapViewer',
+    component: SitemapViewer,
+    meta: { title: 'Sitemap Viewer XML' }
+  }
 ]
 
 const router = createRouter({
@@ -212,8 +226,6 @@ router.afterEach((to) => {
   const defaultTitle = 'Solid Disk Direct';
   const routeTitle = to.meta?.title;
   const title = `${routeTitle} | ${defaultTitle}`;
-  // console.log('Page Title: '+title)
-  // console.log('Links: '+visitedUrls)
   if (title) {
     document.title = `${title}`;
 

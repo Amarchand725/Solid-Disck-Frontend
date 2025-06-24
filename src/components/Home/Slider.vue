@@ -10,7 +10,7 @@
         <router-link to="/">
           <picture>
             <source
-                :srcset="slider.image || '/placeholders/270x280.svg'"
+                :srcset="generateSrcset(slider.image) || '/placeholders/270x280.svg'"
                 type="image/webp"
             />
             <img
@@ -29,7 +29,6 @@
         </picture>
         </router-link>
       </SwiperSlide>
-
     </Swiper>
   </section>
 </template>

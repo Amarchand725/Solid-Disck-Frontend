@@ -1,9 +1,12 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useCart } from '@/composables/useCart'
 import Header from '@/components/Header/Header.vue'
 import Footer from '@/components/Footer/Footer.vue'
 import Loader from '@/components/Header/Loader.vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
 
 const { getCart } = useCart()
 const loading = ref(true)
@@ -15,16 +18,20 @@ onMounted(async () => {
     loading.value = false
   }
 })
+
+const hideLayout = computed(() => {
+  return route.path.startsWith('/sitemap') || route.path.endsWith('.xml')
+})
 </script>
 
 <template>
   <div>
-    <Header />
+    <Header v-if="!hideLayout" />
     <router-view />
-    <Footer />
+    <Footer v-if="!hideLayout" />
 
     <!-- Loader on top -->
-     <Loader v-if="loading" />
+    <Loader v-if="loading" />
   </div>
 </template>
 <style>
