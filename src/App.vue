@@ -34,7 +34,7 @@ const hideLayout = computed(() => {
     <Loader v-if="loading" />
   </div>
 </template>
-<style>
+<style scoped>
 body {
   font-family: 'Roboto', sans-serif;
 }

@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { nextTick } from 'vue';
-import { initAllPlugins } from '@/initPlugins';
+import { initAllPlugins } from '@/initPlugins.js';
 import store from '@/vuexstore/store';
 
 const Home = () => import('@/views/Home.vue')

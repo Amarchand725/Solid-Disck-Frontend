@@ -28,7 +28,10 @@
                 <div class="work_with_us_card" title="Connect with Our Experts – Call Now">
                     <a :href="`tel:${settings?.phone}`">
                         <div class="inner">
-                            <img alt="why-work-with-us-image" title="why-work-with-us-image" loading="lazy" width="45" height="45" decoding="async" data-nimg="1" 
+                            <img 
+                                alt="why-work-with-us-image" 
+                                title="why-work-with-us-image" 
+                                loading="lazy" width="45" height="45" decoding="async" data-nimg="1" 
                                 srcset="/assets/image/Call-Icon-home.avif"
                                 src="/assets/image/Call-Icon-home.avif" 
                                 style="color: transparent;"

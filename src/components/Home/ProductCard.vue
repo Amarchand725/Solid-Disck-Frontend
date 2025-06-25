@@ -15,6 +15,7 @@
                 width="270"
                 height="280"
                 decoding="async"
+                loading="lazy"
                 data-nimg="1"
                 :src="product.thumbnail || '/placeholders/270x280.svg'"
                 @error="onImageError"
