@@ -10,12 +10,12 @@
                     <div class="mnp">
                         <p :title="productDetails?.mpn">MPN: <span>{{ productDetails?.mpn }}</span></p>
                         <p v-if="productDetails && productDetails.brand" :title="productDetails.brand.name">
-                            Brand:&nbsp;
-                            <router-link to="#" style="color: black;">{{ productDetails.brand.name }}</router-link>
+                            Manufacturer:&nbsp;
+                            <router-link :to="`/brands/${productDetails.brand.slug}`" style="color: black;">{{ productDetails.brand.name }}</router-link>
                         </p>
                         <p v-if="productDetails && productDetails.category" :title="productDetails.category.name">
                             Category:&nbsp;
-                            <router-link to="#" style="color: black;">{{ productDetails.category.name }}</router-link>
+                            <router-link :to="`/categories/${productDetails.category.slug}`" style="color: black;">{{ productDetails.category.name }}</router-link>
                         </p>
                     </div>
                 </div>

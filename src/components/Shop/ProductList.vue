@@ -30,7 +30,7 @@
                         <b>MPN:&nbsp; </b>
                         <router-link 
                             :title="product?.mpn" 
-                            to="#"
+                            :to="`/products/${product.category_url}/${product.slug}`"
                         >
                             {{ product?.mpn }}
                         </router-link>
@@ -43,7 +43,7 @@
                         Brand:&nbsp;
                         <router-link 
                             style="color: black;"
-                            to="#" 
+                            :to="`/brands/${product?.brand.slug}`" 
                         >
                             {{ product?.brand?.name }}
                         </router-link>

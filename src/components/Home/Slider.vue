@@ -15,7 +15,7 @@
                     :srcset="slider.image || '/placeholders/270x280.svg'"
                     type="image/webp"
                 />
-                <img
+                <!-- <img
                   :src="slider.image || '/placeholders/1600x400.svg'"
                   :srcset="slider.image"
                   :sizes="'(max-width: 600px) 400px, (max-width: 900px) 600px, (max-width: 1100px) 800px, (max-width: 1300px) 1000px, (max-width: 1500px) 1200px, 1600px'"
@@ -27,8 +27,8 @@
                   :fetchpriority="index === 0 ? 'high' : 'low'"
                   @error="onImageError"
                   class="banner-image"
-                />
-                <!-- <img
+                /> -->
+                <img
                   :src="slider.image || '/placeholders/1600x400.svg'"
                   :srcset="slider.image"
                   :sizes="'(max-width: 600px) 400px, (max-width: 900px) 600px, (max-width: 1100px) 800px, (max-width: 1300px) 1000px, (max-width: 1500px) 1200px, 1600px'"
@@ -41,7 +41,7 @@
                   :fetchpriority="index === 0 ? 'high' : 'low'"
                   @error="onImageError"
                   class="banner-image"
-                /> -->
+                />
 
             </picture>
             </router-link>
@@ -94,10 +94,10 @@
   }
 
   .banner-image {
+    display: block;
     width: 100%;
     height: auto;
-    object-fit: cover;
-    position: relative;
+    aspect-ratio: 4 / 1;
   }
 
   @media (max-width: 768px) {

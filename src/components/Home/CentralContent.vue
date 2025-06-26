@@ -16,7 +16,7 @@
   align-items: center;
   justify-content: center;
   padding: 0 2rem;
-  background-color: #f5f5f5; /* optional background */
+  background-color: #ffffff; /* optional background */
   overflow: hidden;
 }
 
@@ -39,5 +39,12 @@ p {
   font-family: 'Inter';
   src: url('/fonts/Inter.woff2') format('woff2');
   font-display: swap;
+}
+@media (max-width: 768px) {
+ .hero-section {
+    height: 600px;
+    display: flex;
+    justify-content: space-evenly; /* or space-around, or space-between */
+  }
 }
 </style>

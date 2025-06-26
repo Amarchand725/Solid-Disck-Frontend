@@ -31,10 +31,10 @@ const hideLayout = computed(() => {
     <Footer v-if="!hideLayout" />
 
     <!-- Loader on top -->
-    <Loader v-if="loading" />
+    <!-- <Loader v-if="loading" /> -->
   </div>
 </template>
-<style scoped>
+<style>
 body {
   font-family: 'Roboto', sans-serif;
 }

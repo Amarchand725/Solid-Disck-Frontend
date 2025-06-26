@@ -15,7 +15,7 @@
                     :categoryTrail="categoryTrail"
                 />
                 <span class="separator"> &gt; </span>
-                <strong title="productDetails.title">{{ productDetails?.slug }}</strong>
+                <strong title="productDetails.title">{{ productDetails?.mpn }}</strong>
             </div>
             <div class="ant-row css-i6rspj">
                 <Details :productDetails="productDetails" />
