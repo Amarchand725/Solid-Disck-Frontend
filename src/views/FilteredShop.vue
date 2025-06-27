@@ -108,11 +108,17 @@
           <!-- Product List -->
           <div class="ant-col ant-col-xs-19 css-i6rspj">
             <div class="col_right">
+              <div class="search-results-header" v-if="totalResults > 0">
+                <div class="results-count">
+                  Total Results Found: <strong>{{ totalResults.toLocaleString() }}</strong>
+                </div>
+                <hr class="divider" />
+              </div>
               <div class="product_list_wrapper">
-                <div v-if="loading" class="loader-overlay">
+                <div v-if="!isInitialLoadDone" class="loader-overlay">
                   <img src="/assets/image/Spinner-2.gif" alt="Loading..." class="spinner-gif" />
                 </div>
-                <div v-else>
+                <div v-else-if="products.length > 0">
                   <div class="product_view_comp_main" v-for="product in products" :key="product.id">
                     <ProductList
                       :product="product"
@@ -133,7 +139,7 @@
                     </button>
                   </div>
                 </div>
-                <div v-if="!loading && products.length === 0" class="no-products ant-col ant-col-xs-11 css-i6rspj">
+                <div v-else-if="isInitialLoadDone && products.length === 0" class="no-products ant-col ant-col-xs-11 css-i6rspj">
                   <div class="col_right">
                     <div class="product_list_wrapper">
                       <h3>Product not found</h3>
@@ -141,31 +147,6 @@
                   </div>
                 </div>
               </div>
-
-              <!-- Pagination -->
-              <!-- <div class="bottom_navigation" v-if="pagination && pagination.total > 0">
-                <p>
-                  Showing <b>{{ showingStart }} - {{ showingEnd }}</b> Results
-                </p>
-                <div class="bottom_pagination">
-                  <ul class="ant-pagination css-i6rspj">
-                    <li
-                      v-for="page in visiblePages"
-                      :key="page"
-                      :title="page"
-                      :class="[
-                        'ant-pagination-item',
-                        `ant-pagination-item-${page}`,
-                        page === pagination.current_page ? 'ant-pagination-item-active' : ''
-                      ]"
-                      tabindex="0"
-                      @click="goToPage(page)"
-                    >
-                      <a rel="index follow">{{ page }}</a>
-                    </li>
-                  </ul>
-                </div>
-              </div> -->
             </div>
           </div> <!-- End Product List -->
         </div>
@@ -191,6 +172,7 @@ const { buyNow, loadingBuyNow} = useBuyNow()
 
 import { debounce } from 'lodash-es';
 
+const isInitialLoadDone = ref(false);
 const isLoadingMore = ref(false);
 
 const hasMorePages = computed(() => {
@@ -307,7 +289,7 @@ const loadInitialData = async (page = 1) => {
         search: searchQuery,
         brand: selectedBrand.value,
         subCategory: selectedCategory.value,
-        perPage: pagination.value.per_page || 10,
+        perPage: pagination.value?.per_page ?? 10,
         page,
         sortField: 'created_at',
         sortDirection: 'desc',
@@ -321,7 +303,7 @@ const loadInitialData = async (page = 1) => {
         categorySlug: slug,
         brand: selectedBrand.value,
         subCategory: selectedCategory.value,
-        perPage: pagination.value.per_page || 10,
+        perPage: pagination.value?.per_page ?? 10,
         page,
         sortField: 'created_at',
         sortDirection: 'desc',
@@ -330,6 +312,7 @@ const loadInitialData = async (page = 1) => {
   } catch (err) {
     console.error("Failed to load data:", err);
   } finally {
+    isInitialLoadDone.value = true;
     loading.value = false;
     loading.page = false;
   }
@@ -340,6 +323,7 @@ const loadProducts = async (page = 1) => {
   const segments = route.path.split('/').filter(Boolean);
   const slugParam = segments[segments.length - 1];
 
+  isInitialLoadDone.value = false;
   products.value = [];
   loading.value = true;
 
@@ -349,7 +333,7 @@ const loadProducts = async (page = 1) => {
         search: querySearch,
         brand: selectedBrand.value,
         subCategory: selectedCategory.value,
-        perPage: pagination.value.per_page || 10,
+        perPage: pagination.value?.per_page ?? 10,
         page,
         sortField: 'created_at',
         sortDirection: 'desc',
@@ -359,7 +343,7 @@ const loadProducts = async (page = 1) => {
         categorySlug: slugParam,
         brand: selectedBrand.value,
         subCategory: selectedCategory.value,
-        perPage: pagination.value.per_page || 10,
+        perPage: pagination.value?.per_page ?? 10,
         page,
         sortField: 'created_at',
         sortDirection: 'desc',
@@ -369,6 +353,7 @@ const loadProducts = async (page = 1) => {
     console.error("Failed to load products:", err);
   } finally {
     loading.value = false;
+    isInitialLoadDone.value = true;
   }
 };
 
@@ -381,12 +366,13 @@ const loadFilteredProducts = async (page = 1) => {
   if (selectedBrand.value) filters.brand = selectedBrand.value;
   if (selectedCategory.value) filters.category = selectedCategory.value;
 
+  isInitialLoadDone.value = false;
   loading.value = true;
   try {
     const res = await fetchProductsByAttributeValue(attributeVal, page, {
       brand: filters.brand,
       category: filters.category,
-      perPage: pagination.value.per_page || 10,
+      perPage: pagination.value?.per_page ?? 10,
     });
 
     if (res?.data?.length) {
@@ -400,6 +386,7 @@ const loadFilteredProducts = async (page = 1) => {
   } catch (err) {
     console.error("Failed to load filtered products:", err);
   } finally {
+    isInitialLoadDone.value = true;
     loading.value = false;
   }
 };
@@ -419,6 +406,7 @@ watch(
 );
 
 const resetFilters = () => {
+  isInitialLoadDone.value = false;
   selectedCategory.value = null;
   selectedBrand.value = null;
   loadInitialData();
@@ -482,83 +470,104 @@ const resetFilters = () => {
     }
 
     .filter-input,
-.filter-select,
-.filter-button {
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  transition: all 0.2s ease-in-out;
-  width: -webkit-fill-available;
-}
+    .filter-select,
+    .filter-button {
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease-in-out;
+      width: -webkit-fill-available;
+    }
 
-.filter-input:focus,
-.filter-select:focus {
-  outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
-}
+    .filter-input:focus,
+    .filter-select:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+    }
 
-.filter-button {
-  background-color: #e5e7eb;
-  color: #374151;
-  cursor: pointer;
-}
+    .filter-button {
+      background-color: #e5e7eb;
+      color: #374151;
+      cursor: pointer;
+    }
 
-.filter-button:hover {
-  background-color: #d1d5db;
-}
-.no-products {
-  text-align: center;
-  padding: 2rem;
-  font-size: 1.2rem;
-  color: #666;
-  font-style: italic;
-}
+    .filter-button:hover {
+      background-color: #d1d5db;
+    }
+    .no-products {
+      text-align: center;
+      padding: 2rem;
+      font-size: 1.2rem;
+      color: #666;
+      font-style: italic;
+    }
 
-.loader-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(255, 255, 255, 0.7); /* light overlay */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* z-index: 9999; */
-}
+    .loader-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(255, 255, 255, 0.7); /* light overlay */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* z-index: 9999; */
+    }
 
-.spinner-gif {
-  width: 80px; /* adjust size as needed */
-  height: 80px;
-}
+    .spinner-gif {
+      width: 80px; /* adjust size as needed */
+      height: 80px;
+    }
 
-.loader-overlay {
-  /* animation: fadeIn 0.3s ease-in-out; */
-}
+    .loader-overlay {
+      /* animation: fadeIn 0.3s ease-in-out; */
+    }
 
-.no-products {
-  text-align: center;
-  padding: 2rem 1rem;
-}
+    .no-products {
+      text-align: center;
+      padding: 2rem 1rem;
+    }
 
-.placeholder-wrapper {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-top: 1rem;
-}
+    .placeholder-wrapper {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
 
-.placeholder-card {
-  width: 200px;
-  height: 250px;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-  border-radius: 10px;
-}
+    .placeholder-card {
+      width: 200px;
+      height: 250px;
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 10px;
+    }
+    .search-results-header {
+      margin: 1.5rem 0 1rem;
+      padding: 0 0.5rem;
+    }
+
+    .results-count {
+      font-size: 1.1rem;
+      color: #333;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .results-count strong {
+      color: #007bff; /* Blue highlight */
+    }
+
+    .divider {
+      border: none;
+      border-top: 2px solid #eee;
+      margin: 0;
+    }
 @keyframes shimmer {
   0% {
     background-position: -200% 0;

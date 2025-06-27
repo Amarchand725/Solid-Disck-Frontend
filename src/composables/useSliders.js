@@ -2,7 +2,7 @@ import { ref } from 'vue';
 import axios from '@/plugins/axios';
 
 const sliders = ref([]);
-const loadingSlider = ref(false);
+const loadingSlider = ref(true);
 const error = ref(null);
 
 const getSliders = async () => {

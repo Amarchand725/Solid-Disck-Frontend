@@ -5,13 +5,13 @@
                 :alt="settings?.name" 
                 :title="settings?.name" 
                 loading="lazy" width="220" height="50" decoding="async" data-nimg="1" 
-                :src="settings?.white_logo || '/placeholders/220x50.svg'" 
+                :src="settings?.white_logo || '/assets/image/bPuzFaxQIh0d83ivRvEzETEdzvPfA91qjxsLM37G.webp'" 
                 @error="onImageError"
                 style="color: transparent;"
             >
         </router-link>
         
-        <div class="logo_bottom_para" style="width: 350px; margin-top: 10px;">
+        <div v-if="settings != null" class="logo_bottom_para" style="width: 350px; margin-top: 10px;">
             <div class="info-detail">
                 <span>Address</span>
                 <span>{{ settings?.address ?? '' }}</span>
@@ -35,6 +35,12 @@
             <div class="info-detail">
                 <span>Working Hours</span>
                 <span>{{ settings?.day_range ?? '' }} / {{ settings?.start_time ?? '' }} - {{ settings?.end_time ?? '' }} ({{ settings?.timezone ?? '' }})</span>
+            </div>
+        </div>
+        <div v-else class="logo_bottom_para" style="width: 350px; margin-top: 10px;">
+            <div class="info-detail">
+                <span>Address</span>
+                <span>Loading...</span>
             </div>
         </div>
         <div class="social-icons">

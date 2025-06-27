@@ -107,11 +107,17 @@
             </div>
 
             <!-- Product List -->
-            <div v-if="loading && products.length === 0" class="loader-overlay">
+            <div v-if="isFetchingInitialProducts" class="loader-overlay">
               <img src="/assets/image/Spinner-2.gif" alt="Loading..." class="spinner-gif" />
             </div>
-            <div v-else class="ant-col ant-col-xs-19 css-i6rspj">
+            <div v-else-if="products.length > 0" class="ant-col ant-col-xs-19 css-i6rspj">
               <div class="col_right">
+                <div class="search-results-header" v-if="totalResults > 0">
+                  <div class="results-count">
+                    Showing <strong>{{ products.length.toLocaleString() }}</strong> of <strong>{{ totalResults.toLocaleString() }}</strong> results
+                  </div>
+                  <hr class="divider" />
+                </div>
                 <div class="product_list_wrapper">
                   <div class="product_view_comp_main" v-for="product in products" :key="product.id">
                     <ProductList
@@ -167,8 +173,7 @@
                 </div> -->
               </div>
             </div> 
-            <!-- End Product List -->
-            <div v-if="!loading && products.length === 0" class="no-products ant-col ant-col-xs-11 css-i6rspj">
+            <div v-else class="no-products ant-col ant-col-xs-11 css-i6rspj">
               <div class="col_right">
                 <div class="product_list_wrapper">
                   <h3>Product not found</h3>
@@ -187,7 +192,7 @@
     import CategoryBreadcrumb from '@/components/SingleProduct/CategoryBreadcrumb.vue';
     import ProductList from '@/components/Shop/ProductList.vue';
     
-    import { ref, onMounted, watch, computed , nextTick  } from 'vue';
+    import { ref, onMounted, onBeforeMount, watch, computed , nextTick  } from 'vue';
     import { useRoute } from 'vue-router';
     import { useBrands } from '@/composables/useBrands';
     import { useCategories } from '@/composables/useCategories';
@@ -200,6 +205,7 @@
     import { debounce } from 'lodash-es';
 
     const isLoadingMore = ref(false);
+    const isFetchingInitialProducts = ref(true);
     const hasMorePages = computed(() => {
       return pagination.value && pagination.value.current_page < pagination.value.last_page;
     });
@@ -207,7 +213,7 @@
     // Composables
     const { settings } = useSettings();
     const { getCategoryBySlug } = useCategories();
-    const { products, pagination, loading, getProductsByCategory, searchedKeyWord, searchProductsForPage } = useProducts();
+    const { products, pagination, loading, getProductsByCategory, searchedKeyWord, searchProductsForPage, totalResults } = useProducts();
     const { addToCart, buyItNow, loading2, loader } = useCart();
 
     const { getCategories } = useCategories();
@@ -263,7 +269,14 @@
 
       try {
         if (searchQuery) {
-          await searchProductsForPage(searchQuery, false); // false means replace, not append
+          // await searchProductsForPage(searchQuery, false); // false means replace, not append
+          await searchProductsForPage({
+            search: searchQuery,
+            perPage: 10,
+            page: 1,
+            sortField: 'created_at',
+            sortDirection: 'desc'
+          }, false);
         } else if (slug) {
           const result = await getCategoryBySlug(slug);
           category.value = result;
@@ -281,10 +294,11 @@
       } catch (err) {
         console.error("Failed to load data:", err);
       } finally {
+        isFetchingInitialProducts.value = false;
         loading.value = false;
         loading.page = false;
       }
-    };
+  };
 
   const loadMoreProducts = async () => {
     if (isLoadingMore.value || !hasMorePages.value) return;
@@ -332,6 +346,12 @@
     }
   };
 
+  onBeforeMount(() => {
+    products.value = [];
+    pagination.value = null;
+    searchedKeyWord.value = '';
+  });
+
   // Lifecycle
   onMounted(async () => {
     categories.value = await getCategories();
@@ -345,7 +365,9 @@
   watch(
     () => [route.params.slug, route.query.search],
     async () => {
-        await loadInitialData();
+      isFetchingInitialProducts.value = true;
+      await nextTick();
+      await loadInitialData();
     }
   );
 
@@ -412,83 +434,105 @@
     }
 
     .filter-input,
-.filter-select,
-.filter-button {
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  transition: all 0.2s ease-in-out;
-  width: -webkit-fill-available;
-}
+    .filter-select,
+    .filter-button {
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease-in-out;
+      width: -webkit-fill-available;
+    }
 
-.filter-input:focus,
-.filter-select:focus {
-  outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
-}
+    .filter-input:focus,
+    .filter-select:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+    }
 
-.filter-button {
-  background-color: #e5e7eb;
-  color: #374151;
-  cursor: pointer;
-}
+    .filter-button {
+      background-color: #e5e7eb;
+      color: #374151;
+      cursor: pointer;
+    }
 
-.filter-button:hover {
-  background-color: #d1d5db;
-}
-.no-products {
-  text-align: center;
-  padding: 2rem;
-  font-size: 1.2rem;
-  color: #666;
-  font-style: italic;
-}
+    .filter-button:hover {
+      background-color: #d1d5db;
+    }
+    .no-products {
+      text-align: center;
+      padding: 2rem;
+      font-size: 1.2rem;
+      color: #666;
+      font-style: italic;
+    }
 
-.loader-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(255, 255, 255, 0.7); /* light overlay */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* z-index: 9999; */
-}
+    .loader-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(255, 255, 255, 0.7); /* light overlay */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* z-index: 9999; */
+    }
 
-.spinner-gif {
-  width: 80px; /* adjust size as needed */
-  height: 80px;
-}
+    .spinner-gif {
+      width: 80px; /* adjust size as needed */
+      height: 80px;
+    }
 
-.loader-overlay {
-  /* animation: fadeIn 0.3s ease-in-out; */
-}
+    .loader-overlay {
+      /* animation: fadeIn 0.3s ease-in-out; */
+    }
 
-.no-products {
-  text-align: center;
-  padding: 2rem 1rem;
-}
+    .no-products {
+      text-align: center;
+      padding: 2rem 1rem;
+    }
 
-.placeholder-wrapper {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-top: 1rem;
-}
+    .placeholder-wrapper {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
 
-.placeholder-card {
-  width: 200px;
-  height: 250px;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-  border-radius: 10px;
-}
+    .placeholder-card {
+      width: 200px;
+      height: 250px;
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 10px;
+    }
+    .search-results-header {
+      margin: 1.5rem 0 1rem;
+      padding: 0 0.5rem;
+    }
+
+    .results-count {
+      font-size: 1.1rem;
+      color: #333;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .results-count strong {
+      color: #007bff; /* Blue highlight */
+    }
+
+    .divider {
+      border: none;
+      border-top: 2px solid #eee;
+      margin: 0;
+    }
+
 @keyframes shimmer {
   0% {
     background-position: -200% 0;

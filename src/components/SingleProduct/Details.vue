@@ -173,6 +173,13 @@
                             </button>
                         </span>
                         <div class="norton_image">
+                            <!-- <a href="//www.dmca.com/Protection/Status.aspx?ID=99871f18-5690-4a47-8ad1-c86661b95c31" title="DMCA.com Protection Status" class="dmca-badge"> <img src ="https://images.dmca.com/Badges/dmca_protected_16_120.png?ID=99871f18-5690-4a47-8ad1-c86661b95c31"  alt="DMCA.com Protection Status" /></a>   -->
+                            <img 
+                                alt="DMCA.com Protection Status" 
+                                srcset="/assets/image/dmca-blue.webp"
+                                src ="/assets/image/dmca-blue.webp"  
+                                loading="lazy" width="100" height="35" decoding="async" data-nimg="1"  
+                            />
                             <img 
                                 alt="Norton" 
                                 title="Norton" 
@@ -323,6 +330,7 @@
     //     updateHeadAndZendesk()
     // })
 </script>
+ 
 <style>
 .add_to_cart:hover {
   background: #001e4c !important;
