@@ -22,7 +22,11 @@
     <!-- ... existing template above ... -->
     <!-- Search Results Dropdown -->
     <div class="search_dropdown" v-if="searchTerm && (searchResults?.length || searchResults?.length === 0)">
-      <ul v-if="searchResults.length">
+      <!-- Loading State -->
+      <div v-if="isLoading" class="loading-message">
+        Loading...
+      </div>
+      <ul v-else-if="searchResults.length">
         <li v-for="item in searchResults" :key="item.id">
           <router-link :to="`/products/${item.category_url}/${item.slug}`"  @click="clearSearch">
             {{ item.title }} ({{ item.mpn }})
@@ -48,18 +52,27 @@ const searchTerm = ref('')
 const { searchResults, searchProducts } = useProducts()
 
 const searchContainer = ref(null)
+const isLoading = ref(false)
 
-const handleSearch = () => {
+const handleSearch = async () => {
   if (!searchTerm.value.trim()) {
     searchResults.value = []
     return
   }
-  searchProducts(searchTerm.value)
+  // searchProducts(searchTerm.value)
+  isLoading.value = true
+  try {
+    await searchProducts(searchTerm.value)
+  } catch (error) {
+    console.error('Search failed:', error)
+    searchResults.value = []
+  } finally {
+    isLoading.value = false
+  }
 }
 
 const handleSearch2 = () => {
   if (searchTerm.value.trim()) {
-    // router.push({ name: 'Shop', params: { search: encodeURIComponent(searchTerm.value.trim()) } })
     router.push({ path: '/products', query: { search: searchTerm.value.trim() } });
     searchResults.value = [] // Optional: clear dropdown
     searchTerm.value = '';
@@ -136,5 +149,15 @@ onUnmounted(() => {
   color: #333;
   display: block;
   width: 100%;
+}
+.loading-message {
+  padding: 10px;
+  text-align: center;
+  color: #999;
+}
+.no-results {
+  padding: 10px;
+  text-align: center;
+  color: #c00;
 }
 </style>

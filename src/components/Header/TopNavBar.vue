@@ -4,7 +4,7 @@
             <ul class="ant-menu-overflow ant-menu ant-menu-root ant-menu-horizontal ant-menu-light nav-menu-custom css-i6rspj" role="menu" tabindex="0" data-menu-list="true" style="width: 100%;">
                 <li class="ant-menu-overflow-item ant-menu-submenu ant-menu-submenu-horizontal" role="none" style="opacity: 1; order: 0;">
                   <div class="dropdown-container">
-                    <button class="dropdown-btn">Shop By Category</button>
+                    <button class="dropdown-btn">Explore Categories</button>
                     <ul class="dropdown-menu">
                       <CategoryMenu
                         v-for="(item, index) in visibleCategories"

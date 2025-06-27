@@ -35,3 +35,14 @@
 
     const currentYear = new Date().getFullYear();
 </script>
+<style scoped>
+    footer {
+    min-height: 250px; /* Based on actual height */
+    }
+    .right_icons_main {
+    min-height: 50px;
+    }
+    .left-icons.cart {
+    min-width: 80px;
+    }
+</style>

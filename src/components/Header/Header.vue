@@ -10,6 +10,7 @@
                                 :title="settings?.name || 'Solid Disk Direct'"
                                 fetchpriority="high"
                                 decoding="async"
+                                loading="lazy"
                                 width="220"
                                 height="50"
                                 :src="settings?.logo || '/assets/image/cOPCmXsTYZD8imXv03nHXTUesUat0VzFcRfOt5to.webp'"
@@ -139,7 +140,16 @@ function generateLogoSrcset(logoUrl) {
   background-color: #f9f9f9;
   cursor: pointer;
 }
+.right_icons_main {
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
 
+.left-icons.cart {
+  min-width: 80px; /* Reserve space for cart icon + count like (0) */
+}
 /* Hide on screens smaller than 768px (typical mobile size) */
 @media (max-width: 767px) {
   .left-icons.shopper-approved {

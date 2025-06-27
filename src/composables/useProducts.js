@@ -4,6 +4,7 @@ import axios from '@/plugins/axios';
 const searchedKeyWord = ref([]);
 const categoryData = ref({});
 const products = ref([]);
+const totalResults = ref(0)
 const pagination = ref({
   total: 0,
   current_page: 1,
@@ -81,6 +82,7 @@ const getProductsByCategory = async ({
     searchResults.value = [];
     searchedKeyWord.value = [];
     pagination.value = res.data.pagination;
+    totalResults.value = res.data?.pagination?.total || 0;
   } catch (err) {
     error.value = err;
   } finally {
@@ -112,6 +114,7 @@ const getProductsByBrand = async ({
     searchResults.value = [];
     searchedKeyWord.value = [];
     pagination.value = res.data.pagination;
+    totalResults.value = res.data?.pagination?.total || 0;
   } catch (err) {
     error.value = err;
   } finally {
@@ -130,6 +133,28 @@ const searchProducts = async (keyword) => {
     const res = await axios.get('/products/search', {
       params: { keyword }
     })
+
+    searchResults.value = res.data.data || []
+  } catch (err) {
+    error.value = err
+    searchResults.value = []
+  } finally {
+    loading.value = false
+  }
+}
+
+const searchProductsByButton = async (keyword) => {
+  if (!keyword) {
+    searchResults.value = []
+    return
+  }
+
+  loading.value = true
+  try {
+    const res = await axios.get('/products/search2', {
+      params: { keyword }
+    })
+    
     searchResults.value = res.data.data || []
   } catch (err) {
     error.value = err
@@ -159,6 +184,7 @@ const searchProductsForPage = async ({ search, perPage = 10, page = 1, sortField
     products.value = res.data.data;
     searchedKeyWord.value = res.data.keyword;
     pagination.value = res.data.pagination;
+    totalResults.value = res.data?.pagination?.total || 0;
   } catch (err) {
     error.value = err
     searchResults.value = []
@@ -190,6 +216,7 @@ const fetchProductsByAttributeValue = async (attributeSlug, page = 1, filters = 
     categoryData.value = response.data.data.category;
     searchedKeyWord.value = response.data.data.keyword || [];
     pagination.value = response.data.data.pagination;
+    totalResults.value = response.data.data?.pagination?.total || 0;
   } catch (error) {
     console.error('Failed to fetch products by attribute value:', error);
     throw error;
@@ -202,6 +229,7 @@ export function useProducts() {
     categoryData,
     products,
     pagination,
+    totalResults,
     loading,
     error,
     getProducts,
@@ -209,6 +237,7 @@ export function useProducts() {
     getProductsByCategory,
     getProductsByBrand,
     searchProducts,
+    searchProductsByButton,
     searchResults,
     searchProductsForPage,
     fetchProductsByAttributeValue

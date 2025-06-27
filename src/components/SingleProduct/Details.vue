@@ -10,12 +10,12 @@
                     <div class="mnp">
                         <p :title="productDetails?.mpn">MPN: <span>{{ productDetails?.mpn }}</span></p>
                         <p v-if="productDetails && productDetails.brand" :title="productDetails.brand.name">
-                            Brand:&nbsp;
-                            <router-link to="#" style="color: black;">{{ productDetails.brand.name }}</router-link>
+                            Manufacturer:&nbsp;
+                            <router-link :to="`/brands/${productDetails.brand.slug}`" style="color: black;">{{ productDetails.brand.name }}</router-link>
                         </p>
                         <p v-if="productDetails && productDetails.category" :title="productDetails.category.name">
                             Category:&nbsp;
-                            <router-link to="#" style="color: black;">{{ productDetails.category.name }}</router-link>
+                            <router-link :to="`/categories/${productDetails.category.slug}`" style="color: black;">{{ productDetails.category.name }}</router-link>
                         </p>
                     </div>
                 </div>
@@ -173,6 +173,13 @@
                             </button>
                         </span>
                         <div class="norton_image">
+                            <!-- <a href="//www.dmca.com/Protection/Status.aspx?ID=99871f18-5690-4a47-8ad1-c86661b95c31" title="DMCA.com Protection Status" class="dmca-badge"> <img src ="https://images.dmca.com/Badges/dmca_protected_16_120.png?ID=99871f18-5690-4a47-8ad1-c86661b95c31"  alt="DMCA.com Protection Status" /></a>   -->
+                            <img 
+                                alt="DMCA.com Protection Status" 
+                                srcset="/assets/image/dmca-blue.webp"
+                                src ="/assets/image/dmca-blue.webp"  
+                                loading="lazy" width="100" height="35" decoding="async" data-nimg="1"  
+                            />
                             <img 
                                 alt="Norton" 
                                 title="Norton" 
@@ -323,6 +330,7 @@
     //     updateHeadAndZendesk()
     // })
 </script>
+ 
 <style>
 .add_to_cart:hover {
   background: #001e4c !important;

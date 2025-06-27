@@ -20,7 +20,7 @@ const formattedXml = ref('')
 onMounted(async () => {
   try {
     const sitemapName = route.params.sitemapName
-const res = await axios.get(`/${sitemapName}.xml`, {
+    const res = await axios.get(`/${sitemapName}.xml`, {
       headers: { Accept: 'application/xml' },
       responseType: 'text'
     })

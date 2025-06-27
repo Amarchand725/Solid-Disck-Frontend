@@ -1,6 +1,5 @@
-
 export function initAllPlugins() {
-  // Existing ant-tabs logic
+  // Ant Design Tabs
   const tabs = document.querySelectorAll(".ant-tabs-tab");
   const tabBtns = document.querySelectorAll(".ant-tabs-tab-btn");
   const panels = document.querySelectorAll("[id^='rc-tabs-2-panel']");
@@ -26,19 +25,19 @@ export function initAllPlugins() {
     panel.style.display = idx === 0 ? "block" : "none";
   });
 
-  // openThis function
+  // openThis: toggle dropdown visibility
   window.openThis = function () {
     document.querySelectorAll('.ant-select-dropdown')
       .forEach(el => el.classList.toggle('ant-select-dropdown-hidden'));
   };
 
-  // toggleSummary function
+  // toggleSummary: toggle summary section visibility
   window.toggleSummary = function () {
     const body = document.getElementById("summaryBody");
     if (body) body.classList.toggle('ant-collapse-content-hidden');
   };
 
-  // Checkbox toggle for billing form
+  // Toggle billing form visibility
   const checkbox = document.getElementById('billToDiffCheckbox');
   if (checkbox) {
     checkbox.addEventListener('change', function () {
@@ -47,13 +46,12 @@ export function initAllPlugins() {
     });
   }
 
-  // Specs/Reviews tabs logic
+  // Specs / Reviews Tab Logic
   const specTabs = document.querySelectorAll(".specsTabs ul li h2");
   const specsSection = document.querySelector(".specification_main_custom");
   const reviewsSection = document.querySelector(".tab-content-item");
 
   if (specTabs.length && specsSection && reviewsSection) {
-    // Initial state
     specsSection.style.display = "block";
     reviewsSection.style.display = "none";
     specTabs[0].classList.add("border-bottom-black");
@@ -76,6 +74,7 @@ export function initAllPlugins() {
 }
 
 // export function initAllPlugins() {
+//   // Existing ant-tabs logic
 //   const tabs = document.querySelectorAll(".ant-tabs-tab");
 //   const tabBtns = document.querySelectorAll(".ant-tabs-tab-btn");
 //   const panels = document.querySelectorAll("[id^='rc-tabs-2-panel']");
@@ -101,21 +100,51 @@ export function initAllPlugins() {
 //     panel.style.display = idx === 0 ? "block" : "none";
 //   });
 
+//   // openThis function
 //   window.openThis = function () {
 //     document.querySelectorAll('.ant-select-dropdown')
 //       .forEach(el => el.classList.toggle('ant-select-dropdown-hidden'));
 //   };
 
+//   // toggleSummary function
 //   window.toggleSummary = function () {
 //     const body = document.getElementById("summaryBody");
 //     if (body) body.classList.toggle('ant-collapse-content-hidden');
 //   };
 
+//   // Checkbox toggle for billing form
 //   const checkbox = document.getElementById('billToDiffCheckbox');
 //   if (checkbox) {
 //     checkbox.addEventListener('change', function () {
 //       const form = document.getElementById('billingForm');
 //       if (form) form.style.display = this.checked ? 'block' : 'none';
+//     });
+//   }
+
+//   // Specs/Reviews tabs logic
+//   const specTabs = document.querySelectorAll(".specsTabs ul li h2");
+//   const specsSection = document.querySelector(".specification_main_custom");
+//   const reviewsSection = document.querySelector(".tab-content-item");
+
+//   if (specTabs.length && specsSection && reviewsSection) {
+//     // Initial state
+//     specsSection.style.display = "block";
+//     reviewsSection.style.display = "none";
+//     specTabs[0].classList.add("border-bottom-black");
+
+//     specTabs.forEach((tab) => {
+//       tab.addEventListener("click", () => {
+//         specTabs.forEach(t => t.classList.remove("border-bottom-black"));
+//         tab.classList.add("border-bottom-black");
+
+//         if (tab.getAttribute("title") === "Specifications") {
+//           specsSection.style.display = "block";
+//           reviewsSection.style.display = "none";
+//         } else if (tab.getAttribute("title") === "Reviews") {
+//           specsSection.style.display = "none";
+//           reviewsSection.style.display = "block";
+//         }
+//       });
 //     });
 //   }
 // }
