@@ -81,11 +81,13 @@
     </div>
 </template>
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted , watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { useGroups } from '@/composables/useGroups.js'
 
 const { groups, loading, error, getGroups } = useGroups()
 
+const route = useRoute()
 onMounted(() => {
   getGroups()
   document.addEventListener('click', handleClickOutside)
@@ -93,6 +95,11 @@ onMounted(() => {
 
 onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside)
+})
+
+watch(() => route.fullPath, () => {
+  selectedGroupId.value = null
+  showDropdown.value = false
 })
 
 const props = defineProps({
