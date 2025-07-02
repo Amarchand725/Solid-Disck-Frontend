@@ -1,6 +1,8 @@
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import axios from '@/plugins/axios';
 
+const router = useRouter();
 const searchedKeyWord = ref([]);
 const categoryData = ref({});
 const products = ref([]);
@@ -37,8 +39,11 @@ const getProductBySlug = async (slug, categoryPath) => {
   try {
     const res = await axios.get(`/products/${categoryPath}/${slug}`);
     const data = res?.data.data;
+
     if (!data) {
       console.warn(`Product not found for slug: "${slug}", category: "${categoryPath}"`);
+      router.push('/')
+      return; // stop here so it doesn't continue
     }
 
     searchResults.value = [];
