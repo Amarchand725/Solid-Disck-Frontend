@@ -98,6 +98,7 @@ const routes = [
     path: '/order-success/:orderNumber',
     name: 'OrderSuccess',
     component: OrderSuccess,
+    meta: { title: 'Success Order' },
     props: true,  // important to enable passing params as props
   },
   {
